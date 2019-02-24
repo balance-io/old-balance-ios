@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
+		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
+		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* HomeViewController.swift */; };
-		DC669844221CA8F100C383BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC669843221CA8F100C383BD /* Assets.xcassets */; };
 		DC669847221CA8F100C383BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC669845221CA8F100C383BD /* LaunchScreen.storyboard */; };
 		DC66984F221D7E0200C383BD /* CDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66984E221D7E0200C383BD /* CDP.swift */; };
 		DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669850221D7E9300C383BD /* CDPAPI.swift */; };
@@ -17,15 +19,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
+		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
+		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
+		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC669839221CA8F000C383BD /* Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Balance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC66983C221CA8F000C383BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC66983E221CA8F000C383BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		DC669843221CA8F100C383BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC669846221CA8F100C383BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC669848221CA8F100C383BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC66984E221D7E0200C383BD /* CDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDP.swift; sourceTree = "<group>"; };
 		DC669850221D7E9300C383BD /* CDPAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPAPI.swift; sourceTree = "<group>"; };
-		DC669854221ED25E00C383BD /* CDPTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CDPTableViewCell.swift; path = Balance/CDPTableViewCell.swift; sourceTree = "<group>"; };
+		DC669854221ED25E00C383BD /* CDPTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,18 +39,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		671853DF3540132917996814 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		76225EB6B814565E0DA6B90F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */,
+				40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DC669830221CA8F000C383BD = {
 			isa = PBXGroup;
 			children = (
-				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
 				DC66983B221CA8F000C383BD /* Balance */,
 				DC66983A221CA8F000C383BD /* Products */,
+				76225EB6B814565E0DA6B90F /* Pods */,
+				671853DF3540132917996814 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -59,13 +84,15 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
+				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
+				DC452001222050F80077813C /* Assets.xcassets */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
 				DC66983E221CA8F000C383BD /* HomeViewController.swift */,
 				DC66984E221D7E0200C383BD /* CDP.swift */,
 				DC669850221D7E9300C383BD /* CDPAPI.swift */,
-				DC669843221CA8F100C383BD /* Assets.xcassets */,
 				DC669845221CA8F100C383BD /* LaunchScreen.storyboard */,
 				DC669848221CA8F100C383BD /* Info.plist */,
+				DC3455062221686D00136F8F /* Balance.xcdatamodeld */,
 			);
 			path = Balance;
 			sourceTree = "<group>";
@@ -77,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC66984B221CA8F100C383BD /* Build configuration list for PBXNativeTarget "Balance" */;
 			buildPhases = (
+				1498338121071E6253D9E871 /* [CP] Check Pods Manifest.lock */,
 				DC669835221CA8F000C383BD /* Sources */,
 				DC669836221CA8F000C383BD /* Frameworks */,
 				DC669837221CA8F000C383BD /* Resources */,
+				E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -128,12 +157,59 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC452002222050F80077813C /* Assets.xcassets in Resources */,
 				DC669847221CA8F100C383BD /* LaunchScreen.storyboard in Resources */,
-				DC669844221CA8F100C383BD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1498338121071E6253D9E871 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Balance-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DC669835221CA8F000C383BD /* Sources */ = {
@@ -142,6 +218,7 @@
 			files = (
 				DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
+				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				DC669855221ED25E00C383BD /* CDPTableViewCell.swift in Sources */,
 				DC66983F221CA8F000C383BD /* HomeViewController.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,
@@ -280,6 +357,7 @@
 		};
 		DC66984C221CA8F100C383BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,6 +378,7 @@
 		};
 		DC66984D221CA8F100C383BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -339,6 +418,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DC3455062221686D00136F8F /* Balance.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DC3455072221686D00136F8F /* Balance.xcdatamodel */,
+			);
+			currentVersion = DC3455072221686D00136F8F /* Balance.xcdatamodel */;
+			path = Balance.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DC669831221CA8F000C383BD /* Project object */;
 }
