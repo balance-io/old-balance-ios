@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import Floaty
+import SwiftEntryKit
 
 
 //["tab": 42249.60231457469, "act": give, "ink": 278.7336414172244, "deleted": 0, "timestamp": 1548945287000, "pep": 645.17, "time": 2019-01-31T14:34:47.000Z, "arg": <null>, "block": 7154155, "id": 14165, "liq_price": 77.55783061819776, "ratio": 281.664015430498, "art": 15000, "per": 1.040800462956618, "ire": 14825.62108276614, "pip": 145.635, "lad": 0x507c0d38456a75b56d938228f0eb8Df00E2A2f15]
@@ -182,14 +183,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //            }
 //        }
         
-        navigationItem.title = "Watchlist"
+        navigationItem.title = ""
 //        navigationItem.
 //        UINavigationBar.appearance().barTintColor = UIColor(red: 234.0/255.0, green: 46.0/255.0, blue: 73.0/255.0, alpha: 1.0)
 //        UINavigationBar.appearance().tintColor = UIColor.white
 //        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         
         
-        let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
+//        let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         self.navigationController?.navigationBar.barTintColor = .white
 //        self.navigationController?.navigationBar.barTintColor = _ColorLiteralType(red: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
 //        self.navigationController?.navigationBar.barTintColor = UIColor(cgColor: CGColor.b)
@@ -212,10 +213,10 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         view.addSubview(cdpsTableView)
         cdpsTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        cdpsTableView.topAnchor.constraint(equalTo:view.safeAreaLayoutGuide.topAnchor).isActive = true
+        cdpsTableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
         cdpsTableView.leftAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leftAnchor).isActive = true
         cdpsTableView.rightAnchor.constraint(equalTo:view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        cdpsTableView.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        cdpsTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         
         cdpsTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
@@ -395,7 +396,356 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //        return 10
     }
     
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+//
+        let row = indexPath.row
+        print("Row: \(row)")
+        
+//        var attributes = EKAttributes.topFloat
+//        attributes.entryBackground = .gradient(gradient: .init(colors: [.red, .green], startPoint: .zero, endPoint: CGPoint(x: 1, y: 1)))
+//        attributes.popBehavior = .animated(animation: .init(translate: .init(duration: 0.3), scale: .init(from: 1, to: 0.7, duration: 0.7)))
+//        attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 10, offset: .zero))
+//        attributes.statusBar = .dark
+//        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+////        attributes.positionConstraints.maxSize = .init(width: .constant(value: UIView.main.minEdge), height: .intrinsic)
+//
+//        let titleText = "Test"
+//        let titleFont = UIFont.systemFont(ofSize: 14)
+//
+//        let descText = "This is a test."
+//        let descFont = UIFont.systemFont(ofSize: 12)
+//        let textColor = UIColor.black
+        
+//        let title = EKProperty.LabelContent(text: titleText, style: .init(font: titleFont, color: textColor))
+//        let description = EKProperty.LabelContent(text: descText, style: .init(font: descFont, color: textColor))
+//        let image = EKProperty.ImageContent(image: UIImage(named: imageName)!, size: CGSize(width: 35, height: 35))
+//        let simpleMessage = EKSimpleMessage(image: image, title: title, description: description)
+//        let notificationMessage = EKNotificationMessage(simpleMessage: simpleMessage)
+        
+//        let contentView = EKNotificationMessageView(with: notificationMessage)
+//        SwiftEntryKit.display(entry: contentView, using: attributes)
+        
+//        private func showLightAwesomePopupMessage(attributes: EKAttributes) {
+//            let image = UIImage(named: "ic_done_all_light_48pt")!
+//            let title = "Awesome!"
+//            let description = "You are using SwiftEntryKit, and this is a pop up with important content"
+//            showPopupMessage(attributes: attributes, title: title, titleColor: .white, description: description, descriptionColor: .white, buttonTitleColor: EKColor.Gray.mid, buttonBackgroundColor: .white, image: image)
+//        }
+//
+//        println(meetingArray[row] as! String)
+//
+//        let secondViewController = self.storyboard.instantiateViewControllerWithIdentifier("storyBoardIdFor your new ViewController") as SecondViewController
+//        self.navigationController.pushViewController(secondViewController, animated: true)
+        
+//        showNote(attributes: <#T##EKAttributes#>)
+//        showNote(attributes: attributes)
+//        noteCellSelected(with: attributes, row: indexPath.row)
+        
+        
+//        var attributes: EKAttributes {
+//            var attributes = EKAttributes
+            var attributes = EKAttributes()
+            attributes = .centerFloat
+            attributes.name = "Top Note"
+            attributes.hapticFeedbackType = .success
+            attributes.popBehavior = .animated(animation: .translation)
+            attributes.entryBackground = .color(color: .black)
+            attributes.roundCorners = .all(radius: 10)
+            attributes.border = .none
+            attributes.statusBar = .hidden
+        
+            let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
+//            let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
+            let heightConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.5)
+            attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
+//            attributes.positionConstraints.verticalOffset = 100
+            attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
+            attributes.positionConstraints.rotation.isEnabled = false
+//                attributes.screenBackground = .color(color: UIColor(white: 0.5, alpha: 0.5))
+//            attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .easeOut)
+            attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
+            attributes.statusBar = .light
+//        attributes.scroll = .disabled
+//        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+//        attributes.popBehavior = .animated(animation: .init(translate: .init(duration: 0.05)))
+        attributes.displayDuration = .infinity
+        
+//        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
+        
+        let customView = UIView()
+        
+        customView.backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
+        customView.clipsToBounds = true
+        customView.layer.cornerRadius = 20
+        
+        let mkrGreenImage = UIImage(named: "mkrGreen")
+        let mkrGreenImageView = UIImageView(image: mkrGreenImage)
+        mkrGreenImageView.frame = CGRect(x:0, y: 0, width: 32, height: 32)
+        //        imageView.frame = CGRect(x:0, y: 0, width: customView.frame.width - 30, height: 23)
+        mkrGreenImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(mkrGreenImageView)
+        
+        mkrGreenImageView.topAnchor.constraint(equalTo: customView.topAnchor, constant: 10).isActive = true
+        mkrGreenImageView.leadingAnchor.constraint(equalTo: customView.leadingAnchor, constant: 10).isActive = true
+//        mkrGreenImageView.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10).isActive = true
+        
+//        indexPath
+        let cdpItem = CDPs[indexPath.row]
+        
+//        cdp.
+        
+//        let identifier:Int?
+//        let ratio:Double?
+//        let pip:Double? // Reference price feed
+//        let art:Double? // Debt
+//        let ink:Double? // Locked collateral (in SKR)
+//        let liqPrice:Double?
+        
+//        cdp.identifier
+        
+        
+        
+        
+        
+        let identifierLabel = UILabel()
+        identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        identifierLabel.text = "Maker CDP #\(cdpItem.identifier!.description)"
+        identifierLabel.textColor = .white
+        identifierLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(identifierLabel)
+        
+        identifierLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.trailingAnchor, constant: 10).isActive = true
+        identifierLabel.centerYAnchor.constraint(equalTo: mkrGreenImageView.centerYAnchor).isActive = true
+        
+        let collateralTitleLabel = UILabel()
+        collateralTitleLabel.text = "COLLATERAL"
+        collateralTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        collateralTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        collateralTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(collateralTitleLabel)
+        
+        collateralTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
+        collateralTitleLabel.topAnchor.constraint(equalTo: mkrGreenImageView.bottomAnchor, constant: 15).isActive = true
+        
+        let ethCircleImage = UIImage(named: "ethWhiteCircle")
+        let ethCircleImageView = UIImageView(image: ethCircleImage)
+        ethCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
+        ethCircleImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(ethCircleImageView)
+        
+        ethCircleImageView.topAnchor.constraint(equalTo:collateralTitleLabel.bottomAnchor, constant: 10).isActive = true
+        ethCircleImageView.leadingAnchor.constraint(equalTo:mkrGreenImageView.leadingAnchor, constant: 0).isActive = true
+        
+        let etherTitleLabel = UILabel()
+        etherTitleLabel.text = "Ether"
+        etherTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        etherTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        etherTitleLabel.textColor = .white
+        
+        customView.addSubview(etherTitleLabel)
+        
+        etherTitleLabel.leadingAnchor.constraint(equalTo: ethCircleImageView.trailingAnchor, constant: 10).isActive = true
+        etherTitleLabel.centerYAnchor.constraint(equalTo: ethCircleImageView.centerYAnchor).isActive = true
+        
+        let collateralBreakdownLabel = UILabel()
+        collateralBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        collateralBreakdownLabel.translatesAutoresizingMaskIntoConstraints = false
+        collateralBreakdownLabel.textColor = .white
+        
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
+        numberFormatter.maximumFractionDigits = 0
+        
+        if let ink = cdpItem.ink {
+            if let pip = cdpItem.pip {
+                let inkString:String? = numberFormatter.string(from: NSNumber(value:ink))
+                let pipString:String? = numberFormatter.string(from: NSNumber(value:pip))
+                
+                collateralBreakdownLabel.text = "\(inkString!.description) ETH * \(pipString!.description) USD"
+            }
+        }
+        
+        customView.addSubview(collateralBreakdownLabel)
+    
+        collateralBreakdownLabel.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10).isActive = true
+        collateralBreakdownLabel.topAnchor.constraint(equalTo: collateralTitleLabel.bottomAnchor, constant: 10).isActive = true
+        
+        
+        let debtTitleLabel = UILabel()
+        debtTitleLabel.text = "DEBT"
+        debtTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        debtTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        debtTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(debtTitleLabel)
+        
+        debtTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
+        debtTitleLabel.topAnchor.constraint(equalTo: ethCircleImageView.bottomAnchor, constant: 15).isActive = true
 
+        let daiCircleImage = UIImage(named: "daiCircle")
+        let daiCircleImageView = UIImageView(image: daiCircleImage)
+        daiCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
+        daiCircleImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(daiCircleImageView)
+        
+        daiCircleImageView.topAnchor.constraint(equalTo:debtTitleLabel.bottomAnchor, constant: 10).isActive = true
+        daiCircleImageView.leadingAnchor.constraint(equalTo:mkrGreenImageView.leadingAnchor, constant: 0).isActive = true
+        
+        let daiTitleLabel = UILabel()
+        daiTitleLabel.text = "Dai"
+        daiTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        daiTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        daiTitleLabel.textColor = .white
+        
+        customView.addSubview(daiTitleLabel)
+        
+        daiTitleLabel.leadingAnchor.constraint(equalTo: daiCircleImageView.trailingAnchor, constant: 10).isActive = true
+        daiTitleLabel.centerYAnchor.constraint(equalTo: daiCircleImageView.centerYAnchor).isActive = true
+        
+        let debtBreakdownLabel = UILabel()
+        debtBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        debtBreakdownLabel.translatesAutoresizingMaskIntoConstraints = false
+        debtBreakdownLabel.textColor = .white
+        
+        if let art = cdpItem.art {
+            let artString:String? = numberFormatter.string(from: NSNumber(value:art))
+            debtBreakdownLabel.text = "\(artString!.description) DAI * 1.00 USD"
+        }
+
+        customView.addSubview(debtBreakdownLabel)
+
+        debtBreakdownLabel.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10).isActive = true
+        debtBreakdownLabel.centerYAnchor.constraint(equalTo: daiCircleImageView.centerYAnchor).isActive = true
+        
+        let positionTitleLabel = UILabel()
+        positionTitleLabel.text = "POSITION"
+        positionTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        positionTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        positionTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(positionTitleLabel)
+        
+        positionTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
+        positionTitleLabel.topAnchor.constraint(equalTo: debtBreakdownLabel.bottomAnchor, constant: 15).isActive = true
+        
+        
+
+
+
+
+
+        let riskBarImage = UIImage(named: "riskbar")
+        let riskBarImageView = UIImageView(image: riskBarImage)
+        riskBarImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
+//        imageView.frame = CGRect(x:0, y: 0, width: customView.frame.width - 30, height: 23)
+        riskBarImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(riskBarImageView)
+        
+        riskBarImageView.bottomAnchor.constraint(equalTo: customView.bottomAnchor, constant: -20).isActive = true
+        riskBarImageView.leadingAnchor.constraint(equalTo: customView.leadingAnchor, constant: 10).isActive = true
+        riskBarImageView.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10).isActive = true
+        
+        let riskDotImage = UIImage(named: "riskDot")
+        let riskDotImageView = UIImageView(image: riskDotImage)
+        riskDotImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
+        //        imageView.frame = CGRect(x:0, y: 0, width: customView.frame.width - 30, height: 23)
+        riskDotImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        customView.addSubview(riskDotImageView)
+        
+        riskDotImageView.centerYAnchor.constraint(equalTo: riskBarImageView.centerYAnchor, constant: 0).isActive = true
+        
+        let width = riskBarImageView.frame.width
+        print(width)
+        let widthPercent:Double = Double(width / 100.00)
+        print(widthPercent)
+        
+//        riskDotImageView.leadingAnchor.constraint(equalTo: customView.leadingAnchor, constant: 50).isActive = true
+        
+        if let ratio = cdpItem.ratio {
+            
+            print("risky!")
+            print(ratio)
+            if ratio <= 150.00 {
+                riskDotImageView.leadingAnchor.constraint(equalTo: riskBarImageView.leadingAnchor, constant: 0).isActive = true
+            } else if ratio >= 350.00 {
+                riskDotImageView.trailingAnchor.constraint(equalTo: riskBarImageView.trailingAnchor, constant: 0).isActive = true
+            } else {
+                let pointsAway = ratio - 150.00
+                let riskDotPositionFromLeft = (pointsAway / 2) * widthPercent
+                print(pointsAway)
+                print(riskDotPositionFromLeft)
+            
+            print(riskDotPositionFromLeft)
+                
+                riskDotImageView.leadingAnchor.constraint(equalTo: riskBarImageView.leadingAnchor, constant: CGFloat(riskDotPositionFromLeft)).isActive = true
+                
+            }
+        }
+        
+        
+        
+//        riskDotImageView.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10).isActive = true
+        
+//        ethCircleImageView.topAnchor.constraint(equalTo:mkrSquircle.bottomAnchor, constant: 12).isActive = true
+//        ethCircleImageView.centerXAnchor.constraint(equalTo:mkrSquircle.centerXAnchor, constant: 0).isActive = true
+//        return imageView
+        
+        
+        /*
+         ... Customize the view as you like ...
+         */
+        
+        // Display the view with the configuration
+        SwiftEntryKit.display(entry: customView, using: attributes)
+        
+//        let text = "CDP"
+//        let style = EKProperty.LabelStyle(font: UIFont.systemFont(ofSize: 14), color: .white, alignment: .center)
+//        let labelContent = EKProperty.LabelContent(text: text, style: style)
+//
+//        let contentView = EKNoteMessageView(with: labelContent)
+//
+//        SwiftEntryKit.display(entry: contentView, using: attributes)
+        
+        
+        
+//        showNote(attributes: attributes)
+//            return attributes
+//        }
+
+    }
+    
+//    private func showNote(attributes: EKAttributes) {
+//        let text = "CDP"
+//        let style = EKProperty.LabelStyle(font: UIFont.systemFont(ofSize: 14), color: .white, alignment: .center)
+//        let labelContent = EKProperty.LabelContent(text: text, style: style)
+//
+//        let contentView = EKNoteMessageView(with: labelContent)
+//
+//        SwiftEntryKit.display(entry: contentView, using: attributes)
+//    }
+
+//    private func tableView(_ tableView: UITableView, didHighlightRowAtIndexPath indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPTableViewCell
+//        cell.contentView.backgroundColor = .red
+//    }
+//
+//    private func tableView(_ tableView: UITableView, didUnhighlightRowAtIndexPath indexPath: NSIndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath as IndexPath) as! CDPTableViewCell
+//        cell.contentView.backgroundColor = .clear
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPTableViewCell
@@ -403,6 +753,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
 //        cell.textLabel?.text = "\(CDPs[indexPath.row].identifier!)"
         
+        cell.selectionStyle = .none
         cell.cdp = CDPs[indexPath.row]
 
         return cell

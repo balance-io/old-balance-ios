@@ -10,6 +10,7 @@
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
+		DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B07682225B0A200107A8B /* UILabel+Padding.swift */; };
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* HomeViewController.swift */; };
 		DC669847221CA8F100C383BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC669845221CA8F100C383BD /* LaunchScreen.storyboard */; };
@@ -24,6 +25,7 @@
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC5B07682225B0A200107A8B /* UILabel+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Padding.swift"; sourceTree = "<group>"; };
 		DC669839221CA8F000C383BD /* Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Balance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC66983C221CA8F000C383BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC66983E221CA8F000C383BD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		DC5B07672225B07800107A8B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DC5B07682225B0A200107A8B /* UILabel+Padding.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		DC669830221CA8F000C383BD = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +94,7 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
+				DC5B07672225B07800107A8B /* Extensions */,
 				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
 				DC452001222050F80077813C /* Assets.xcassets */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
@@ -197,12 +208,16 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Floaty/Floaty.framework",
+				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Floaty.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEntryKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -219,6 +234,7 @@
 				DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
+				DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPTableViewCell.swift in Sources */,
 				DC66983F221CA8F000C383BD /* HomeViewController.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,

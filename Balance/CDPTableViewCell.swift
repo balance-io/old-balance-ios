@@ -11,6 +11,13 @@ import UIKit
 
 class CDPTableViewCell: UITableViewCell {
     
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//        self.selectedBackgroundView = UIView()
+//        self.selectionStyle = .none // you can also take this line out
+//        // Initialization code
+//    }
+    
     var cdp:CDP? {
         didSet {
             guard let cdpItem = cdp else {return}
@@ -27,11 +34,21 @@ class CDPTableViewCell: UITableViewCell {
             }
             
             if let ratio = cdpItem.ratio {
+//                ratioLabel.textColor
+                
+                if ratio < 150.00 {
+                    ratioLabel.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
+                } else if ratio < 200.00 {
+                    ratioLabel.backgroundColor = .red
+                } else if ratio < 250.00 {
+                    ratioLabel.backgroundColor = .orange
+                } else if ratio > 300.00 {
+                    ratioLabel.backgroundColor = .green
+                }
+//
                 ratioLabel.text = " \(String(format:"%.0f", ratio))%"
             }
-            
 
-            
             if let art = cdpItem.art {
                 let artFormatted = numberFormatter.string(from: NSNumber(value:art))
                 artLabel.text = "\(artFormatted!) DAI"
@@ -126,7 +143,7 @@ class CDPTableViewCell: UITableViewCell {
     let collateralizedTitleLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
-        label.text = "Collateralized"
+        label.text = "Collateral"
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
 //        label.backgroundColor = .red
@@ -153,9 +170,11 @@ class CDPTableViewCell: UITableViewCell {
     
     let ratioLabel:UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
-        label.textColor = .white
-        //        label.textColor =  _ColorLiteralType(red: 1, green: 1, blue: 1, alpha: 1)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
+        label.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
+        label.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
+//        label.textColor = .white
+//                label.textColor =  _ColorLiteralType(red: 1, green: 1, blue: 1, alpha: 1)
         //        label.backgroundColor =  _ColorLiteralType(red: 0.2431372549, green: 0.7647058824, blue: 0.8392156863, alpha: 1)
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -248,10 +267,9 @@ class CDPTableViewCell: UITableViewCell {
     //        return img
     //    }()
 
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
+
+
+    
 
 
     
@@ -380,8 +398,11 @@ class CDPTableViewCell: UITableViewCell {
         positionTitleLabel.leadingAnchor.constraint(equalTo: debtTitleLabel.leadingAnchor, constant: 0).isActive = true
         
         
-        ratioLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
+//        ratioLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 10).isActive = true
+        
         ratioLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
+//        ratioLabel.centerYAnchor.constraint(equalTo: identityLabel.centerYAnchor, constant: 0).isActive = true
+        ratioLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
         
         inkLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
         inkLabel.centerYAnchor.constraint(equalTo: collateralizedTitleLabel.centerYAnchor, constant: 0).isActive = true
@@ -407,10 +428,15 @@ class CDPTableViewCell: UITableViewCell {
         
     }
     
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
+//
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
+        self.selectedBackgroundView!.backgroundColor = selected ? .red : nil
     }
     
     required init?(coder aDecoder: NSCoder) {
