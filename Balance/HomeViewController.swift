@@ -50,10 +50,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if makers.count > 0 {
             for maker in makers {
-                print("DATA")
-                print(maker.value(forKey: "singleCollateralDaiIdentifier"))
                 singleCollateralDaiIdentifiers.append(maker.value(forKey: "singleCollateralDaiIdentifier") as! String)
-                
             }
 
             for identifier in singleCollateralDaiIdentifiers {
