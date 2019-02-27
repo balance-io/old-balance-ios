@@ -9,22 +9,6 @@
 import Foundation
 
 struct CDP {
-    //    "tab": 42249.60231457469,
-    //    "time": 2019-01-31T14:34:47.000Z,
-    //    "id": 14165,
-    //    "ratio": 281.664015430498,
-    //    "lad": 0x507c0d38456a75b56d938228f0eb8Df00E2A2f15,
-    //    "art": 15000,
-    //    "deleted": 0,
-    //    "arg": <null>,
-    //    "pip": 145.635,
-    //    "ink": 278.7336414172244,
-    //    "pep": 645.17,
-    //    "timestamp": 1548945287000,
-    //    "ire": 14825.62108276614,
-    //    "per": 1.040800462956618,
-    //    "act": give,
-    //    "liq_price": 77.55783061819776]]
     let identifier:Int?
     let ratio:Double?
     let pip:Double?
@@ -32,6 +16,23 @@ struct CDP {
     let ink:Double?
     let liqPrice:Double?
 }
+
+//    "tab": 42249.60231457469,
+//    "time": 2019-01-31T14:34:47.000Z,
+//    "id": 14165,
+//    "ratio": 281.664015430498,
+//    "lad": 0x507c0d38456a75b56d938228f0eb8Df00E2A2f15,
+//    "art": 15000,
+//    "deleted": 0,
+//    "arg": <null>,
+//    "pip": 145.635,
+//    "ink": 278.7336414172244,
+//    "pep": 645.17,
+//    "timestamp": 1548945287000,
+//    "ire": 14825.62108276614,
+//    "per": 1.040800462956618,
+//    "act": give,
+//    "liq_price": 77.55783061819776]]
 
 // contract SaiTub is DSThing, SaiTubEvents {
 //     DSToken  public  sai;  // Stablecoin
