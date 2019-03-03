@@ -125,6 +125,7 @@ class CDPTableViewCell: UITableViewCell {
     let ratioLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
+        label.textAlignment = .center
         label.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
         label.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         label.layer.cornerRadius = 5
@@ -136,6 +137,7 @@ class CDPTableViewCell: UITableViewCell {
     let pipLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
+        label.textAlignment = .right
         label.textColor = .white
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -146,6 +148,7 @@ class CDPTableViewCell: UITableViewCell {
     let artLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
+        label.textAlignment = .right
         label.textColor = .white
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -156,6 +159,7 @@ class CDPTableViewCell: UITableViewCell {
     let inkLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
+        label.textAlignment = .right
         label.textColor = .white
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -166,6 +170,7 @@ class CDPTableViewCell: UITableViewCell {
     let liqPriceLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
+        label.textAlignment = .right
         label.textColor = .white
         label.layer.cornerRadius = 5
         label.clipsToBounds = true
@@ -233,6 +238,7 @@ class CDPTableViewCell: UITableViewCell {
         
         identityLabel.centerYAnchor.constraint(equalTo:mkrSquircle.centerYAnchor, constant: 0).isActive = true
         identityLabel.leadingAnchor.constraint(equalTo:mkrSquircle.trailingAnchor, constant: 5).isActive = true
+        identityLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.8).isActive = true
         
         collateralizedTitleLabel.centerYAnchor.constraint(equalTo:self.ethCircleImageView.centerYAnchor, constant: 0).isActive = true
         collateralizedTitleLabel.leadingAnchor.constraint(equalTo:self.ethCircleImageView.trailingAnchor, constant: 5).isActive = true
@@ -244,16 +250,23 @@ class CDPTableViewCell: UITableViewCell {
         positionTitleLabel.leadingAnchor.constraint(equalTo: debtTitleLabel.leadingAnchor, constant: 0).isActive = true
         
         ratioLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        ratioLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15).isActive = true
+        ratioLabel.centerYAnchor.constraint(equalTo: identityLabel.centerYAnchor).isActive = true
+        ratioLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.17).isActive = true
         
         inkLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
         inkLabel.centerYAnchor.constraint(equalTo: collateralizedTitleLabel.centerYAnchor, constant: 0).isActive = true
+        inkLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
         
         artLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
         artLabel.centerYAnchor.constraint(equalTo: debtTitleLabel.centerYAnchor, constant: 0).isActive = true
+        artLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
         
         liqPriceLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
         liqPriceLabel.centerYAnchor.constraint(equalTo: positionTitleLabel.centerYAnchor, constant: 0).isActive = true
+        liqPriceLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
+        
+        containerView.setNeedsLayout()
+        containerView.layoutIfNeeded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

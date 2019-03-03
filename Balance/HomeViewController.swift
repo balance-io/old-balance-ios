@@ -16,12 +16,9 @@ private var CDPs = [CDP]()
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let cdpsTableView = UITableView()
+    let floaty = Floaty()
     
     var makers: [NSManagedObject] = []
-    
-    override func viewWillAppear(_ animated: Bool) {
-        getData()
-    }
     
     func getData() {
         
@@ -123,11 +120,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cdpsTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         
         cdpsTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        
-        let floaty = Floaty()
 
         floaty.openAnimationType = .slideUp
-        
         floaty.overlayColor = UIColor.black.withAlphaComponent(0.7)
         
         let ethItem = FloatyItem()
@@ -138,7 +132,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            floaty.close()
+            self.floaty.close()
         }
         floaty.addItem(item: ethItem)
         
@@ -150,7 +144,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-            floaty.close()
+            self.floaty.close()
         }
         floaty.addItem(item: contactItem)
         
@@ -217,6 +211,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.view.addSubview(floaty)
         
         setUpNavigation()
+        getData()
     }
     
     func deleteAllData(_ entity:String) {
@@ -641,4 +636,3 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return 180
     }
 }
-
