@@ -207,6 +207,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         deleteItem.title = "Delete All"
         deleteItem.icon = UIImage(named: "trash")!
         deleteItem.handler = { ethItem in
+            print("DELETE THINGS")
             self.deleteAllData("Maker")
             self.getData()
             
@@ -219,21 +220,24 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func deleteAllData(_ entity:String) {
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
         
+        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+        print("FETCHING")
+        print(fetchRequest)
         fetchRequest.returnsObjectsAsFaults = false
+        
         do {
-            let results = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest)
-            for object in results {
-                guard let objectData = object as? NSManagedObject else {continue}
-                appDelegate.persistentContainer.viewContext.delete(objectData)
+            let results = try context.fetch(fetchRequest)
+            print(results)
+            for managedObject in results {
+                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
+                context.delete(managedObjectData)
+                try context.save()
             }
-        } catch let error {
-            print("Detele all data in \(entity) error :", error)
+        } catch let error as NSError {
+            print("Deleted all my data in myEntity error : \(error) \(error.userInfo)")
         }
     }
 
