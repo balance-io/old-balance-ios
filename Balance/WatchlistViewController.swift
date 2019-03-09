@@ -1,21 +1,12 @@
-//
-//  ViewController.swift
-//  Balance
-//
-//  Created by Richard Burton on 19/02/2019.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 import CoreData
 import Floaty
 import SwiftEntryKit
 
 private var ethereumWallets = [EthereumWallet]()
+var wallets: [NSManagedObject] = []
 
 class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    var wallets: [NSManagedObject] = []
     
     let walletsTableView = UITableView()
     let floaty = Floaty()
@@ -168,8 +159,6 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
                     
                     do {
                         try managedContext.save()
-//                        self.makers.append(maker)
-//                        self.getData()
                     } catch let error as NSError {
                         print("Could not save. \(error), \(error.userInfo)")
                     }
@@ -236,6 +225,27 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         cell.wallet = ethereumWallets[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            
+            let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+            let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
+            
+            let objectToDelete = wallets[indexPath.row]
+            ethereumWallets.remove(at: indexPath.row)
+            context.delete(objectToDelete)
+            
+            do {
+                try context.save()
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            } catch let error {
+                print("Could not save Deletion \(error)")
+            }
+            
+            tableView.reloadData()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

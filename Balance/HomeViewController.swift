@@ -1,18 +1,8 @@
-//
-//  ViewController.swift
-//  Balance
-//
-//  Created by Richard Burton on 19/02/2019.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 import CoreData
 import SwiftEntryKit
-//import UIL
 
 private var CDPs = [CDP]()
-
 
 extension UILabel {
     func setSizeFont (sizeFont: CGFloat) {
@@ -127,9 +117,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             for ethereumAddressString in ethereumAddressStrings {
                 
-//                guard let url = URL(string: "https://mkr.tools/api/v1/cdp/\(String(describing: identifier))") else {return}// biggest CDP
                 guard let url = URL(string: "https://mkr.tools/api/v1/lad/\(String(describing: ethereumAddressString))") else {return}// biggest CDP
-//                https://mkr.tools/api/v1/lad/0x1db7332D24EBbdC5F49c34AA6830Cb7f46A3647C
                 
                 let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                     guard let dataResponse = data,
@@ -250,18 +238,14 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         attributes.positionConstraints.rotation.isEnabled = false
     
         let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
-//        let heightConstraint = EKAttributes.PositionConstraints.Edge.fill
-                let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
-//        let heightConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.52)
+        let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
+        
         attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
-//        attributes.positionConstraints.size = .intrinsic
+
         attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
         attributes.positionConstraints.rotation.isEnabled = false
         attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
         attributes.statusBar = .ignored
-//        attributes.scroll = .disabled
-//        attributes.scroll = .enabled(swipeable: true, pullbackAnimation: .jolt)
-//        attributes.popBehavior = .animated(animation: .init(translate: .init(duration: 0.05)))
         attributes.displayDuration = .infinity
 
         let customView = UIView()
@@ -596,9 +580,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         let plainEnglishContainerView = UIView()
         
-        
         //TODO Find a way to get the UILabel to stretch dynamically.
-//        plainEnglishContainerView.backgroundColor = .red
         plainEnglishContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         customView.addSubview(plainEnglishContainerView)
@@ -612,43 +594,22 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let plainEnglishExplanationLabel = UILabel()
         var textForPlainEnglishExplanationLabel = ""
         plainEnglishExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
-//
+        
         if let liqPrice = cdpItem.liqPrice {
             textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the ratio of 150% and be liquidated."
         }
-//
-        
-//        let paragraph = NSMutableParagraphStyle()
-//        paragraph.alignment = .center
-//
-//        let attributesText: [NSAttributedString.Key : Any] = [NSAttributedString.Key.paragraphStyle: paragraph]
-//        let attrString = NSAttributedString(string:textForPlainEnglishExplanationLabel, attributes: attributesText)
-////        textView.attributedText =  attrString
-//
+
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel
         plainEnglishExplanationLabel.textAlignment = .center
-//
-//
-//        plainEnglishExplanationLabel.attributedText = attrString
         plainEnglishExplanationLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-//        plainEnglishExplanationLabel.backgroundColor = .green
         plainEnglishExplanationLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
         
         plainEnglishExplanationLabel.lineBreakMode = .byWordWrapping
         plainEnglishExplanationLabel.numberOfLines = 0
         plainEnglishExplanationLabel.sizeToFit()
 
-//
-//        plainEnglishExplanationLabel.setSizeFont(sizeFont: 16)
-//
-//        plainEnglishContainerView.addSubview(plainEnglishExplanationLabel)
         customView.addSubview(plainEnglishExplanationLabel)
         
-//        plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: plainEnglishContainerView.leadingAnchor).isActive = true
-//        plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: plainEnglishContainerView.trailingAnchor).isActive = true
-//        plainEnglishExplanationLabel.topAnchor.constraint(equalTo: plainEnglishContainerView.bottomAnchor, constant: 0).isActive = true
-//        plainEnglishExplanationLabel.bottomAnchor.constraint(equalTo: plainEnglishContainerView.bottomAnchor, constant: 0).isActive = true
-//
         plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
         plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
         plainEnglishExplanationLabel.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
@@ -656,8 +617,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         SwiftEntryKit.display(entry: customView, using: attributes)
     }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPTableViewCell
