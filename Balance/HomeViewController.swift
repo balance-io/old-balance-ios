@@ -256,11 +256,15 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         attributes.roundCorners = .all(radius: 20)
         attributes.border = .none
         attributes.statusBar = .hidden
+        
+        attributes.positionConstraints.rotation.isEnabled = false
     
         let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
-//            let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
-        let heightConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.52)
+//        let heightConstraint = EKAttributes.PositionConstraints.Edge.fill
+                let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
+//        let heightConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.52)
         attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
+//        attributes.positionConstraints.size = .intrinsic
         attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
         attributes.positionConstraints.rotation.isEnabled = false
         attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
@@ -604,7 +608,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         var textForPlainEnglishExplanationLabel = ""
         
         if let liqPrice = cdpItem.liqPrice {
-            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the \n collateral ratio of 150% and be liquidated."
+            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the collateral ratio of 150% and be liquidated."
         }
         
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel
@@ -620,9 +624,12 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
         plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
         plainEnglishExplanationLabel.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
+        plainEnglishExplanationLabel.bottomAnchor.constraint(equalTo: customView.bottomAnchor, constant: -15).isActive = true
 
         SwiftEntryKit.display(entry: customView, using: attributes)
     }
+    
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPTableViewCell

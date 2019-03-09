@@ -25,6 +25,7 @@
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DC4BA4EA223437D800A4E30D /* Balance.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Balance.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC5B07682225B0A200107A8B /* UILabel+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Padding.swift"; sourceTree = "<group>"; };
 		DC669839221CA8F000C383BD /* Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Balance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC66983C221CA8F000C383BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
+				DC4BA4EA223437D800A4E30D /* Balance.playground */,
 				DC5B07672225B07800107A8B /* Extensions */,
 				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
 				DC452001222050F80077813C /* Assets.xcassets */,
