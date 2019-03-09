@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import Floaty
 import SwiftEntryKit
 //import UIL
 
@@ -25,7 +24,6 @@ extension UILabel {
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let cdpsTableView = UITableView()
-    let floaty = Floaty()
     
     var makers: [NSManagedObject] = []
     
@@ -184,7 +182,9 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        
+        self.view.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        cdpsTableView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
         
         cdpsTableView.dataSource = self
         cdpsTableView.delegate = self
@@ -199,131 +199,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cdpsTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
         
         cdpsTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-
-        floaty.openAnimationType = .slideUp
-        floaty.overlayColor = UIColor.black.withAlphaComponent(0.7)
-        
-        let ethItem = FloatyItem()
-        ethItem.buttonColor = .black
-        ethItem.title = "ETH Address"
-        ethItem.icon = UIImage(named: "ethWhiteCircle")!
-        ethItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Add an ETH address", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            alert.addTextField(configurationHandler: { textField in
-                textField.placeholder = "Enter a wallet address beginning in 0x..."
-//                textField.keyboardType = .numberPad
-            })
-            
-            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                
-                if let ethereumAddress = alert.textFields?.first?.text {
-                    print("Your address: \(ethereumAddress)")
-                    
-                    guard let appDelegate =
-                        UIApplication.shared.delegate as? AppDelegate else {
-                            return
-                    }
-                    
-                    let managedContext =
-                        appDelegate.persistentContainer.viewContext
-                    
-                    let entity =
-                        NSEntityDescription.entity(forEntityName: "Ethereum",
-                                                   in: managedContext)!
-                    
-                    let ethereumObject = NSManagedObject(entity: entity,
-                                                insertInto: managedContext)
-                    
-                    ethereumObject.setValue(ethereumAddress, forKeyPath: "address")
-                    
-                    do {
-                        try managedContext.save()
-                        self.makers.append(ethereumObject)
-                        self.getData()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                }
-            }))
-            self.present(alert, animated: true)
-        }
-        floaty.addItem(item: ethItem)
-        
-        let contactItem = FloatyItem()
-        contactItem.buttonColor = .black
-        contactItem.title = "Contact"
-        contactItem.icon = UIImage(named: "contact")!
-        contactItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            self.floaty.close()
-        }
-        //floaty.addItem(item: contactItem)
-        
-        let cdpItem = FloatyItem()
-        cdpItem.buttonColor = .black
-        cdpItem.title = "CDP"
-        cdpItem.icon = UIImage(named: "cdp")!
-        cdpItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Add a CDP number", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            alert.addTextField(configurationHandler: { textField in
-                textField.placeholder = "Enter the number. e.g. 3228"
-                textField.keyboardType = .numberPad
-            })
-            
-            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                
-                if let cdp = alert.textFields?.first?.text {
-                    print("Your CDP: \(cdp)")
-                    
-                    guard let appDelegate =
-                        UIApplication.shared.delegate as? AppDelegate else {
-                            return
-                    }
-                    
-                    let managedContext =
-                        appDelegate.persistentContainer.viewContext
-                    
-                    let entity =
-                        NSEntityDescription.entity(forEntityName: "Maker",
-                                                   in: managedContext)!
-                    
-                    let maker = NSManagedObject(entity: entity,
-                                                insertInto: managedContext)
-                    
-                    maker.setValue(cdp, forKeyPath: "singleCollateralDaiIdentifier")
-                    
-                    do {
-                        try managedContext.save()
-                        self.makers.append(maker)
-                        self.getData()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
-                }
-            }))
-            self.present(alert, animated: true)
-        }
-        floaty.addItem(item: cdpItem)
-        
-        let deleteItem = FloatyItem()
-        deleteItem.buttonColor = .black
-        deleteItem.title = "Delete All"
-        deleteItem.icon = UIImage(named: "trash")!
-        deleteItem.handler = { ethItem in
-            print("DELETE THINGS")
-            self.deleteAllData("Maker")
-            self.deleteAllData("Ethereum")
-            self.getData()
-        }
-        floaty.addItem(item: deleteItem)
-        
-        self.view.addSubview(floaty)
         
         setUpNavigation()
         getData()

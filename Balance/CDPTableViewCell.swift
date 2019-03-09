@@ -200,6 +200,8 @@ class CDPTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
 
         containerView.addSubview(lineView)
         containerView.addSubview(identityLabel)
