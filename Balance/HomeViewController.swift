@@ -10,8 +10,17 @@ import UIKit
 import CoreData
 import Floaty
 import SwiftEntryKit
+//import UIL
 
 private var CDPs = [CDP]()
+
+
+extension UILabel {
+    func setSizeFont (sizeFont: CGFloat) {
+        self.font =  UIFont(name: self.font.fontName, size: sizeFont)!
+        self.sizeToFit()
+    }
+}
 
 class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -603,24 +612,62 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         saferLabel.trailingAnchor.constraint(equalTo: riskBarImageView.trailingAnchor).isActive = true
         saferLabel.centerYAnchor.constraint(equalTo: rektLabel.centerYAnchor).isActive = true
+
+        let plainEnglishContainerView = UIView()
+        
+        
+        //TODO Find a way to get the UILabel to stretch dynamically.
+//        plainEnglishContainerView.backgroundColor = .red
+        plainEnglishContainerView.translatesAutoresizingMaskIntoConstraints = false
+
+        customView.addSubview(plainEnglishContainerView)
+
+        plainEnglishContainerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
+        plainEnglishContainerView.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
+        plainEnglishContainerView.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
+        plainEnglishContainerView.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
+        plainEnglishContainerView.bottomAnchor.constraint(equalTo: customView.bottomAnchor, constant: -15).isActive = true
         
         let plainEnglishExplanationLabel = UILabel()
         var textForPlainEnglishExplanationLabel = ""
-        
+        plainEnglishExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
+//
         if let liqPrice = cdpItem.liqPrice {
-            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the collateral ratio of 150% and be liquidated."
+            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the ratio of 150% and be liquidated."
         }
+//
         
+//        let paragraph = NSMutableParagraphStyle()
+//        paragraph.alignment = .center
+//
+//        let attributesText: [NSAttributedString.Key : Any] = [NSAttributedString.Key.paragraphStyle: paragraph]
+//        let attrString = NSAttributedString(string:textForPlainEnglishExplanationLabel, attributes: attributesText)
+////        textView.attributedText =  attrString
+//
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel
         plainEnglishExplanationLabel.textAlignment = .center
+//
+//
+//        plainEnglishExplanationLabel.attributedText = attrString
         plainEnglishExplanationLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+//        plainEnglishExplanationLabel.backgroundColor = .green
         plainEnglishExplanationLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
-        plainEnglishExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         plainEnglishExplanationLabel.lineBreakMode = .byWordWrapping
         plainEnglishExplanationLabel.numberOfLines = 0
-        
+        plainEnglishExplanationLabel.sizeToFit()
+
+//
+//        plainEnglishExplanationLabel.setSizeFont(sizeFont: 16)
+//
+//        plainEnglishContainerView.addSubview(plainEnglishExplanationLabel)
         customView.addSubview(plainEnglishExplanationLabel)
         
+//        plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: plainEnglishContainerView.leadingAnchor).isActive = true
+//        plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: plainEnglishContainerView.trailingAnchor).isActive = true
+//        plainEnglishExplanationLabel.topAnchor.constraint(equalTo: plainEnglishContainerView.bottomAnchor, constant: 0).isActive = true
+//        plainEnglishExplanationLabel.bottomAnchor.constraint(equalTo: plainEnglishContainerView.bottomAnchor, constant: 0).isActive = true
+//
         plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
         plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
         plainEnglishExplanationLabel.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
