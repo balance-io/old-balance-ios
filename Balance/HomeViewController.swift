@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
         }
         
+        //TODO Make this way cleaner
         let managedContext =
             appDelegate.persistentContainer.viewContext
         
@@ -103,6 +104,75 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             CDPs.removeAll()
             self.cdpsTableView.reloadData()
         }
+        
+        //DRY!
+        var ethereumAddresses: [NSManagedObject] = []
+        
+//        let managedEthereumAddressesContext = appDelegate.persistentContainer.viewContext
+        
+        let fetchEthereumAddressesRequest = NSFetchRequest<NSManagedObject>(entityName: "Ethereum")
+        
+        do {
+            ethereumAddresses = try managedContext.fetch(fetchEthereumAddressesRequest)
+            print("DATABASE")
+            print(ethereumAddresses)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        
+        var ethereumAddressStrings = [String]()
+        
+        if ethereumAddresses.count > 0 {
+            for ethereumAddress in ethereumAddresses {
+                ethereumAddressStrings.append(ethereumAddress.value(forKey: "address") as! String)
+            }
+            
+            for ethereumAddressString in ethereumAddressStrings {
+                
+//                guard let url = URL(string: "https://mkr.tools/api/v1/cdp/\(String(describing: identifier))") else {return}// biggest CDP
+                guard let url = URL(string: "https://mkr.tools/api/v1/lad/\(String(describing: ethereumAddressString))") else {return}// biggest CDP
+//                https://mkr.tools/api/v1/lad/0x1db7332D24EBbdC5F49c34AA6830Cb7f46A3647C
+                
+                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                    guard let dataResponse = data,
+                        error == nil else {
+                            print(error?.localizedDescription ?? "Response Error")
+                            return }
+                    do{
+                        //here dataResponse received from a network request
+                        let jsonResponse = try JSONSerialization.jsonObject(with:
+                            dataResponse, options: [])
+                        //print(jsonResponse) //Response result
+                        
+                        guard let jsonArray = jsonResponse as? [[String: Any]] else {
+                            return
+                        }
+                        print(jsonArray)
+                        
+                        for dic in jsonArray{
+                            
+                            guard let identifier = dic["id"] as? Int else { return }
+                            guard let ratio = dic["ratio"] as? Double else { return }
+                            guard let pip = dic["pip"] as? Double else { return }
+                            guard let art = dic["art"] as? Double else { return }
+                            guard let ink = dic["ink"] as? Double else { return }
+                            guard let liqPrice = dic["liq_price"] as? Double else { return }
+                            
+                            CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
+                        }
+                        DispatchQueue.main.async {
+                            self.cdpsTableView.reloadData()
+                        }
+                    } catch let parsingError {
+                        print("Error", parsingError)
+                    }
+                }
+                task.resume()
+            }
+        } else {
+            CDPs.removeAll()
+            self.cdpsTableView.reloadData()
+        }
     }
     
     func setUpNavigation() {
@@ -138,10 +208,46 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         ethItem.title = "ETH Address"
         ethItem.icon = UIImage(named: "ethWhiteCircle")!
         ethItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            self.floaty.close()
+            let alert = UIAlertController(title: "Add an ETH address", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addTextField(configurationHandler: { textField in
+                textField.placeholder = "Enter a wallet address beginning in 0x..."
+//                textField.keyboardType = .numberPad
+            })
+            
+            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
+                
+                if let ethereumAddress = alert.textFields?.first?.text {
+                    print("Your address: \(ethereumAddress)")
+                    
+                    guard let appDelegate =
+                        UIApplication.shared.delegate as? AppDelegate else {
+                            return
+                    }
+                    
+                    let managedContext =
+                        appDelegate.persistentContainer.viewContext
+                    
+                    let entity =
+                        NSEntityDescription.entity(forEntityName: "Ethereum",
+                                                   in: managedContext)!
+                    
+                    let ethereumObject = NSManagedObject(entity: entity,
+                                                insertInto: managedContext)
+                    
+                    ethereumObject.setValue(ethereumAddress, forKeyPath: "address")
+                    
+                    do {
+                        try managedContext.save()
+                        self.makers.append(ethereumObject)
+                        self.getData()
+                    } catch let error as NSError {
+                        print("Could not save. \(error), \(error.userInfo)")
+                    }
+                }
+            }))
+            self.present(alert, animated: true)
         }
         floaty.addItem(item: ethItem)
         
@@ -155,7 +261,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.present(alert, animated: true, completion: nil)
             self.floaty.close()
         }
-        floaty.addItem(item: contactItem)
+        //floaty.addItem(item: contactItem)
         
         let cdpItem = FloatyItem()
         cdpItem.buttonColor = .black
@@ -212,8 +318,8 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         deleteItem.handler = { ethItem in
             print("DELETE THINGS")
             self.deleteAllData("Maker")
+            self.deleteAllData("Ethereum")
             self.getData()
-            
         }
         floaty.addItem(item: deleteItem)
         
