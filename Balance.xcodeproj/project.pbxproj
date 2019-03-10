@@ -59,6 +59,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53F0C9A8223571B900FF0796 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC66984E221D7E0200C383BD /* CDP.swift */,
+				DC669850221D7E9300C383BD /* CDPAPI.swift */,
+				DC4BA4F12234617A00A4E30D /* Address.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53F0C9A9223571C300FF0796 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
+				DC66983E221CA8F000C383BD /* HomeViewController.swift */,
+				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
+				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		53F0C9AA223571D500FF0796 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
+				DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */,
+			);
+			path = "Table Cells";
+			sourceTree = "<group>";
+		};
+		53F0C9AB223571E800FF0796 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		671853DF3540132917996814 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,19 +142,14 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
-				DC4BA4EA223437D800A4E30D /* Balance.playground */,
-				DC5B07672225B07800107A8B /* Extensions */,
-				DC669854221ED25E00C383BD /* CDPTableViewCell.swift */,
-				DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */,
-				DC452001222050F80077813C /* Assets.xcassets */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
-				DC66983E221CA8F000C383BD /* HomeViewController.swift */,
-				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
-				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
-				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
-				DC66984E221D7E0200C383BD /* CDP.swift */,
-				DC4BA4F12234617A00A4E30D /* Address.swift */,
-				DC669850221D7E9300C383BD /* CDPAPI.swift */,
+				DC5B07672225B07800107A8B /* Extensions */,
+				53F0C9A8223571B900FF0796 /* Models */,
+				53F0C9A9223571C300FF0796 /* View Controllers */,
+				53F0C9AB223571E800FF0796 /* Views */,
+				53F0C9AA223571D500FF0796 /* Table Cells */,
+				DC4BA4EA223437D800A4E30D /* Balance.playground */,
+				DC452001222050F80077813C /* Assets.xcassets */,
 				DC669845221CA8F100C383BD /* LaunchScreen.storyboard */,
 				DC669848221CA8F100C383BD /* Info.plist */,
 				DC3455062221686D00136F8F /* Balance.xcdatamodeld */,
