@@ -10,7 +10,7 @@ import UIKit
 
 class CDPTableViewCell: UITableViewCell {
     
-    var cdp:CDP? {
+    var cdp: CDP? {
         didSet {
             guard let cdpItem = cdp else {return}
             let numberFormatter = NumberFormatter()
@@ -55,7 +55,7 @@ class CDPTableViewCell: UITableViewCell {
         }
     }
     
-    let identityLabel:UILabel = {
+    let identityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .white
@@ -63,7 +63,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let ethCircleImageView:UIImageView = {
+    let ethCircleImageView: UIImageView = {
         let image = UIImage(named: "ethWhiteCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -71,7 +71,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let mkrSquircle:UIImageView = {
+    let mkrSquircle: UIImageView = {
         let image = UIImage(named: "mkrSquircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -79,7 +79,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let daiCircle:UIImageView = {
+    let daiCircle: UIImageView = {
         let image = UIImage(named: "daiCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -87,7 +87,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let checkCircle:UIImageView = {
+    let checkCircle: UIImageView = {
         let image = UIImage(named: "checkCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -95,7 +95,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let collateralizedTitleLabel:UILabel = {
+    let collateralizedTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Collateral"
@@ -104,7 +104,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let debtTitleLabel:UILabel = {
+    let debtTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Debt"
@@ -113,7 +113,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let positionTitleLabel:UILabel = {
+    let positionTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Position"
@@ -122,7 +122,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let ratioLabel:UILabel = {
+    let ratioLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
@@ -134,7 +134,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let pipLabel:UILabel = {
+    let pipLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -145,7 +145,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let artLabel:UILabel = {
+    let artLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -156,7 +156,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let inkLabel:UILabel = {
+    let inkLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -167,7 +167,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let liqPriceLabel:UILabel = {
+    let liqPriceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -178,7 +178,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let containerView:UIView = {
+    let containerView: UIView = {
         let view = UIView()
         
         let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
@@ -189,7 +189,7 @@ class CDPTableViewCell: UITableViewCell {
         return view
     }()
     
-    let lineView:UIView = {
+    let lineView: UIView = {
         let line = UIView(frame: CGRect())
         line.backgroundColor = .white
         line.alpha = 0.8
