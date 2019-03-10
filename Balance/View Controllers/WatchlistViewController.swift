@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 import Floaty
 import SwiftEntryKit
+import SnapKit
 
 class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -11,7 +12,34 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     private var managedEthereumWallets = [NSManagedObject]()
     private var ethereumWallets = [EthereumWallet]()
     
-    func setUpNavigation() {
+    // MARK: - View Controller Lifecycle -
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        
+        walletsTableView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        walletsTableView.separatorStyle = .none
+        walletsTableView.dataSource = self
+        walletsTableView.delegate = self
+        
+        walletsTableView.register(WalletTableViewCell.self, forCellReuseIdentifier: "walletCell")
+        view.addSubview(walletsTableView)
+        
+        walletsTableView.translatesAutoresizingMaskIntoConstraints = false
+        walletsTableView.snp.makeConstraints { make in
+            make.top.equalTo(view)
+            make.left.equalTo(view.safeAreaLayoutGuide)
+            make.right.equalTo(view.safeAreaLayoutGuide)
+            make.bottom.equalTo(view)
+        }
+        
+        setupFloaty()
+        setupNavigation()
+        loadData()
+    }
+    
+    func setupNavigation() {
         navigationItem.title = ""
         if let navigationController = navigationController {
             navigationController.navigationBar.barTintColor = .white
@@ -20,32 +48,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
-        walletsTableView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
-        
-        managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
-        if managedEthereumWallets.count > 0 {
-            for wallet in managedEthereumWallets {
-                ethereumWallets.append(EthereumWallet(name: String(wallet.value(forKey: "name") as! String), address: String(wallet.value(forKey: "address") as! String)))
-            }
-        }
-        
-        walletsTableView.dataSource = self
-        walletsTableView.delegate = self
-        
-        walletsTableView.register(WalletTableViewCell.self, forCellReuseIdentifier: "walletCell")
-        view.addSubview(walletsTableView)
-        walletsTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        walletsTableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        walletsTableView.leftAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        walletsTableView.rightAnchor.constraint(equalTo:view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        walletsTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        
-        walletsTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        
+    func setupFloaty() {
         floaty.openAnimationType = .slideUp
         floaty.overlayColor = UIColor.black.withAlphaComponent(0.7)
         
@@ -120,10 +123,21 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         floaty.addItem(item: deleteItem)
         
         self.view.addSubview(floaty)
-        
-        setUpNavigation()
-//        getData()
     }
+    
+    // MARK: - Data Loading -
+    
+    func loadData() {
+        managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+        if managedEthereumWallets.count > 0 {
+            for wallet in managedEthereumWallets {
+                ethereumWallets.append(EthereumWallet(name: String(wallet.value(forKey: "name") as! String), address: String(wallet.value(forKey: "address") as! String)))
+            }
+        }
+        walletsTableView.reloadData()
+    }
+    
+    // MARK: - Table View -
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ethereumWallets.count
