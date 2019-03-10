@@ -1,4 +1,13 @@
+//
+//  CDPTableViewCell.swift
+//  Balance
+//
+//  Created by Richard Burton on 21/02/2019.
+//  Copyright © 2019 Balance. All rights reserved.
+//
+
 import UIKit
+import SnapKit
 
 class WalletTableViewCell: UITableViewCell {
     
@@ -46,41 +55,33 @@ class WalletTableViewCell: UITableViewCell {
         return view
     }()
     
-    let lineView:UIView = {
-        let line = UIView(frame: CGRect())
-        line.backgroundColor = .white
-        line.alpha = 0.8
-        line.layer.cornerRadius = 5
-        
-        return line
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        containerView.addSubview(lineView)
+        contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            // NOTE: Setting priority to less than 1000 on the top and bottom constraints prevents a constraint error when removing the cell
+            make.top.equalToSuperview().offset(10).priority(999)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-10).priority(999)
+        }
+        
         containerView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
+        }
+        
         containerView.addSubview(addressLabel)
-        
-        self.contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
-        
-        self.contentView.addSubview(containerView)
-        
-        containerView.heightAnchor.constraint(equalToConstant: 50)
-        containerView.leadingAnchor.constraint(equalTo:self.leadingAnchor, constant:10).isActive = true
-        containerView.trailingAnchor.constraint(equalTo:self.trailingAnchor, constant:-10).isActive = true
-        containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
-        
-//        nameLabel.centerYAnchor.constraint(equalTo:containerView.centerYAnchor, constant: 0).isActive = true
-        nameLabel.topAnchor.constraint(equalTo:containerView.topAnchor, constant: 15).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo:containerView.leadingAnchor, constant: 15).isActive = true
-        nameLabel.trailingAnchor.constraint(equalTo:containerView.trailingAnchor, constant: 15).isActive = true
-//        nameLabel.widthAnchor.constraint(equalTo:containerView.widthAnchor, multiplier: 0.8).isActive = true
-        
-        addressLabel.topAnchor.constraint(equalTo:nameLabel.bottomAnchor, constant: 5).isActive = true
-        addressLabel.leadingAnchor.constraint(equalTo:nameLabel.leadingAnchor).isActive = true
-        addressLabel.trailingAnchor.constraint(equalTo:nameLabel.trailingAnchor).isActive = true
+        addressLabel.snp.makeConstraints { make in
+            make.top.equalTo(nameLabel.snp.bottom).offset(5)
+            make.leading.equalTo(nameLabel)
+            make.trailing.equalTo(nameLabel)
+        }
         
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
@@ -88,7 +89,7 @@ class WalletTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.selectedBackgroundView!.backgroundColor = selected ? .red : nil
+        self.selectedBackgroundView?.backgroundColor = selected ? .red : nil
     }
     
     required init?(coder aDecoder: NSCoder) {
