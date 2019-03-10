@@ -12,6 +12,7 @@
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
 		53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */; };
 		53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */; };
+		53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B5223596B400FF0796 /* CDPInfoView.swift */; };
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EB2234583900A4E30D /* TabBarController.swift */; };
@@ -35,6 +36,7 @@
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerToolsAPI.swift; sourceTree = "<group>"; };
 		53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Async.swift"; sourceTree = "<group>"; };
+		53F0C9B5223596B400FF0796 /* CDPInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPInfoView.swift; sourceTree = "<group>"; };
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		53F0C9AB223571E800FF0796 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				53F0C9B5223596B400FF0796 /* CDPInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */,
 				DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */,
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
