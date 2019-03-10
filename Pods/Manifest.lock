@@ -1,24 +1,28 @@
 PODS:
   - Floaty (4.1.0)
   - QuickLayout (2.1.1)
+  - SnapKit (4.0.1)
   - SwiftEntryKit (0.8.8):
     - QuickLayout (= 2.1.1)
 
 DEPENDENCIES:
   - Floaty (~> 4.1.0)
+  - SnapKit (~> 4.0.0)
   - SwiftEntryKit (= 0.8.8)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Floaty
     - QuickLayout
+    - SnapKit
     - SwiftEntryKit
 
 SPEC CHECKSUMS:
   Floaty: 1a4e213f3512cf3045ef9cb0c1ff456226d1f66a
   QuickLayout: 9af2b7fd89a6552828f51a5aba28d1bcdb8b340c
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftEntryKit: c50f25a14772713ded1591c852d1c1dc74c95b9e
 
-PODFILE CHECKSUM: 14393771e3a25cacf4d9b50c13ad105f6a5dc6b0
+PODFILE CHECKSUM: e577db101cb9b08fff28a997f30f1f9382b03e6f
 
 COCOAPODS: 1.6.1
