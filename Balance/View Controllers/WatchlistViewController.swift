@@ -29,8 +29,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         walletsTableView.translatesAutoresizingMaskIntoConstraints = false
         walletsTableView.snp.makeConstraints { make in
             make.top.equalTo(view)
-            make.left.equalTo(view.safeAreaLayoutGuide)
-            make.right.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(view.safeAreaLayoutGuide)
+            make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view)
         }
         
@@ -57,23 +57,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         ethItem.title = "ETH Address"
         ethItem.icon = UIImage(named: "ethWhiteCircle")!
         ethItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Add an ETH address", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            alert.addTextField(configurationHandler: { textField in
-                textField.placeholder = "Wallet Name"
-            })
-            
-            alert.addTextField(configurationHandler: { textField in
-                textField.placeholder = "Enter a wallet address beginning in 0x..."
-            })
-            
-            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                if let name = alert.textFields?.first?.text, let address = alert.textFields?.last?.text {
-                    CoreDataHelper.saveEthereumWallet(name: name, address: address)
-                }
-            }))
-            self.present(alert, animated: true)
+            let addEthereumWalletViewController = AddEthereumWalletViewController()
+            self.present(addEthereumWalletViewController, animated: true)
         }
         floaty.addItem(item: ethItem)
         

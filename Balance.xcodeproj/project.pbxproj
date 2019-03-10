@@ -13,6 +13,8 @@
 		53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */; };
 		53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */; };
 		53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B5223596B400FF0796 /* CDPInfoView.swift */; };
+		53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */; };
+		53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */; };
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EB2234583900A4E30D /* TabBarController.swift */; };
@@ -37,6 +39,8 @@
 		53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerToolsAPI.swift; sourceTree = "<group>"; };
 		53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Async.swift"; sourceTree = "<group>"; };
 		53F0C9B5223596B400FF0796 /* CDPInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPInfoView.swift; sourceTree = "<group>"; };
+		53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEthereumWalletViewController.swift; sourceTree = "<group>"; };
+		53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
 				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
 				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
+				53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -136,9 +141,10 @@
 		DC5B07672225B07800107A8B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */,
 				DC5B07682225B0A200107A8B /* UILabel+Padding.swift */,
 				53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */,
-				53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */,
+				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -315,9 +321,11 @@
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
 				DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */,
+				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPTableViewCell.swift in Sources */,
 				DC4BA4EE22345FC900A4E30D /* WatchlistViewController.swift in Sources */,
 				DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */,
+				53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */,
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
 				DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,
