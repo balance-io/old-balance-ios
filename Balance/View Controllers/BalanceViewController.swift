@@ -18,8 +18,8 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         // Load Ethereum Wallets
-        let ethereumAddresses = CoreDataHelper.loadAllEthereumAddresses()
-        MakerToolsAPI.loadEthereumAddressCDPs(ethereumAddresses) { CDPs in
+        let ethereumWallets = CoreDataHelper.loadAllEthereumWallets()
+        MakerToolsAPI.loadEthereumWalletCDPs(ethereumWallets) { CDPs in
             self.CDPs.append(contentsOf: CDPs)
             self.cdpsTableView.reloadData()
         }

@@ -3,19 +3,21 @@ import CoreData
 import Floaty
 import SwiftEntryKit
 
-private var ethereumWallets = [EthereumWallet]()
-var wallets: [NSManagedObject] = []
-
 class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let walletsTableView = UITableView()
-    let floaty = Floaty()
+    private let walletsTableView = UITableView()
+    private let floaty = Floaty()
+    
+    private var managedEthereumWallets = [NSManagedObject]()
+    private var ethereumWallets = [EthereumWallet]()
     
     func setUpNavigation() {
         navigationItem.title = ""
-        self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        if let navigationController = navigationController {
+            navigationController.navigationBar.barTintColor = .white
+            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        }
     }
     
     override func viewDidLoad() {
@@ -23,30 +25,11 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         self.view.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
         walletsTableView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Ethereum")
-        
-        do {
-            wallets = try managedContext.fetch(fetchRequest)
-            print("DATABASE")
-            print(wallets)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        if wallets.count > 0 {
-            for wallet in wallets {
+        managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+        if managedEthereumWallets.count > 0 {
+            for wallet in managedEthereumWallets {
                 ethereumWallets.append(EthereumWallet(name: String(wallet.value(forKey: "name") as! String), address: String(wallet.value(forKey: "address") as! String)))
             }
-        } else {
-            ethereumWallets.removeAll()
-            self.walletsTableView.reloadData()
         }
         
         walletsTableView.dataSource = self
@@ -83,28 +66,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
             })
             
             alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                
-                if let ethereumAddress = alert.textFields?.last?.text {
-                    if let walletName = alert.textFields?.first?.text {
-                        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                            return
-                        }
-                        
-                        let managedContext = appDelegate.persistentContainer.viewContext
-                        
-                        let entity = NSEntityDescription.entity(forEntityName: "Ethereum", in: managedContext)!
-                        
-                        let ethereumObject = NSManagedObject(entity: entity, insertInto: managedContext)
-                        
-                        ethereumObject.setValue(walletName, forKey: "name")
-                        ethereumObject.setValue(ethereumAddress, forKeyPath: "address")
-                    }
-        
-                    do {
-                        try managedContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
+                if let name = alert.textFields?.first?.text, let address = alert.textFields?.last?.text {
+                    CoreDataHelper.saveEthereumWallet(name: name, address: address)
                 }
             }))
             self.present(alert, animated: true)
@@ -136,32 +99,9 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
             })
             
             alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                
                 if let cdp = alert.textFields?.first?.text {
                     print("Your CDP: \(cdp)")
-                    
-                    guard let appDelegate =
-                        UIApplication.shared.delegate as? AppDelegate else {
-                            return
-                    }
-                    
-                    let managedContext =
-                        appDelegate.persistentContainer.viewContext
-                    
-                    let entity =
-                        NSEntityDescription.entity(forEntityName: "Maker",
-                                                   in: managedContext)!
-                    
-                    let maker = NSManagedObject(entity: entity,
-                                                insertInto: managedContext)
-                    
-                    maker.setValue(cdp, forKeyPath: "singleCollateralDaiIdentifier")
-                    
-                    do {
-                        try managedContext.save()
-                    } catch let error as NSError {
-                        print("Could not save. \(error), \(error.userInfo)")
-                    }
+                    CoreDataHelper.saveMaker(singleCollateralDaiIdentifier: cdp)
                 }
             }))
             self.present(alert, animated: true)
@@ -174,8 +114,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         deleteItem.icon = UIImage(named: "trash")!
         deleteItem.handler = { ethItem in
             print("DELETE THINGS")
-            self.deleteAllData("Maker")
-            self.deleteAllData("Ethereum")
+            CoreDataHelper.deleteAllData(entity: "Maker")
+            CoreDataHelper.deleteAllData(entity: "Ethereum")
         }
         floaty.addItem(item: deleteItem)
         
@@ -185,66 +125,29 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
 //        getData()
     }
     
-    func deleteAllData(_ entity:String) {
-        
-        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        print("FETCHING")
-        print(fetchRequest)
-        fetchRequest.returnsObjectsAsFaults = false
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            print(results)
-            for managedObject in results {
-                let managedObjectData:NSManagedObject = managedObject as! NSManagedObject
-                context.delete(managedObjectData)
-                try context.save()
-            }
-        } catch let error as NSError {
-            print("Deleted all my data in myEntity error : \(error) \(error.userInfo)")
-        }
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ethereumWallets.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let row = indexPath.row
-        print("Row: \(row)")
+        print("Row: \(indexPath.row)")
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "walletCell", for: indexPath) as! WalletTableViewCell
         cell.selectionStyle = .none
         cell.wallet = ethereumWallets[indexPath.row]
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
-            let context:NSManagedObjectContext = appDel.persistentContainer.viewContext
-            
-            let objectToDelete = wallets[indexPath.row]
-            ethereumWallets.remove(at: indexPath.row)
-            context.delete(objectToDelete)
-            
-            do {
-                try context.save()
+            if CoreDataHelper.delete(managedObject: managedEthereumWallets[indexPath.row]) {
+                managedEthereumWallets.remove(at: indexPath.row)
+                ethereumWallets.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
-            } catch let error {
-                print("Could not save Deletion \(error)")
             }
-            
-            tableView.reloadData()
         }
     }
     
