@@ -11,6 +11,9 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    // Convenience accessor
+    static let shared = UIApplication.shared.delegate as! AppDelegate
 
     var window: UIWindow?
 

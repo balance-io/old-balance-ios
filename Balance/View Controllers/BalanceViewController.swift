@@ -2,98 +2,28 @@ import UIKit
 import CoreData
 import SwiftEntryKit
 
-private var CDPs = [CDP]()
-
-extension UILabel {
-    func setSizeFont (sizeFont: CGFloat) {
-        self.font =  UIFont(name: self.font.fontName, size: sizeFont)!
-        self.sizeToFit()
-    }
-}
-
-class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BalanceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let cdpsTableView = UITableView()
-    
-    var makers: [NSManagedObject] = []
+    var makers = [NSManagedObject]()
+    var CDPs = [CDP]()
     
     func getData() {
-        
         CDPs.removeAll()
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        //TODO Make this way cleaner
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Maker")
-        
-        do {
-            makers = try managedContext.fetch(fetchRequest)
-            print("DATABASE")
-            print(makers)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        var singleCollateralDaiIdentifiers = [String]()
-        
+        makers = CoreDataHelper.loadAllMakers()
         if makers.count > 0 {
-            for maker in makers {
-                singleCollateralDaiIdentifiers.append(maker.value(forKey: "singleCollateralDaiIdentifier") as! String)
-            }
-
-            for identifier in singleCollateralDaiIdentifiers {
-
-                guard let url = URL(string: "https://mkr.tools/api/v1/cdp/\(String(describing: identifier))") else {return}// biggest CDP
-            
-                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    guard let dataResponse = data,
-                        error == nil else {
-                            print(error?.localizedDescription ?? "Response Error")
-                            return }
-                    do{
-                        //here dataResponse received from a network request
-                        let jsonResponse = try JSONSerialization.jsonObject(with:
-                            dataResponse, options: [])
-                        //print(jsonResponse) //Response result
-                        
-                        guard let jsonArray = jsonResponse as? [[String: Any]] else {
-                            return
-                        }
-                        print(jsonArray)
-                        
-                        for dic in jsonArray{
-                            
-                            guard let identifier = dic["id"] as? Int else { return }
-                            guard let ratio = dic["ratio"] as? Double else { return }
-                            guard let pip = dic["pip"] as? Double else { return }
-                            guard let art = dic["art"] as? Double else { return }
-                            guard let ink = dic["ink"] as? Double else { return }
-                            guard let liqPrice = dic["liq_price"] as? Double else { return }
-
-                            CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
-                        }
-                        DispatchQueue.main.async {
-                            self.cdpsTableView.reloadData()
-                        }
-                    } catch let parsingError {
-                        print("Error", parsingError)
-                    }
-                }
-                task.resume()
+            MakerToolsAPI.loadCDPs(makers: makers) { CDPs in
+                self.CDPs = CDPs
+                self.cdpsTableView.reloadData()
             }
         } else {
             CDPs.removeAll()
-            self.cdpsTableView.reloadData()
+            cdpsTableView.reloadData()
         }
         
         //DRY!
+        let managedContext = AppDelegate.shared.persistentContainer.viewContext
         var ethereumAddresses: [NSManagedObject] = []
         
 //        let managedEthereumAddressesContext = appDelegate.persistentContainer.viewContext
@@ -144,7 +74,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             guard let ink = dic["ink"] as? Double else { return }
                             guard let liqPrice = dic["liq_price"] as? Double else { return }
                             
-                            CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
+                            self.CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
                         }
                         DispatchQueue.main.async {
                             self.cdpsTableView.reloadData()

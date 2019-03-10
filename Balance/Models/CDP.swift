@@ -9,12 +9,12 @@
 import Foundation
 
 struct CDP {
-    let identifier:Int?
-    let ratio:Double?
-    let pip:Double?
-    let art:Double?
-    let ink:Double?
-    let liqPrice:Double?
+    let identifier: Int?
+    let ratio: Double?
+    let pip: Double?
+    let art: Double?
+    let ink: Double?
+    let liqPrice: Double?
 }
 
 //    "tab": 42249.60231457469,

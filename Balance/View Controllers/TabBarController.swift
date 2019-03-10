@@ -10,7 +10,7 @@ import UIKit
 
 class TabBarController: UITabBarController {
     let watchlistViewController = WatchlistViewController()
-    let balanceViewController = HomeViewController()
+    let balanceViewController = BalanceViewController()
     let settingsViewController = SettingsViewController()
 
     override func viewDidLoad() {
