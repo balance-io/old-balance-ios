@@ -21,4 +21,10 @@ class TabBarController: UITabBarController {
         settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settingsTabBarItemImage"), selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
         viewControllers = [watchlistViewController, balanceViewController, settingsViewController]
     }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        // Fixes iOS bug with view sizing
+        // NOTE: Do not call super here or it will crash
+        self.view.setNeedsLayout()
+    }
 }
