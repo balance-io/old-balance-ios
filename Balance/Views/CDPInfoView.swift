@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
@@ -241,26 +242,36 @@ class CDPInfoView: UIView {
         layer.cornerRadius = 20
         
         addSubview(mkrGreenImageView)
-        mkrGreenImageView.topAnchor.constraint(equalTo: topAnchor, constant: 15).isActive = true
-        mkrGreenImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
-        
+        mkrGreenImageView.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(15)
+            make.leading.equalTo(self).offset(15)
+        }
+
         identifierLabel.text = "Maker CDP #\(cdpItem.identifier!.description)"
         addSubview(identifierLabel)
-        identifierLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.trailingAnchor, constant: 10).isActive = true
-        identifierLabel.centerYAnchor.constraint(equalTo: mkrGreenImageView.centerYAnchor).isActive = true
-        
+        identifierLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView.snp.trailing).offset(10)
+            make.centerY.equalTo(mkrGreenImageView)
+        }
+
         addSubview(collateralTitleLabel)
-        collateralTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        collateralTitleLabel.topAnchor.constraint(equalTo: mkrGreenImageView.bottomAnchor, constant: 15).isActive = true
-        
+        collateralTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.top.equalTo(mkrGreenImageView.snp.bottom).offset(15)
+        }
+
         addSubview(ethCircleImageView)
-        ethCircleImageView.topAnchor.constraint(equalTo:collateralTitleLabel.bottomAnchor, constant: 10).isActive = true
-        ethCircleImageView.leadingAnchor.constraint(equalTo:mkrGreenImageView.leadingAnchor, constant: 0).isActive = true
-        
+        ethCircleImageView.snp.makeConstraints { make in
+            make.top.equalTo(collateralTitleLabel.snp.bottom).offset(10)
+            make.leading.equalTo(mkrGreenImageView)
+        }
+
         addSubview(etherTitleLabel)
-        etherTitleLabel.leadingAnchor.constraint(equalTo: ethCircleImageView.trailingAnchor, constant: 10).isActive = true
-        etherTitleLabel.centerYAnchor.constraint(equalTo: ethCircleImageView.centerYAnchor).isActive = true
-        
+        etherTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(ethCircleImageView.snp.trailing).offset(10)
+            make.centerY.equalTo(ethCircleImageView)
+        }
+
         if let ink = cdpItem.ink {
             if let pip = cdpItem.pip {
                 let inkString = numberFormatter.string(from: NSNumber(value: ink))
@@ -273,21 +284,29 @@ class CDPInfoView: UIView {
             }
         }
         addSubview(collateralBreakdownLabel)
-        collateralBreakdownLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
-        collateralBreakdownLabel.topAnchor.constraint(equalTo: collateralTitleLabel.bottomAnchor, constant: 10).isActive = true
-        
+        collateralBreakdownLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(self).offset(-15)
+            make.top.equalTo(collateralTitleLabel.snp.bottom).offset(10)
+        }
+
         addSubview(debtTitleLabel)
-        debtTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        debtTitleLabel.topAnchor.constraint(equalTo: ethCircleImageView.bottomAnchor, constant: 15).isActive = true
-        
+        debtTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.top.equalTo(ethCircleImageView.snp.bottom).offset(15)
+        }
+
         addSubview(daiCircleImageView)
-        daiCircleImageView.topAnchor.constraint(equalTo:debtTitleLabel.bottomAnchor, constant: 10).isActive = true
-        daiCircleImageView.leadingAnchor.constraint(equalTo:mkrGreenImageView.leadingAnchor, constant: 0).isActive = true
-        
+        daiCircleImageView.snp.makeConstraints { make in
+            make.top.equalTo(debtTitleLabel.snp.bottom).offset(10)
+            make.leading.equalTo(mkrGreenImageView)
+        }
+
         addSubview(daiTitleLabel)
-        daiTitleLabel.leadingAnchor.constraint(equalTo: daiCircleImageView.trailingAnchor, constant: 10).isActive = true
-        daiTitleLabel.centerYAnchor.constraint(equalTo: daiCircleImageView.centerYAnchor).isActive = true
-        
+        daiTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(daiCircleImageView.snp.trailing).offset(10)
+            make.centerY.equalTo(daiCircleImageView)
+        }
+
         if let art = cdpItem.art {
             let artString = numberFormatter.string(from: NSNumber(value:art))
             if let artString = artString {
@@ -297,25 +316,35 @@ class CDPInfoView: UIView {
             }
         }
         addSubview(debtBreakdownLabel)
-        debtBreakdownLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
-        debtBreakdownLabel.centerYAnchor.constraint(equalTo: daiCircleImageView.centerYAnchor).isActive = true
-        
+        debtBreakdownLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(self).offset(-10)
+            make.centerY.equalTo(daiCircleImageView)
+        }
+
         addSubview(positionTitleLabel)
-        positionTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        positionTitleLabel.topAnchor.constraint(equalTo: debtBreakdownLabel.bottomAnchor, constant: 15).isActive = true
-    
+        positionTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.top.equalTo(debtBreakdownLabel.snp.bottom).offset(15)
+        }
+
         addSubview(riskTitleLabel)
-        riskTitleLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        riskTitleLabel.topAnchor.constraint(equalTo: positionTitleLabel.bottomAnchor, constant: 10).isActive = true
-        
+        riskTitleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.top.equalTo(positionTitleLabel.snp.bottom).offset(10)
+        }
+
         addSubview(priceTitleLabel)
-        priceTitleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        priceTitleLabel.centerYAnchor.constraint(equalTo: riskTitleLabel.centerYAnchor).isActive = true
-        
+        priceTitleLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(riskTitleLabel)
+        }
+
         addSubview(ratioTitleLabel)
-        ratioTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
-        ratioTitleLabel.centerYAnchor.constraint(equalTo: riskTitleLabel.centerYAnchor).isActive = true
-        
+        ratioTitleLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(self).offset(-15)
+            make.centerY.equalTo(riskTitleLabel)
+        }
+
         var riskColor = UIColor.white
         var riskRange = "Unknown"
         if let ratio = cdpItem.ratio {
@@ -336,38 +365,47 @@ class CDPInfoView: UIView {
         riskLabel.text = riskRange
         riskLabel.backgroundColor = riskColor
         addSubview(riskLabel)
-        riskLabel.leadingAnchor.constraint(equalTo: riskTitleLabel.leadingAnchor).isActive = true
-        riskLabel.topAnchor.constraint(equalTo: riskTitleLabel.bottomAnchor, constant: 5).isActive = true
-        
+        riskLabel.snp.makeConstraints { make in
+            make.leading.equalTo(riskTitleLabel)
+            make.top.equalTo(riskTitleLabel.snp.bottom).offset(5)
+        }
+
         if let liqPrice = cdpItem.liqPrice, let pip = cdpItem.pip {
             liqPriceLabel.text = "$\(String(format:"%.0f", pip)) / \(String(format:"%.0f", liqPrice))"
         }
         liqPriceLabel.backgroundColor = riskColor
         addSubview(liqPriceLabel)
-        liqPriceLabel.centerXAnchor.constraint(equalTo: priceTitleLabel.centerXAnchor, constant: 0).isActive = true
-        liqPriceLabel.topAnchor.constraint(equalTo: priceTitleLabel.bottomAnchor, constant: 5).isActive = true
-        
+        liqPriceLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(priceTitleLabel)
+            make.top.equalTo(priceTitleLabel.snp.bottom).offset(5)
+        }
+
         if let ratio = cdpItem.ratio {
             ratioLabel.text = " \(String(format:"%.0f", ratio))%"
         }
         ratioLabel.backgroundColor = riskColor
         addSubview(ratioLabel)
-        ratioLabel.trailingAnchor.constraint(equalTo: ratioTitleLabel.trailingAnchor, constant: 0).isActive = true
-        ratioLabel.topAnchor.constraint(equalTo: ratioTitleLabel.bottomAnchor, constant: 5).isActive = true
-        
+        ratioLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(ratioTitleLabel)
+            make.top.equalTo(ratioTitleLabel.snp.bottom).offset(5)
+        }
+
         addSubview(riskBarImageView)
-        riskBarImageView.topAnchor.constraint(equalTo: riskLabel.bottomAnchor, constant: 20).isActive = true
-        riskBarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15).isActive = true
-        riskBarImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15).isActive = true
-        
+        riskBarImageView.snp.makeConstraints { make in
+            make.top.equalTo(riskLabel.snp.bottom).offset(20)
+            make.leading.equalTo(self).offset(15)
+            make.trailing.equalTo(self).offset(-15)
+        }
+
         addSubview(riskDotImageView)
-        riskDotImageView.centerYAnchor.constraint(equalTo: riskBarImageView.centerYAnchor, constant: 0).isActive = true
-        
+        riskDotImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(riskBarImageView)
+        }
+
         let width = riskBarImageView.frame.size.width
         print(width)
         let widthPercent:Double = Double(width / 100.00)
         print(widthPercent)
-        
         if let ratio = cdpItem.ratio {
             if ratio <= 150.00 {
                 riskDotImageView.leadingAnchor.constraint(equalTo: riskBarImageView.leadingAnchor, constant: 0).isActive = true
@@ -379,25 +417,32 @@ class CDPInfoView: UIView {
                 riskDotImageView.leadingAnchor.constraint(equalTo: riskBarImageView.leadingAnchor, constant: CGFloat(riskDotPositionFromLeft)).isActive = true
             }
         }
-        
         addSubview(rektLabel)
-        rektLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        rektLabel.topAnchor.constraint(equalTo: riskBarImageView.bottomAnchor, constant: 10).isActive = true
-        
+        rektLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.top.equalTo(riskBarImageView.snp.bottom).offset(10)
+        }
+
         addSubview(dangerLabel)
-        dangerLabel.centerXAnchor.constraint(equalTo: riskBarImageView.centerXAnchor).isActive = true
-        dangerLabel.centerYAnchor.constraint(equalTo: rektLabel.centerYAnchor).isActive = true
-        
+        dangerLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(riskBarImageView)
+            make.centerY.equalTo(rektLabel)
+        }
+
         addSubview(saferLabel)
-        saferLabel.trailingAnchor.constraint(equalTo: riskBarImageView.trailingAnchor).isActive = true
-        saferLabel.centerYAnchor.constraint(equalTo: rektLabel.centerYAnchor).isActive = true
-        
+        saferLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(riskBarImageView)
+            make.centerY.equalTo(rektLabel)
+        }
+
         addSubview(plainEnglishContainerView)
-        plainEnglishContainerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60).isActive = true
-        plainEnglishContainerView.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        plainEnglishContainerView.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
-        plainEnglishContainerView.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
-        plainEnglishContainerView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
+        plainEnglishContainerView.snp.makeConstraints { make in
+            make.height.greaterThanOrEqualTo(60)
+            make.leading.equalTo(mkrGreenImageView)
+            make.trailing.equalTo(saferLabel)
+            make.top.equalTo(rektLabel.snp.bottom).offset(15)
+            make.bottom.equalTo(self).offset(-15)
+        }
         
         var textForPlainEnglishExplanationLabel = ""
         if let liqPrice = cdpItem.liqPrice {
@@ -406,10 +451,12 @@ class CDPInfoView: UIView {
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel
         plainEnglishExplanationLabel.sizeToFit()
         addSubview(plainEnglishExplanationLabel)
-        plainEnglishExplanationLabel.leadingAnchor.constraint(equalTo: mkrGreenImageView.leadingAnchor).isActive = true
-        plainEnglishExplanationLabel.trailingAnchor.constraint(equalTo: saferLabel.trailingAnchor).isActive = true
-        plainEnglishExplanationLabel.topAnchor.constraint(equalTo: rektLabel.bottomAnchor, constant: 15).isActive = true
-        plainEnglishExplanationLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15).isActive = true
+        plainEnglishExplanationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(mkrGreenImageView)
+            make.trailing.equalTo(saferLabel)
+            make.top.equalTo(rektLabel.snp.bottom).offset(15)
+            make.bottom.equalTo(self).offset(-15)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
