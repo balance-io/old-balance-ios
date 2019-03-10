@@ -23,4 +23,18 @@ struct CoreDataHelper {
         }
         return makers;
     }
+    
+    static func loadAllEthereumAddresses() -> [NSManagedObject] {
+        let managedContext = AppDelegate.shared.persistentContainer.viewContext
+        var ethereumAddresses = [NSManagedObject]()
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Ethereum")
+        do {
+            ethereumAddresses = try managedContext.fetch(fetchRequest)
+            print("DATABASE")
+            print(ethereumAddresses)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return ethereumAddresses
+    }
 }

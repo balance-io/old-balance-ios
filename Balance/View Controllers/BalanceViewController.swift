@@ -5,88 +5,22 @@ import SwiftEntryKit
 class BalanceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     let cdpsTableView = UITableView()
-    var makers = [NSManagedObject]()
     var CDPs = [CDP]()
     
     func getData() {
         CDPs.removeAll()
         
-        makers = CoreDataHelper.loadAllMakers()
-        if makers.count > 0 {
-            MakerToolsAPI.loadCDPs(makers: makers) { CDPs in
-                self.CDPs = CDPs
-                self.cdpsTableView.reloadData()
-            }
-        } else {
-            CDPs.removeAll()
-            cdpsTableView.reloadData()
+        // Load MakerDAO CDPs
+        let makers = CoreDataHelper.loadAllMakers()
+        MakerToolsAPI.loadMakerCDPs(makers) { CDPs in
+            self.CDPs.append(contentsOf: CDPs)
+            self.cdpsTableView.reloadData()
         }
         
-        //DRY!
-        let managedContext = AppDelegate.shared.persistentContainer.viewContext
-        var ethereumAddresses: [NSManagedObject] = []
-        
-//        let managedEthereumAddressesContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchEthereumAddressesRequest = NSFetchRequest<NSManagedObject>(entityName: "Ethereum")
-        
-        do {
-            ethereumAddresses = try managedContext.fetch(fetchEthereumAddressesRequest)
-            print("DATABASE")
-            print(ethereumAddresses)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
-        var ethereumAddressStrings = [String]()
-        
-        if ethereumAddresses.count > 0 {
-            for ethereumAddress in ethereumAddresses {
-                ethereumAddressStrings.append(ethereumAddress.value(forKey: "address") as! String)
-            }
-            
-            for ethereumAddressString in ethereumAddressStrings {
-                
-                guard let url = URL(string: "https://mkr.tools/api/v1/lad/\(String(describing: ethereumAddressString))") else {return}// biggest CDP
-                
-                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    guard let dataResponse = data,
-                        error == nil else {
-                            print(error?.localizedDescription ?? "Response Error")
-                            return }
-                    do{
-                        //here dataResponse received from a network request
-                        let jsonResponse = try JSONSerialization.jsonObject(with:
-                            dataResponse, options: [])
-                        //print(jsonResponse) //Response result
-                        
-                        guard let jsonArray = jsonResponse as? [[String: Any]] else {
-                            return
-                        }
-                        print(jsonArray)
-                        
-                        for dic in jsonArray{
-                            
-                            guard let identifier = dic["id"] as? Int else { return }
-                            guard let ratio = dic["ratio"] as? Double else { return }
-                            guard let pip = dic["pip"] as? Double else { return }
-                            guard let art = dic["art"] as? Double else { return }
-                            guard let ink = dic["ink"] as? Double else { return }
-                            guard let liqPrice = dic["liq_price"] as? Double else { return }
-                            
-                            self.CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
-                        }
-                        DispatchQueue.main.async {
-                            self.cdpsTableView.reloadData()
-                        }
-                    } catch let parsingError {
-                        print("Error", parsingError)
-                    }
-                }
-                task.resume()
-            }
-        } else {
-            CDPs.removeAll()
+        // Load Ethereum Wallets
+        let ethereumAddresses = CoreDataHelper.loadAllEthereumAddresses()
+        MakerToolsAPI.loadEthereumAddressCDPs(ethereumAddresses) { CDPs in
+            self.CDPs.append(contentsOf: CDPs)
             self.cdpsTableView.reloadData()
         }
     }

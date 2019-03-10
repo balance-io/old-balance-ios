@@ -82,8 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
-				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
 				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
+				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
 				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
