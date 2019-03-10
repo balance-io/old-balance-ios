@@ -21,15 +21,15 @@ struct CoreDataHelper {
     static func loadAllData(entity: String) -> [NSManagedObject] {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
-        var makers = [NSManagedObject]()
+        var managedObjects = [NSManagedObject]()
         do {
-            makers = try managedContext.fetch(fetchRequest)
+            managedObjects = try managedContext.fetch(fetchRequest)
             print("DATABASE")
-            print(makers)
+            print(managedObjects)
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
-        return makers;
+        return managedObjects;
     }
     
     @discardableResult static func saveMaker(singleCollateralDaiIdentifier: String) -> Bool {

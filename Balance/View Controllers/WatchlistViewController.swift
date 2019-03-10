@@ -57,7 +57,10 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         ethItem.title = "ETH Address"
         ethItem.icon = UIImage(named: "ethWhiteCircle")!
         ethItem.handler = { ethItem in
-            let addEthereumWalletViewController = AddEthereumWalletViewController()
+            let addEthereumWalletViewController = AddEthereumWalletViewController() { name, address, includeInBalance in
+                CoreDataHelper.saveEthereumWallet(name: name, address: address)
+                self.loadData()
+            }
             self.present(addEthereumWalletViewController, animated: true)
         }
         floaty.addItem(item: ethItem)
@@ -69,7 +72,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         contactItem.handler = { ethItem in
             let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            self.present(alert, animated: true)
             self.floaty.close()
         }
         
@@ -114,6 +117,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     func loadData() {
         managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+        ethereumWallets = [EthereumWallet]()
         if managedEthereumWallets.count > 0 {
             for wallet in managedEthereumWallets {
                 ethereumWallets.append(EthereumWallet(name: String(wallet.value(forKey: "name") as! String), address: String(wallet.value(forKey: "address") as! String)))

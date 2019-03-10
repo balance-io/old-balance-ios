@@ -28,7 +28,9 @@ private func newTextFieldContainer() -> UIView {
 }
 
 class AddEthereumWalletViewController: UIViewController {
-    let topContainerView: UIView = {
+    let completion: (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()
+    
+    private let topContainerView: UIView = {
         let topContainerView = UIView()
         topContainerView.translatesAutoresizingMaskIntoConstraints = false
         topContainerView.backgroundColor = .white
@@ -36,28 +38,28 @@ class AddEthereumWalletViewController: UIViewController {
         return topContainerView
     }()
     
-    let closeButton: UIButton = {
+    private let closeButton: UIButton = {
         let closeButton = UIButton()
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setImage(UIImage(named: "closeButton"), for: .normal)
         return closeButton
     }()
     
-    let middleContainerView: UIView = {
+    private let middleContainerView: UIView = {
         let middleContainerView = UIView()
         middleContainerView.translatesAutoresizingMaskIntoConstraints = false
         middleContainerView.backgroundColor = .black
         return middleContainerView
     }()
     
-    let scanQRCodeImageView: UIImageView = {
+    private let scanQRCodeImageView: UIImageView = {
         let scanQRCodeImageView = UIImageView()
         scanQRCodeImageView.translatesAutoresizingMaskIntoConstraints = false
         scanQRCodeImageView.image = UIImage(named: "qrCode")
         return scanQRCodeImageView
     }()
     
-    let scanQRCodeLabel: UILabel = {
+    private let scanQRCodeLabel: UILabel = {
         let scanQRCodeLabel = UILabel()
         scanQRCodeLabel.translatesAutoresizingMaskIntoConstraints = false
         scanQRCodeLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
@@ -66,7 +68,7 @@ class AddEthereumWalletViewController: UIViewController {
         return scanQRCodeLabel
     }()
     
-    let bottomContainerView: UIView = {
+    private let bottomContainerView: UIView = {
         let bottomContainerView = UIView()
         bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.backgroundColor = .white
@@ -74,15 +76,15 @@ class AddEthereumWalletViewController: UIViewController {
         return bottomContainerView
     }()
     
-    let nameTitleLabel: UILabel = {
+    private let nameTitleLabel: UILabel = {
         let nameTitleLabel = newTitleLabel()
         nameTitleLabel.text = "Name"
         return nameTitleLabel
     }()
     
-    let nameFieldContainer: UIView = newTextFieldContainer()
+    private let nameFieldContainer: UIView = newTextFieldContainer()
     
-    let nameTextField: UITextField = {
+    private let nameTextField: UITextField = {
         let nameTextField = UITextField()
         nameTextField.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.font = UIFont.systemFont(ofSize: 19)
@@ -94,15 +96,15 @@ class AddEthereumWalletViewController: UIViewController {
         return nameTextField
     }()
     
-    let addressTitleLabel: UILabel = {
+    private let addressTitleLabel: UILabel = {
         let addressTitleLabel = newTitleLabel()
         addressTitleLabel.text = "Ethereum Wallet Address"
         return addressTitleLabel
     }()
     
-    let addressFieldContainer: UIView = newTextFieldContainer()
+    private let addressFieldContainer: UIView = newTextFieldContainer()
     
-    let addressTextField: UITextField = {
+    private let addressTextField: UITextField = {
         let addressTextField = UITextField()
         addressTextField.translatesAutoresizingMaskIntoConstraints = false
         addressTextField.placeholder = "Address starting with 0x or ENS"
@@ -116,7 +118,7 @@ class AddEthereumWalletViewController: UIViewController {
         return addressTextField
     }()
     
-    let pasteButton: UIButton = {
+    private let pasteButton: UIButton = {
         let pasteButton = UIButton()
         pasteButton.translatesAutoresizingMaskIntoConstraints = false
         pasteButton.backgroundColor = UIColor(hexString: "#0E76FD")
@@ -128,19 +130,19 @@ class AddEthereumWalletViewController: UIViewController {
         return pasteButton
     }()
     
-    let includeInBalanceTitleLabel: UILabel = {
+    private let includeInBalanceTitleLabel: UILabel = {
         let includeInBalanceTitleLabel = newTitleLabel()
         includeInBalanceTitleLabel.text = "Include in total balance"
         return includeInBalanceTitleLabel
     }()
     
-    let includeInBalanceSwitch: UISwitch = {
+    private let includeInBalanceSwitch: UISwitch = {
         let includeInBalanceSwitch = UISwitch()
         includeInBalanceSwitch.translatesAutoresizingMaskIntoConstraints = false
         return includeInBalanceSwitch
     }()
     
-    let addButton: UIButton = {
+    private let addButton: UIButton = {
         let addButton = UIButton()
         addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.backgroundColor = UIColor(red: 57.0/255.0, green: 64.0/255.0, blue: 82.0/255.0, alpha: 0.25)
@@ -151,6 +153,17 @@ class AddEthereumWalletViewController: UIViewController {
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return addButton
     }()
+    
+    // MARK - View Lifecycle -
+    
+    init(completion: @escaping (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()) {
+        self.completion = completion
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("unimplemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -235,6 +248,7 @@ class AddEthereumWalletViewController: UIViewController {
             make.leading.equalToSuperview().offset(11)
             make.centerY.equalToSuperview()
         }
+        pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
         
         addressFieldContainer.addSubview(addressTextField)
         addressTextField.snp.makeConstraints { make in
@@ -267,6 +281,7 @@ class AddEthereumWalletViewController: UIViewController {
             make.leading.equalToSuperview().offset(18)
             make.centerY.equalToSuperview()
         }
+        addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
         
         //
         // Middle Container
@@ -293,7 +308,28 @@ class AddEthereumWalletViewController: UIViewController {
         }
     }
     
+    // MARK - Button Actions -
+    
     @objc private func closeAction() {
-        self.dismiss(animated: true)
+        dismiss(animated: true)
+    }
+    
+    @objc private func pasteAction() {
+        if let string = UIPasteboard.general.string {
+            addressTextField.text = string
+        }
+    }
+    
+    @objc private func addAction() {
+        guard let name = nameTextField.text, let address = addressTextField.text, name.count > 0 else {
+            return
+        }
+        
+        guard (address.hasPrefix("0x") && address.count == 42) || (address.hasPrefix("ENS") && address.count > 3) else {
+            return
+        }
+        
+        completion(name, address, includeInBalanceSwitch.isOn)
+        dismiss(animated: true)
     }
 }
