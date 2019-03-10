@@ -1,6 +1,6 @@
 import UIKit
 
-class EtherTableViewCell: UITableViewCell {
+class EthereumTableViewCell: UITableViewCell {
     
 //    var wallet:EthereumWallet? {
 //        didSet {
@@ -18,17 +18,57 @@ class EtherTableViewCell: UITableViewCell {
 //        }
 //    }
     
-    let titleLabel:UILabel = {
+    let ethSquircleImageView: UIImageView = {
+        let image = UIImage(named: "ethSquircleDark")
+        let imageView = UIImageView(image: image)
+        imageView.frame = CGRect(x:0, y: 0, width: 25, height: 25)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let ethereumLabel:UILabel = {
         let label = UILabel()
+        label.text = "Ethereum"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let addressLabel:UILabel = {
+    //TODO add WETH | PETH
+    
+    let lineView:UIView = {
+        let line = UIView(frame: CGRect())
+        line.backgroundColor = .white
+        line.alpha = 0.8
+        line.layer.cornerRadius = 5
+        
+        return line
+    }()
+    
+    let ethCircleImageView: UIImageView = {
+        let image = UIImage(named: "ethWhiteCircle")
+        let imageView = UIImageView(image: image)
+        imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let ethAmountsLabel:UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "33 ETH × 150 USD"
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .left
+        return label
+    }()
+    
+    let ethDollarTotal:UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.text = "$4,950"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
@@ -46,41 +86,31 @@ class EtherTableViewCell: UITableViewCell {
         return view
     }()
     
-    let lineView:UIView = {
-        let line = UIView(frame: CGRect())
-        line.backgroundColor = .white
-        line.alpha = 0.8
-        line.layer.cornerRadius = 5
-        
-        return line
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        containerView.addSubview(ethSquircleImageView)
+        containerView.addSubview(ethereumLabel)
         containerView.addSubview(lineView)
-        containerView.addSubview(nameLabel)
-        containerView.addSubview(addressLabel)
+        containerView.addSubview(ethCircleImageView)
+        containerView.addSubview(ethAmountsLabel)
+        containerView.addSubview(ethDollarTotal)
         
         self.contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
         
         self.contentView.addSubview(containerView)
         
-        containerView.heightAnchor.constraint(equalToConstant: 50)
-        containerView.leadingAnchor.constraint(equalTo:self.leadingAnchor, constant:10).isActive = true
-        containerView.trailingAnchor.constraint(equalTo:self.trailingAnchor, constant:-10).isActive = true
-        containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
+        ethSquircleImageView.snp.makeConstraints { make in
+            make.top.equalTo(containerView).offset(10)
+            make.left.equalTo(containerView).offset(10)
+        }
         
-        //        nameLabel.centerYAnchor.constraint(equalTo:containerView.centerYAnchor, constant: 0).isActive = true
-        nameLabel.topAnchor.constraint(equalTo:containerView.topAnchor, constant: 15).isActive = true
-        nameLabel.leadingAnchor.constraint(equalTo:containerView.leadingAnchor, constant: 15).isActive = true
-        nameLabel.trailingAnchor.constraint(equalTo:containerView.trailingAnchor, constant: 15).isActive = true
-        //        nameLabel.widthAnchor.constraint(equalTo:containerView.widthAnchor, multiplier: 0.8).isActive = true
+        ethereumLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(ethSquircleImageView)
+            make.left.equalTo(ethSquircleImageView.snp_rightMargin).offset(10)
+        }
         
-        addressLabel.topAnchor.constraint(equalTo:nameLabel.bottomAnchor, constant: 5).isActive = true
-        addressLabel.leadingAnchor.constraint(equalTo:nameLabel.leadingAnchor).isActive = true
-        addressLabel.trailingAnchor.constraint(equalTo:nameLabel.trailingAnchor).isActive = true
+        //TODO Autolayout for full cell
         
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
