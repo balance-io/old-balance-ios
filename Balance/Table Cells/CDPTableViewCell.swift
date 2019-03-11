@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import SnapKit
 
 class CDPTableViewCell: UITableViewCell {
-    
     var cdp: CDP? {
         didSet {
             guard let cdpItem = cdp else {return}
@@ -33,29 +33,25 @@ class CDPTableViewCell: UITableViewCell {
                 }
                 ratioLabel.text = " \(String(format:"%.0f", ratio))%"
             }
+            
+            if let ink = cdpItem.ink, let pip = cdpItem.pip {
+                let collateral = ink * pip
+                let collateralFormatted = numberFormatter.string(from: NSNumber(value:collateral))
+                inkLabel.text = "\(String(collateralFormatted!)) USD"
+            }
 
             if let art = cdpItem.art {
                 let artFormatted = numberFormatter.string(from: NSNumber(value:art))
                 artLabel.text = "\(artFormatted!) DAI"
             }
             
-            if let ink = cdpItem.ink {
-                if let pip = cdpItem.pip {
-                    let collateral = ink * pip
-                    let collateralFormatted = numberFormatter.string(from: NSNumber(value:collateral))
-                    inkLabel.text = "\(String(collateralFormatted!)) USD"
-                }
-            }
-            
-            if let liqPrice = cdpItem.liqPrice {
-                if let pip = cdpItem.pip {
-                    liqPriceLabel.text = "$\(String(format:"%.0f", pip)) / \(String(format:"%.0f", liqPrice))"
-                }
+            if let liqPrice = cdpItem.liqPrice, let pip = cdpItem.pip {
+                liqPriceLabel.text = "$\(String(format:"%.0f", pip)) / \(String(format:"%.0f", liqPrice))"
             }
         }
     }
     
-    let identityLabel: UILabel = {
+    private let identityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .white
@@ -63,7 +59,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let ethCircleImageView: UIImageView = {
+    private let ethCircleImageView: UIImageView = {
         let image = UIImage(named: "ethWhiteCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -71,7 +67,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let mkrSquircle: UIImageView = {
+    private let mkrSquircle: UIImageView = {
         let image = UIImage(named: "mkrSquircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -79,7 +75,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let daiCircle: UIImageView = {
+    private let daiCircle: UIImageView = {
         let image = UIImage(named: "daiCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -87,7 +83,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let checkCircle: UIImageView = {
+    private let checkCircle: UIImageView = {
         let image = UIImage(named: "checkCircle")
         let imageView = UIImageView(image: image)
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -95,7 +91,7 @@ class CDPTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let collateralizedTitleLabel: UILabel = {
+    private let collateralizedTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Collateral"
@@ -104,7 +100,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let debtTitleLabel: UILabel = {
+    private let debtTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Debt"
@@ -113,7 +109,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let positionTitleLabel: UILabel = {
+    private let positionTitleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Position"
@@ -122,7 +118,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let ratioLabel: UILabel = {
+    private let ratioLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
@@ -134,7 +130,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let pipLabel: UILabel = {
+    private let artLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -145,7 +141,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let artLabel: UILabel = {
+    private let inkLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -156,7 +152,7 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let inkLabel: UILabel = {
+    private let liqPriceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
@@ -167,20 +163,8 @@ class CDPTableViewCell: UITableViewCell {
         return label
     }()
     
-    let liqPriceLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
-        label.textAlignment = .right
-        label.textColor = .white
-        label.layer.cornerRadius = 5
-        label.clipsToBounds = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
-        
         let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         view.backgroundColor = darkCardBackgroundColor
         view.layer.cornerRadius = 10
@@ -189,83 +173,95 @@ class CDPTableViewCell: UITableViewCell {
         return view
     }()
     
-    let lineView: UIView = {
-        let line = UIView(frame: CGRect())
-        line.backgroundColor = .white
-        line.alpha = 0.8
-        line.layer.cornerRadius = 5
-        
-        return line
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-10)
+        }
 
-        containerView.addSubview(lineView)
-        containerView.addSubview(identityLabel)
-        containerView.addSubview(ethCircleImageView)
         containerView.addSubview(mkrSquircle)
-        containerView.addSubview(daiCircle)
-        containerView.addSubview(checkCircle)
-        containerView.addSubview(collateralizedTitleLabel)
-        containerView.addSubview(debtTitleLabel)
-        containerView.addSubview(positionTitleLabel)
+        mkrSquircle.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(15)
+        }
+        
+        containerView.addSubview(identityLabel)
+        identityLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(mkrSquircle)
+            make.leading.equalTo(mkrSquircle.snp.trailing).offset(5)
+            make.width.equalToSuperview().multipliedBy(0.8)
+        }
+
         containerView.addSubview(ratioLabel)
-        containerView.addSubview(pipLabel)
-        containerView.addSubview(artLabel)
+        ratioLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-15)
+            make.centerY.equalTo(identityLabel)
+            make.width.equalToSuperview().multipliedBy(0.17)
+        }
+        
+        containerView.addSubview(ethCircleImageView)
+        ethCircleImageView.snp.makeConstraints { make in
+            make.top.equalTo(mkrSquircle.snp.bottom).offset(12)
+            make.centerX.equalTo(mkrSquircle)
+        }
+        
+        containerView.addSubview(collateralizedTitleLabel)
+        collateralizedTitleLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(ethCircleImageView)
+            make.leading.equalTo(ethCircleImageView.snp.trailing).offset(5)
+        }
+
         containerView.addSubview(inkLabel)
+        inkLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-15)
+            make.centerY.equalTo(collateralizedTitleLabel)
+            make.width.equalToSuperview().multipliedBy(0.55)
+        }
+        
+        containerView.addSubview(daiCircle)
+        daiCircle.snp.makeConstraints { make in
+            make.top.equalTo(ethCircleImageView.snp.bottom).offset(12)
+            make.centerX.equalTo(ethCircleImageView)
+        }
+
+        containerView.addSubview(debtTitleLabel)
+        debtTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(daiCircle)
+            make.leading.equalTo(collateralizedTitleLabel)
+        }
+
+        containerView.addSubview(artLabel)
+        artLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-15)
+            make.centerY.equalTo(debtTitleLabel)
+            make.width.equalToSuperview().multipliedBy(0.55)
+        }
+        
+        containerView.addSubview(checkCircle)
+        checkCircle.snp.makeConstraints { make in
+            make.top.equalTo(daiCircle.snp.bottom).offset(12)
+            make.centerX.equalTo(ethCircleImageView)
+        }
+        
+        containerView.addSubview(positionTitleLabel)
+        positionTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(checkCircle)
+            make.leading.equalTo(debtTitleLabel)
+        }
+        
         containerView.addSubview(liqPriceLabel)
-        
-        self.contentView.addSubview(containerView)
-        
-        containerView.heightAnchor.constraint(equalToConstant: 300)
-        containerView.leadingAnchor.constraint(equalTo:self.leadingAnchor, constant:10).isActive = true
-        containerView.trailingAnchor.constraint(equalTo:self.trailingAnchor, constant:-10).isActive = true
-        containerView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10).isActive = true
-
-        mkrSquircle.topAnchor.constraint(equalTo:containerView.topAnchor, constant: 20).isActive = true
-        mkrSquircle.leadingAnchor.constraint(equalTo:containerView.leadingAnchor, constant: 15).isActive = true
-        
-        ethCircleImageView.topAnchor.constraint(equalTo:mkrSquircle.bottomAnchor, constant: 12).isActive = true
-        ethCircleImageView.centerXAnchor.constraint(equalTo:mkrSquircle.centerXAnchor, constant: 0).isActive = true
-        
-        daiCircle.topAnchor.constraint(equalTo:ethCircleImageView.bottomAnchor, constant: 12).isActive = true
-        daiCircle.centerXAnchor.constraint(equalTo:ethCircleImageView.centerXAnchor, constant: 0).isActive = true
-        
-        checkCircle.topAnchor.constraint(equalTo:daiCircle.bottomAnchor, constant: 12).isActive = true
-        checkCircle.centerXAnchor.constraint(equalTo:ethCircleImageView.centerXAnchor, constant: 0).isActive = true
-        
-        identityLabel.centerYAnchor.constraint(equalTo:mkrSquircle.centerYAnchor, constant: 0).isActive = true
-        identityLabel.leadingAnchor.constraint(equalTo:mkrSquircle.trailingAnchor, constant: 5).isActive = true
-        identityLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.8).isActive = true
-        
-        collateralizedTitleLabel.centerYAnchor.constraint(equalTo:self.ethCircleImageView.centerYAnchor, constant: 0).isActive = true
-        collateralizedTitleLabel.leadingAnchor.constraint(equalTo:self.ethCircleImageView.trailingAnchor, constant: 5).isActive = true
-
-        debtTitleLabel.topAnchor.constraint(equalTo: daiCircle.topAnchor, constant: 0).isActive = true
-        debtTitleLabel.leadingAnchor.constraint(equalTo: collateralizedTitleLabel.leadingAnchor, constant: 0).isActive = true
-
-        positionTitleLabel.topAnchor.constraint(equalTo: checkCircle.topAnchor, constant: 0).isActive = true
-        positionTitleLabel.leadingAnchor.constraint(equalTo: debtTitleLabel.leadingAnchor, constant: 0).isActive = true
-        
-        ratioLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        ratioLabel.centerYAnchor.constraint(equalTo: identityLabel.centerYAnchor).isActive = true
-        ratioLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.17).isActive = true
-        
-        inkLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        inkLabel.centerYAnchor.constraint(equalTo: collateralizedTitleLabel.centerYAnchor, constant: 0).isActive = true
-        inkLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
-        
-        artLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        artLabel.centerYAnchor.constraint(equalTo: debtTitleLabel.centerYAnchor, constant: 0).isActive = true
-        artLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
-        
-        liqPriceLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15).isActive = true
-        liqPriceLabel.centerYAnchor.constraint(equalTo: positionTitleLabel.centerYAnchor, constant: 0).isActive = true
-        liqPriceLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.55).isActive = true
+        liqPriceLabel.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-15)
+            make.centerY.equalTo(positionTitleLabel)
+            make.width.equalToSuperview().multipliedBy(0.55)
+        }
         
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
@@ -273,10 +269,10 @@ class CDPTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.selectedBackgroundView!.backgroundColor = selected ? .red : nil
+        self.selectedBackgroundView?.backgroundColor = selected ? .red : nil
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("unimplemented")
     }
 }
