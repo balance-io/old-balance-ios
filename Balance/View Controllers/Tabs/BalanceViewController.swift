@@ -37,10 +37,10 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private func setupNavigation() {
         navigationItem.title = ""
-        if let navigationController = navigationController {
-            navigationController.navigationBar.barTintColor = .white
-            navigationController.navigationBar.isTranslucent = false
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = .white
+            navigationBar.isTranslucent = false
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         }
     }
     

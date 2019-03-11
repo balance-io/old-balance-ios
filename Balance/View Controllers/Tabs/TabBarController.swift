@@ -18,7 +18,6 @@ class TabBarController: UITabBarController {
         watchlistNavigationController.tabBarItem = UITabBarItem(title: "Watchlist",
                                                                 image: UIImage(named: "watchlistTabBarItemImage"),
                                                                 selectedImage: UIImage(named: "watchlistTabBarItemImageSelected"))
-
         
         let balanceNavigationController = UINavigationController(rootViewController: BalanceViewController())
         balanceNavigationController.tabBarItem = UITabBarItem(title: "Balance",
@@ -35,8 +34,8 @@ class TabBarController: UITabBarController {
         self.selectedIndex = 1
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if CoreDataHelper.ethereumWalletCount() == 0 && welcomeViewController == nil {
             welcomeViewController = WelcomeViewController()
             present(welcomeViewController!, animated: false, completion: nil)
@@ -50,11 +49,4 @@ class TabBarController: UITabBarController {
             welcomeViewController = nil
         }
     }
-    
-    // NOTE: Probably not needed anymore, but if you see weird view issues then try it out
-//    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        // Fixes iOS bug with view sizing
-//        // NOTE: Do not call super here or it will crash
-//        self.view.setNeedsLayout()
-//    }
 }

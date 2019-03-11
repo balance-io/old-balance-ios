@@ -5,10 +5,16 @@ import SnapKit
 
 class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    private let walletsTableView = UITableView()
-    
     private var managedEthereumWallets = [NSManagedObject]()
     private var ethereumWallets = [EthereumWallet]()
+    
+    private let addButton: UIButton = {
+        let addButton = UIButton()
+        addButton.setBackgroundImage(UIImage(named:"plusButton"), for: .normal)
+        return addButton
+    }()
+
+    private let walletsTableView = UITableView()
     
     // MARK: - View Controller Lifecycle -
     
@@ -40,11 +46,27 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     private func setupNavigation() {
         navigationItem.title = ""
-        if let navigationController = navigationController {
-            navigationController.navigationBar.barTintColor = .white
-            navigationController.navigationBar.isTranslucent = false
-            navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationItem.titleView = addButton
+        addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
+        addButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+            make.width.equalTo(72)
+            make.width.equalTo(72)
         }
+        
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = .white
+            navigationBar.isTranslucent = false
+            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        }
+    }
+    
+    // MARK: - Button Actions -
+    
+    @objc private func addAction() {
+        let addEthereumWalletViewController = AddEthereumWalletViewController()
+        present(addEthereumWalletViewController, animated: true)
     }
     
     // MARK: - Data Loading -
@@ -62,6 +84,9 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     @objc private func walletAdded() {
         loadData()
+        if presentedViewController != nil {
+            dismiss(animated: true)
+        }
     }
     
     // MARK: - Table View -

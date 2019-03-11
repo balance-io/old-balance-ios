@@ -203,10 +203,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.trailing.equalToSuperview()
             make.height.equalTo(tableView.rowHeight * 4)
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
