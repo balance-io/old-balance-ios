@@ -7,7 +7,6 @@ import SnapKit
 class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let walletsTableView = UITableView()
-    private let floaty = Floaty()
     
     private var managedEthereumWallets = [NSManagedObject]()
     private var ethereumWallets = [EthereumWallet]()
@@ -34,7 +33,6 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
             make.bottom.equalTo(view)
         }
         
-        setupFloaty()
         setupNavigation()
         loadData()
     }
@@ -46,71 +44,6 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
             navigationController.navigationBar.isTranslucent = false
             navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         }
-    }
-    
-    private func setupFloaty() {
-        floaty.openAnimationType = .slideUp
-        floaty.overlayColor = UIColor.black.withAlphaComponent(0.7)
-        
-        let ethItem = FloatyItem()
-        ethItem.buttonColor = .black
-        ethItem.title = "ETH Address"
-        ethItem.icon = UIImage(named: "ethWhiteCircle")!
-        ethItem.handler = { ethItem in
-            let addEthereumWalletViewController = AddEthereumWalletViewController() { name, address, includeInBalance in
-                CoreDataHelper.saveEthereumWallet(name: name, address: address)
-                self.loadData()
-            }
-            self.present(addEthereumWalletViewController, animated: true)
-        }
-        floaty.addItem(item: ethItem)
-        
-        let contactItem = FloatyItem()
-        contactItem.buttonColor = .black
-        contactItem.title = "Contact"
-        contactItem.icon = UIImage(named: "contact")!
-        contactItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Soon™️", message: "Coming Soon", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            self.floaty.close()
-        }
-        
-        let cdpItem = FloatyItem()
-        cdpItem.buttonColor = .black
-        cdpItem.title = "CDP"
-        cdpItem.icon = UIImage(named: "cdp")!
-        cdpItem.handler = { ethItem in
-            let alert = UIAlertController(title: "Add a CDP number", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-            
-            alert.addTextField(configurationHandler: { textField in
-                textField.placeholder = "Enter the number. e.g. 3228"
-                textField.keyboardType = .numberPad
-            })
-            
-            alert.addAction(UIAlertAction(title: "Add", style: .default, handler: { action in
-                if let cdp = alert.textFields?.first?.text {
-                    print("Your CDP: \(cdp)")
-                    CoreDataHelper.saveMaker(singleCollateralDaiIdentifier: cdp)
-                }
-            }))
-            self.present(alert, animated: true)
-        }
-        floaty.addItem(item: cdpItem)
-        
-        let deleteItem = FloatyItem()
-        deleteItem.buttonColor = .black
-        deleteItem.title = "Delete All"
-        deleteItem.icon = UIImage(named: "trash")!
-        deleteItem.handler = { ethItem in
-            print("DELETE THINGS")
-            CoreDataHelper.deleteAllData(entity: "Maker")
-            CoreDataHelper.deleteAllData(entity: "Ethereum")
-        }
-        floaty.addItem(item: deleteItem)
-        
-        self.view.addSubview(floaty)
     }
     
     // MARK: - Data Loading -
