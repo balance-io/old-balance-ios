@@ -17,14 +17,14 @@ private let numberFormatter: NumberFormatter = {
 }()
 
 class CDPInfoView: UIView {
-    let mkrGreenImageView: UIImageView = {
+    private let mkrGreenImageView: UIImageView = {
         let mkrGreenImageView = UIImageView(image: UIImage(named: "mkrGreen"))
         mkrGreenImageView.frame = CGRect(x:0, y: 0, width: 32, height: 32)
         mkrGreenImageView.translatesAutoresizingMaskIntoConstraints = false
         return mkrGreenImageView
     }()
     
-    let identifierLabel: UILabel = {
+    private let identifierLabel: UILabel = {
         let identifierLabel = UILabel()
         identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         identifierLabel.textColor = .white
@@ -32,7 +32,7 @@ class CDPInfoView: UIView {
         return identifierLabel
     }()
     
-    let collateralTitleLabel: UILabel = {
+    private let collateralTitleLabel: UILabel = {
         let collateralTitleLabel = UILabel()
         collateralTitleLabel.text = "COLLATERAL"
         collateralTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -41,7 +41,7 @@ class CDPInfoView: UIView {
         return collateralTitleLabel
     }()
     
-    let ethCircleImageView: UIImageView = {
+    private let ethCircleImageView: UIImageView = {
         let ethCircleImage = UIImage(named: "ethWhiteCircle")
         let ethCircleImageView = UIImageView(image: ethCircleImage)
         ethCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -49,7 +49,7 @@ class CDPInfoView: UIView {
         return ethCircleImageView
     }()
     
-    let etherTitleLabel: UILabel = {
+    private let etherTitleLabel: UILabel = {
         let etherTitleLabel = UILabel()
         etherTitleLabel.text = "Ether"
         etherTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -58,7 +58,7 @@ class CDPInfoView: UIView {
         return etherTitleLabel
     }()
     
-    let collateralBreakdownLabel: UILabel = {
+    private let collateralBreakdownLabel: UILabel = {
         let collateralBreakdownLabel = UILabel()
         collateralBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         collateralBreakdownLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ class CDPInfoView: UIView {
         return collateralBreakdownLabel
     }()
     
-    let debtTitleLabel: UILabel = {
+    private let debtTitleLabel: UILabel = {
         let debtTitleLabel = UILabel()
         debtTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         debtTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
@@ -75,7 +75,7 @@ class CDPInfoView: UIView {
         return debtTitleLabel
     }()
     
-    let daiCircleImageView: UIImageView = {
+    private let daiCircleImageView: UIImageView = {
         let daiCircleImage = UIImage(named: "daiCircle")
         let daiCircleImageView = UIImageView(image: daiCircleImage)
         daiCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
@@ -83,7 +83,7 @@ class CDPInfoView: UIView {
         return daiCircleImageView
     }()
     
-    let daiTitleLabel: UILabel = {
+    private let daiTitleLabel: UILabel = {
         let daiTitleLabel = UILabel()
         daiTitleLabel.text = "Dai"
         daiTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -92,7 +92,7 @@ class CDPInfoView: UIView {
         return daiTitleLabel
     }()
     
-    let debtBreakdownLabel: UILabel = {
+    private let debtBreakdownLabel: UILabel = {
         let debtBreakdownLabel = UILabel()
         debtBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         debtBreakdownLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -100,7 +100,7 @@ class CDPInfoView: UIView {
         return debtBreakdownLabel
     }()
     
-    let positionTitleLabel: UILabel = {
+    private let positionTitleLabel: UILabel = {
         let positionTitleLabel = UILabel()
         positionTitleLabel.text = "POSITION"
         positionTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -109,7 +109,7 @@ class CDPInfoView: UIView {
         return positionTitleLabel
     }()
     
-    let riskTitleLabel: UILabel = {
+    private let riskTitleLabel: UILabel = {
         let riskTitleLabel = UILabel()
         riskTitleLabel.text = "RISK"
         riskTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
@@ -118,7 +118,7 @@ class CDPInfoView: UIView {
         return riskTitleLabel
     }()
     
-    let priceTitleLabel: UILabel = {
+    private let priceTitleLabel: UILabel = {
         let priceTitleLabel = UILabel()
         priceTitleLabel.text = "PRICE"
         priceTitleLabel.textAlignment = .center
@@ -128,7 +128,7 @@ class CDPInfoView: UIView {
         return priceTitleLabel
     }()
     
-    let ratioTitleLabel: UILabel = {
+    private let ratioTitleLabel: UILabel = {
         let ratioTitleLabel = UILabel()
         ratioTitleLabel.text = "RATIO"
         ratioTitleLabel.textAlignment = .right
@@ -138,7 +138,7 @@ class CDPInfoView: UIView {
         return ratioTitleLabel
     }()
     
-    let riskLabel: UILabel = {
+    private let riskLabel: UILabel = {
         let riskLabel = UILabel()
         riskLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         riskLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
@@ -149,7 +149,7 @@ class CDPInfoView: UIView {
         return riskLabel
     }()
     
-    let liqPriceLabel: UILabel = {
+    private let liqPriceLabel: UILabel = {
         let liqPriceLabel = UILabel()
         liqPriceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         liqPriceLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
@@ -160,7 +160,7 @@ class CDPInfoView: UIView {
         return liqPriceLabel
     }()
     
-    let ratioLabel: UILabel = {
+    private let ratioLabel: UILabel = {
         let ratioLabel = UILabel()
         ratioLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         ratioLabel.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
@@ -171,7 +171,7 @@ class CDPInfoView: UIView {
         return ratioLabel
     }()
     
-    let riskBarImageView: UIImageView = {
+    private let riskBarImageView: UIImageView = {
         let riskBarImage = UIImage(named: "riskbar")
         let riskBarImageView = UIImageView(image: riskBarImage)
         riskBarImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
@@ -179,7 +179,7 @@ class CDPInfoView: UIView {
         return riskBarImageView
     }()
     
-    let riskDotImageView: UIImageView = {
+    private let riskDotImageView: UIImageView = {
         let riskDotImage = UIImage(named: "riskDot")
         let riskDotImageView = UIImageView(image: riskDotImage)
         riskDotImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
@@ -187,7 +187,7 @@ class CDPInfoView: UIView {
         return riskDotImageView
     }()
     
-    let rektLabel: UILabel = {
+    private let rektLabel: UILabel = {
         let rektLabel = UILabel()
         rektLabel.text = "150%"
         rektLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
@@ -196,7 +196,7 @@ class CDPInfoView: UIView {
         return rektLabel
     }()
     
-    let dangerLabel: UILabel = {
+    private let dangerLabel: UILabel = {
         let dangerLabel = UILabel()
         dangerLabel.text = "250%"
         dangerLabel.textAlignment = .center
@@ -206,7 +206,7 @@ class CDPInfoView: UIView {
         return dangerLabel
     }()
     
-    let saferLabel: UILabel = {
+    private let saferLabel: UILabel = {
         let saferLabel = UILabel()
         saferLabel.text = "350%"
         saferLabel.textAlignment = .right
@@ -216,14 +216,14 @@ class CDPInfoView: UIView {
         return saferLabel
     }()
     
-    let plainEnglishContainerView: UIView = {
+    private let plainEnglishContainerView: UIView = {
         let plainEnglishContainerView = UIView()
         // TODO Find a way to get the UILabel to stretch dynamically.
         plainEnglishContainerView.translatesAutoresizingMaskIntoConstraints = false
         return plainEnglishContainerView
     }()
     
-    let plainEnglishExplanationLabel: UILabel = {
+    private let plainEnglishExplanationLabel: UILabel = {
         let plainEnglishExplanationLabel = UILabel()
         plainEnglishExplanationLabel.translatesAutoresizingMaskIntoConstraints = false
         plainEnglishExplanationLabel.textAlignment = .center

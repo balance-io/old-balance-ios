@@ -9,16 +9,25 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-    let watchlistViewController = WatchlistViewController()
-    let balanceViewController = BalanceViewController()
-    let settingsViewController = SettingsViewController()
+    private let watchlistViewController = WatchlistViewController()
+    private let balanceViewController = BalanceViewController()
+    private let settingsViewController = SettingsViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        watchlistViewController.tabBarItem = UITabBarItem(title: "Watchlist", image: UIImage(named: "watchlistTabBarItemImage"), selectedImage: UIImage(named: "watchlistTabBarItemImageSelected"))
-        balanceViewController.tabBarItem = UITabBarItem(title: "Balance", image: UIImage(named: "balanceTabBarItemImage"), selectedImage: UIImage(named: "balanceTabBarItemImageSelected"))
-        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(named: "settingsTabBarItemImage"), selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
+        watchlistViewController.tabBarItem = UITabBarItem(title: "Watchlist",
+                                                          image: UIImage(named: "watchlistTabBarItemImage"),
+                                                          selectedImage: UIImage(named: "watchlistTabBarItemImageSelected"))
+        
+        balanceViewController.tabBarItem = UITabBarItem(title: "Balance",
+                                                        image: UIImage(named: "balanceTabBarItemImage"),
+                                                        selectedImage: UIImage(named: "balanceTabBarItemImageSelected"))
+        
+        settingsViewController.tabBarItem = UITabBarItem(title: "Settings",
+                                                         image: UIImage(named: "settingsTabBarItemImage"),
+                                                         selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
+        
         viewControllers = [watchlistViewController, balanceViewController, settingsViewController]
     }
     

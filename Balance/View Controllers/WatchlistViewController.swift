@@ -39,7 +39,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         loadData()
     }
     
-    func setupNavigation() {
+    private func setupNavigation() {
         navigationItem.title = ""
         if let navigationController = navigationController {
             navigationController.navigationBar.barTintColor = .white
@@ -48,7 +48,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         }
     }
     
-    func setupFloaty() {
+    private func setupFloaty() {
         floaty.openAnimationType = .slideUp
         floaty.overlayColor = UIColor.black.withAlphaComponent(0.7)
         
@@ -115,7 +115,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     // MARK: - Data Loading -
     
-    func loadData() {
+    private func loadData() {
         managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
         ethereumWallets = [EthereumWallet]()
         if managedEthereumWallets.count > 0 {

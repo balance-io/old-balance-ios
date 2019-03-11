@@ -10,24 +10,25 @@ import UIKit
 import SnapKit
 
 class WalletTableViewCell: UITableViewCell {
-    
-    var wallet:EthereumWallet? {
+    var wallet: EthereumWallet? {
         didSet {
-            guard let walletItem = wallet else {return}
+            guard let walletItem = wallet else {
+                return
+            }
             
             if let name = walletItem.name {
-                nameLabel.text = "\(String(name))"
+                nameLabel.text = "\(name)"
             } else {
                 nameLabel.text = "No Name"
             }
             
             if let address = walletItem.address {
-                addressLabel.text = "\(String(address))"
+                addressLabel.text = "\(address)"
             }
         }
     }
     
-    let nameLabel:UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .black
@@ -35,7 +36,7 @@ class WalletTableViewCell: UITableViewCell {
         return label
     }()
     
-    let addressLabel:UILabel = {
+    private let addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
@@ -45,9 +46,8 @@ class WalletTableViewCell: UITableViewCell {
         return label
     }()
     
-    let containerView:UIView = {
+    private let containerView: UIView = {
         let view = UIView()
-        
         view.backgroundColor = .white
         view.layer.cornerRadius = 5
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +93,6 @@ class WalletTableViewCell: UITableViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("unimplemented")
     }
 }

@@ -4,8 +4,8 @@ import SwiftEntryKit
 
 class BalanceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    let cdpsTableView = UITableView()
-    var CDPs = [CDP]()
+    private let cdpsTableView = UITableView()
+    private var CDPs = [CDP]()
     
     // MARK - View Lifecycle -
     
@@ -33,7 +33,7 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
         loadData()
     }
     
-    func setupNavigation() {
+    private func setupNavigation() {
         navigationItem.title = ""
         if let navigationController = navigationController {
             navigationController.navigationBar.barTintColor = .white
@@ -44,7 +44,7 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     
     // MARK - Data Loading -
     
-    func loadData() {
+    private func loadData() {
         CDPs.removeAll()
         
         // Load MakerDAO CDPs
