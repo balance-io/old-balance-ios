@@ -28,7 +28,7 @@ private func newTextFieldContainer() -> UIView {
     return textFieldContainer
 }
 
-class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate {
     let completion: (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()
     
     private let topContainerView: UIView = {
@@ -233,6 +233,7 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
             make.height.equalTo(53)
         }
         
+        nameTextField.delegate = self
         nameFieldContainer.addSubview(nameTextField)
         nameTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -268,6 +269,7 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
         }
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
         
+        addressTextField.delegate = self
         addressFieldContainer.addSubview(addressTextField)
         addressTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -334,6 +336,9 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
         }
         
         setupCameraPreviewView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -366,6 +371,32 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
         dismiss(animated: true)
     }
     
+    // MARK - Keyboard -
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= (keyboardSize.height - 150)
+                print("y: \(self.view.frame.origin.y) keyboardHeight: \(keyboardSize.height)")
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == nameTextField {
+            addressTextField.becomeFirstResponder()
+        } else {
+            view.endEditing(true)
+        }
+        return false
+    }
+    
     // MARK - QR Code Scanning -
     
     private func setupCameraPreviewView() {
@@ -383,7 +414,6 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
             output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
             session.addOutput(output)
             output.metadataObjectTypes = output.availableMetadataObjectTypes
-            print(output.availableMetadataObjectTypes)
             
             cameraPreviewLayer.session = session
             cameraPreviewLayer.videoGravity = .resizeAspectFill
@@ -428,8 +458,6 @@ class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutput
             }
             
             addressTextField.text = finalDetectedString
-        } else {
-            print("Couldn't read QR code")
         }
         
         cameraHighlightBoxLayer.frame = highlightBoxRect
