@@ -27,7 +27,7 @@ struct MakerToolsAPI {
             let identifiers = ethereumWallet.compactMap { maker in
                 maker.value(forKey: "address") as? String
             }
-            loadCDPs(identifiers: identifiers, baseURL: cdpBaseURL, completion: completion)
+            loadCDPs(identifiers: identifiers, baseURL: ethBaseURL, completion: completion)
         }
     }
     
@@ -37,7 +37,9 @@ struct MakerToolsAPI {
             let dispatchGroup = DispatchGroup()
             for identifier in identifiers {
                 // Biggest CDP
+                
                 let url = baseURL.appendingPathComponent(identifier)
+                print(url)
                 dispatchGroup.enter()
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     defer {
@@ -49,7 +51,7 @@ struct MakerToolsAPI {
                         return
                     }
                     
-                    //debugPrint(String(data: dataResponse, encoding: String.Encoding.utf8)!)
+                    debugPrint(String(data: dataResponse, encoding: String.Encoding.utf8)!)
                     
                     do {
                         guard let jsonArray = try JSONSerialization.jsonObject(with: dataResponse, options: []) as? [[String: Any]] else {
