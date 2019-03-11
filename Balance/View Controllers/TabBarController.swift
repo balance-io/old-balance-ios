@@ -29,6 +29,8 @@ class TabBarController: UITabBarController {
                                                          selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
         
         viewControllers = [watchlistViewController, balanceViewController, settingsViewController]
+        
+        self.selectedIndex = 1
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
