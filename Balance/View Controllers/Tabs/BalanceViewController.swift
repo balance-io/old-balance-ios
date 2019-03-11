@@ -31,6 +31,8 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
         
         setupNavigation()
         loadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     
     private func setupNavigation() {
@@ -45,21 +47,37 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK - Data Loading -
     
     private func loadData() {
-        CDPs.removeAll()
-        
-        // Load MakerDAO CDPs
-        let makers = CoreDataHelper.loadAllMakers()
-        MakerToolsAPI.loadMakerCDPs(makers) { CDPs in
-            self.CDPs.append(contentsOf: CDPs)
-            self.cdpsTableView.reloadData()
+        DispatchQueue.utility.async {
+            var newCDPs = [CDP]()
+            let dispatchGroup = DispatchGroup()
+            
+            // Load MakerDAO CDPs
+            dispatchGroup.enter()
+            let makers = CoreDataHelper.loadAllMakers()
+            MakerToolsAPI.loadMakerCDPs(makers) { CDPs in
+                newCDPs.append(contentsOf: CDPs)
+                dispatchGroup.leave()
+            }
+            
+            // Load Ethereum Wallets
+            dispatchGroup.enter()
+            let ethereumWallets = CoreDataHelper.loadAllEthereumWallets()
+            MakerToolsAPI.loadEthereumWalletCDPs(ethereumWallets) { CDPs in
+                newCDPs.append(contentsOf: CDPs)
+                dispatchGroup.leave()
+            }
+            
+            // Wait for results
+            dispatchGroup.wait()
+            DispatchQueue.main.async {
+                self.CDPs = newCDPs
+                self.cdpsTableView.reloadData()
+            }
         }
-        
-        // Load Ethereum Wallets
-        let ethereumWallets = CoreDataHelper.loadAllEthereumWallets()
-        MakerToolsAPI.loadEthereumWalletCDPs(ethereumWallets) { CDPs in
-            self.CDPs.append(contentsOf: CDPs)
-            self.cdpsTableView.reloadData()
-        }
+    }
+    
+    @objc private func walletAdded() {
+        loadData()
     }
         
     // MARK - Table View -

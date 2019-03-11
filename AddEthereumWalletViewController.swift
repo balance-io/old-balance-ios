@@ -29,8 +29,6 @@ private func newTextFieldContainer() -> UIView {
 }
 
 class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate {
-    let completion: (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()
-    
     private let topContainerView: UIView = {
         let topContainerView = UIView()
         topContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -174,15 +172,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     // MARK - View Lifecycle -
     
-    init(completion: @escaping (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()) {
-        self.completion = completion
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("unimplemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -274,7 +263,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(14)
-            make.trailing.equalTo(pasteButton.snp.leading).offset(-14)
+            make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
             make.bottom.equalToSuperview()
         }
         
@@ -367,8 +356,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             return
         }
         
-        completion(name, address, includeInBalanceSwitch.isOn)
-        dismiss(animated: true)
+        CoreDataHelper.saveEthereumWallet(name: name, address: address)
+        NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     
     // MARK - Keyboard -

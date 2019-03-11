@@ -16,6 +16,7 @@
 		53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */; };
 		53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */; };
 		53F0C9C02236D70A00FF0796 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BF2236D70A00FF0796 /* SettingsTableViewCell.swift */; };
+		53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9C12236E4E600FF0796 /* WelcomeViewController.swift */; };
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EB2234583900A4E30D /* TabBarController.swift */; };
@@ -26,7 +27,6 @@
 		DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B07682225B0A200107A8B /* UILabel+Padding.swift */; };
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* BalanceViewController.swift */; };
-		DC669847221CA8F100C383BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC669845221CA8F100C383BD /* LaunchScreen.storyboard */; };
 		DC66984F221D7E0200C383BD /* CDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66984E221D7E0200C383BD /* CDP.swift */; };
 		DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669850221D7E9300C383BD /* CDPAPI.swift */; };
 		DC669855221ED25E00C383BD /* CDPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669854221ED25E00C383BD /* CDPTableViewCell.swift */; };
@@ -43,6 +43,7 @@
 		53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEthereumWalletViewController.swift; sourceTree = "<group>"; };
 		53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Hex.swift"; sourceTree = "<group>"; };
 		53F0C9BF2236D70A00FF0796 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		53F0C9C12236E4E600FF0796 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,7 +57,6 @@
 		DC669839221CA8F000C383BD /* Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Balance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC66983C221CA8F000C383BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC66983E221CA8F000C383BD /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
-		DC669846221CA8F100C383BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DC669848221CA8F100C383BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC66984E221D7E0200C383BD /* CDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDP.swift; sourceTree = "<group>"; };
 		DC669850221D7E9300C383BD /* CDPAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPAPI.swift; sourceTree = "<group>"; };
@@ -89,11 +89,8 @@
 		53F0C9A9223571C300FF0796 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
-				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
-				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
-				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
-				53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */,
+				53F0C9C32236E4F100FF0796 /* Tabs */,
+				53F0C9C42236E4FF00FF0796 /* Modal */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -122,6 +119,27 @@
 				53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		53F0C9C32236E4F100FF0796 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
+				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
+				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
+				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		53F0C9C42236E4FF00FF0796 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				53F0C9BB2235B4BA00FF0796 /* AddEthereumWalletViewController.swift */,
+				53F0C9C12236E4E600FF0796 /* WelcomeViewController.swift */,
+			);
+			name = Modal;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		671853DF3540132917996814 /* Frameworks */ = {
@@ -182,7 +200,6 @@
 				53F0C9AA223571D500FF0796 /* Table Cells */,
 				DC4BA4EA223437D800A4E30D /* Balance.playground */,
 				DC452001222050F80077813C /* Assets.xcassets */,
-				DC669845221CA8F100C383BD /* LaunchScreen.storyboard */,
 				DC669848221CA8F100C383BD /* Info.plist */,
 				DC3455062221686D00136F8F /* Balance.xcdatamodeld */,
 			);
@@ -250,7 +267,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC452002222050F80077813C /* Assets.xcassets in Resources */,
-				DC669847221CA8F100C383BD /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +334,7 @@
 				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
+				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
@@ -336,17 +353,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DC669845221CA8F100C383BD /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DC669846221CA8F100C383BD /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DC669849221CA8F100C383BD /* Debug */ = {

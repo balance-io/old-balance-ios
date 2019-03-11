@@ -1,6 +1,5 @@
 import UIKit
 import CoreData
-import Floaty
 import SwiftEntryKit
 import SnapKit
 
@@ -35,6 +34,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         
         setupNavigation()
         loadData()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     
     private func setupNavigation() {
@@ -57,6 +58,10 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
             }
         }
         walletsTableView.reloadData()
+    }
+    
+    @objc private func walletAdded() {
+        loadData()
     }
     
     // MARK: - Table View -

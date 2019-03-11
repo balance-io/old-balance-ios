@@ -15,11 +15,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return balanceNameImageView
     }()
     
-    private let linesImageView: UIImageView = {
-        let linesImageView = UIImageView()
-        linesImageView.translatesAutoresizingMaskIntoConstraints = false
-        linesImageView.image = UIImage(named: "lines")
-        return linesImageView
+    private let wavesImageView: UIImageView = {
+        let wavesImageView = UIImageView()
+        wavesImageView.translatesAutoresizingMaskIntoConstraints = false
+        wavesImageView.image = UIImage(named: "waves")
+        return wavesImageView
     }()
     
     private let richardImageView: UIImageView = {
@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let joinTitleLabel = UILabel()
         joinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         joinTitleLabel.font = UIFont.systemFont(ofSize: 24)
-        joinTitleLabel.textColor = UIColor.init(hexString: "#191817")
+        joinTitleLabel.textColor = UIColor(hexString: "#191817")
         joinTitleLabel.text = "Join the community"
         return joinTitleLabel
     }()
@@ -42,7 +42,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let joinSubtitleLabel = UILabel()
         joinSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         joinSubtitleLabel.font = UIFont.systemFont(ofSize: 17)
-        joinSubtitleLabel.textColor = UIColor.init(hexString: "#191817")
+        joinSubtitleLabel.textColor = UIColor(hexString: "#191817")
         joinSubtitleLabel.numberOfLines = 2
         joinSubtitleLabel.lineBreakMode = .byWordWrapping
         joinSubtitleLabel.textAlignment = .center
@@ -56,7 +56,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         mediumButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         mediumButton.setImage(UIImage(named: "mediumLogo"), for: .normal)
         mediumButton.setTitle("Medium", for: .normal)
-        mediumButton.setTitleColor(UIColor.init(hexString: "#191817"), for: .normal)
+        mediumButton.setTitleColor(UIColor(hexString: "#191817"), for: .normal)
         mediumButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return mediumButton
     }()
@@ -67,7 +67,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         discordButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         discordButton.setImage(UIImage(named: "discordLogo"), for: .normal)
         discordButton.setTitle("Discord", for: .normal)
-        discordButton.setTitleColor(UIColor.init(hexString: "#191817"), for: .normal)
+        discordButton.setTitleColor(UIColor(hexString: "#191817"), for: .normal)
         discordButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return discordButton
     }()
@@ -78,7 +78,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         twitterButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         twitterButton.setImage(UIImage(named: "twitterLogo"), for: .normal)
         twitterButton.setTitle("Twitter", for: .normal)
-        twitterButton.setTitleColor(UIColor.init(hexString: "#191817"), for: .normal)
+        twitterButton.setTitleColor(UIColor(hexString: "#191817"), for: .normal)
         twitterButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return twitterButton
     }()
@@ -89,7 +89,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         githubButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         githubButton.setImage(UIImage(named: "githubLogo"), for: .normal)
         githubButton.setTitle("GitHub", for: .normal)
-        githubButton.setTitleColor(UIColor.init(hexString: "#191817"), for: .normal)
+        githubButton.setTitleColor(UIColor(hexString: "#191817"), for: .normal)
         githubButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return githubButton
     }()
@@ -112,21 +112,21 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.centerX.equalTo(balanceLogoImageView)
         }
         
-        view.addSubview(linesImageView)
-        linesImageView.snp.makeConstraints { make in
+        view.addSubview(wavesImageView)
+        wavesImageView.snp.makeConstraints { make in
             make.top.equalTo(balanceNameImageView.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
         
         view.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(linesImageView)
-            make.centerY.equalTo(linesImageView)
+            make.centerX.equalTo(wavesImageView)
+            make.centerY.equalTo(wavesImageView)
         }
         
         view.addSubview(joinTitleLabel)
         joinTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(linesImageView.snp.bottom).offset(5)
+            make.top.equalTo(wavesImageView.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
         
@@ -203,6 +203,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.trailing.equalToSuperview()
             make.height.equalTo(tableView.rowHeight * 4)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // MARK: - Button Actions -

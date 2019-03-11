@@ -20,7 +20,7 @@ class SettingsTableViewCell: UITableViewCell {
         let sideLabel = UILabel()
         sideLabel.translatesAutoresizingMaskIntoConstraints = false
         sideLabel.font = UIFont.systemFont(ofSize: 17)
-        sideLabel.textColor = UIColor.init(hexString: "#8E8E93")
+        sideLabel.textColor = UIColor(hexString: "#8E8E93")
         return sideLabel
     }()
     

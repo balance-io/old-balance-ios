@@ -10,6 +10,10 @@ import Foundation
 import CoreData
 
 struct CoreDataHelper {
+    struct Notifications {
+        static let ethereumWalletAdded = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletAdded")
+    }
+    
     static func loadAllMakers() -> [NSManagedObject] {
         return loadAllData(entity: "Maker")
     }
@@ -30,6 +34,22 @@ struct CoreDataHelper {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
         return managedObjects;
+    }
+    
+    static func ethereumWalletCount() -> Int {
+        return count(entity: "Ethereum")
+    }
+    
+    static func count(entity: String) -> Int {
+        let managedContext = AppDelegate.shared.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
+        var count = 0
+        do {
+            count = try managedContext.count(for: fetchRequest)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+        return count
     }
     
     @discardableResult static func saveMaker(singleCollateralDaiIdentifier: String) -> Bool {
