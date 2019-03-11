@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 import SnapKit
 
 private func newTitleLabel() -> UILabel {
@@ -27,7 +28,7 @@ private func newTextFieldContainer() -> UIView {
     return textFieldContainer
 }
 
-class AddEthereumWalletViewController: UIViewController {
+class AddEthereumWalletViewController: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
     let completion: (_ name: String, _ address: String, _ includeInBalance: Bool) -> ()
     
     private let topContainerView: UIView = {
@@ -50,6 +51,23 @@ class AddEthereumWalletViewController: UIViewController {
         middleContainerView.translatesAutoresizingMaskIntoConstraints = false
         middleContainerView.backgroundColor = .black
         return middleContainerView
+    }()
+    
+    private let cameraPreviewLayer = AVCaptureVideoPreviewLayer()
+    
+    private let cameraHighlightBoxLayer: CALayer = {
+        let cameraHighlightBoxLayer = CALayer()
+        cameraHighlightBoxLayer.borderColor = UIColor.red.cgColor
+        cameraHighlightBoxLayer.borderWidth = 2
+        cameraHighlightBoxLayer.cornerRadius = 10
+        return cameraHighlightBoxLayer
+    }()
+    
+    private let cameraPreviewView: UIView = {
+        let cameraPreviewView = UIView()
+        cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
+        cameraPreviewView.backgroundColor = .black
+        return cameraPreviewView
     }()
     
     private let scanQRCodeImageView: UIImageView = {
@@ -295,6 +313,14 @@ class AddEthereumWalletViewController: UIViewController {
             make.bottom.equalTo(bottomContainerView.snp.top).offset(10)
         }
         
+        middleContainerView.addSubview(cameraPreviewView)
+        cameraPreviewView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
         middleContainerView.addSubview(scanQRCodeImageView)
         scanQRCodeImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -306,6 +332,13 @@ class AddEthereumWalletViewController: UIViewController {
             make.top.equalTo(scanQRCodeImageView.snp.bottom).offset(14)
             make.centerX.equalTo(scanQRCodeImageView)
         }
+        
+        setupCameraPreviewView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        cameraPreviewLayer.frame = cameraPreviewView.bounds
     }
     
     // MARK - Button Actions -
@@ -331,5 +364,74 @@ class AddEthereumWalletViewController: UIViewController {
         
         completion(name, address, includeInBalanceSwitch.isOn)
         dismiss(animated: true)
+    }
+    
+    // MARK - QR Code Scanning -
+    
+    private func setupCameraPreviewView() {
+        guard let device = AVCaptureDevice.default(for: .video) else {
+            return
+        }
+        
+        do {
+            let session = AVCaptureSession()
+            
+            let input = try AVCaptureDeviceInput(device: device)
+            session.addInput(input)
+            
+            let output = AVCaptureMetadataOutput()
+            output.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            session.addOutput(output)
+            output.metadataObjectTypes = output.availableMetadataObjectTypes
+            print(output.availableMetadataObjectTypes)
+            
+            cameraPreviewLayer.session = session
+            cameraPreviewLayer.videoGravity = .resizeAspectFill
+            cameraPreviewView.layer.addSublayer(cameraPreviewLayer)
+            cameraPreviewView.layer.addSublayer(cameraHighlightBoxLayer)
+            session.startRunning()
+        } catch {
+            print("Failed to create AVCaptureSession: \(error)")
+        }
+    }
+    
+    private var lastDetectedString: String?
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        var highlightBoxRect = CGRect.zero
+        var detectedString: String?
+        
+        for metadata in metadataObjects {
+            if metadata.type == AVMetadataObject.ObjectType.qr {
+                if let barCodeObject = cameraPreviewLayer.transformedMetadataObject(for: metadata) as? AVMetadataMachineReadableCodeObject,
+                    let metadata = metadata as? AVMetadataMachineReadableCodeObject {
+                    highlightBoxRect = barCodeObject.bounds.insetBy(dx: -10, dy: -10)
+                    if let stringValue = metadata.stringValue {
+                        detectedString = stringValue
+                        break
+                    }
+                }
+            }
+        }
+        
+        if detectedString != lastDetectedString, var finalDetectedString = detectedString {
+            print("Read QR code: \(finalDetectedString)")
+            lastDetectedString = finalDetectedString
+            
+            // Fix for MetaMask QR codes (and maybe others)
+            let prefixes = ["ethereum:"]
+            for prefix in prefixes {
+                if finalDetectedString.hasPrefix(prefix) {
+                    let startIndex = finalDetectedString.index(finalDetectedString.startIndex, offsetBy: prefix.count)
+                    finalDetectedString = String(finalDetectedString[startIndex...])
+                    break;
+                }
+            }
+            
+            addressTextField.text = finalDetectedString
+        } else {
+            print("Couldn't read QR code")
+        }
+        
+        cameraHighlightBoxLayer.frame = highlightBoxRect
     }
 }
