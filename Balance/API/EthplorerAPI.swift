@@ -24,7 +24,7 @@ struct EthplorerAPI {
         return "freekey"
     }()
     
-    static func getAddressInfo(address: String, completion: @escaping (AddressInfoResponse?) -> ()) {
+    static func loadGetAddressInfo(address: String, completion: @escaping (AddressInfoResponse?) -> ()) {
         DispatchQueue.utility.async {
             var addressInfoResponse: AddressInfoResponse?
             let urlPath = baseURL.appendingPathComponent("getAddressInfo").appendingPathComponent(address)
@@ -37,13 +37,11 @@ struct EthplorerAPI {
                 return
             }
             
-            print("\(url.absoluteString)")
             let task = URLSession.shared.dataTask(with: url) { data, response, error in
                 guard let data = data, error == nil else {
                     print(error?.localizedDescription ?? "Response Error")
                     return
                 }
-                debugPrint(String(data: data, encoding: .utf8)!)
                 
                 do {
                     addressInfoResponse = try JSONDecoder().decode(AddressInfoResponse.self, from: data)

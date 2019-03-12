@@ -10,6 +10,7 @@
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AAD22381D3F001C1883 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53721AAC22381D3F001C1883 /* apikeys.plist */; };
+		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
 		53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */; };
@@ -39,6 +40,7 @@
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AAC22381D3F001C1883 /* apikeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = apikeys.plist; sourceTree = "<group>"; };
+		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerToolsAPI.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			children = (
 				53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */,
 				53721AAA22381BEB001C1883 /* EthplorerAPI.swift */,
+				53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */,
 				53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */,
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
+				53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */,
 				DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */,
 				53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,
