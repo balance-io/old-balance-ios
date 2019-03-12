@@ -1,3 +1,8 @@
+# Don't check in updates to the apikeys plist to keep our keys out of git
+Balance/apikeys.plist
+
+# VIM swap files
+*.swp
 
 # Created by https://www.gitignore.io/api/xcode,macos,swift
 # Edit at https://www.gitignore.io/?templates=xcode,macos,swift
