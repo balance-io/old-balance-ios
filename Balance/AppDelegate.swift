@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // HACK: Ensure "shared" property is loaded on the main thread (yeah it's not "good" code but it's short, sweet, and most importantly it works ;)
+        print(AppDelegate.shared)
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
