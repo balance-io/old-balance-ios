@@ -2,7 +2,6 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "settingsTabBarItemImage.png",
       "scale" : "1x"
     },
     {
