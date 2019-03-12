@@ -48,10 +48,10 @@ class WelcomeViewController: UIViewController {
     private let addButton: UIButton = {
         let addButton = UIButton()
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.backgroundColor = UIColor(hexString: "#006FFF")
         addButton.layer.cornerRadius = 14
         addButton.setTitle("Add an Ethereum Wallet", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
+        addButton.setBackgroundImage(UIImage(named: "blueGradientButton"), for: .normal)
         addButton.setImage(UIImage(named: "ethLogoWhite"), for: .normal)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return addButton
@@ -76,7 +76,7 @@ class WelcomeViewController: UIViewController {
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(wavesAndLogosImageView.snp.bottom).offset(150)
+            make.top.equalTo(wavesAndLogosImageView.snp.bottom).offset(100)
             make.centerX.equalToSuperview()
         }
         
@@ -90,15 +90,16 @@ class WelcomeViewController: UIViewController {
         
         view.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(14)
-            make.trailing.equalToSuperview().offset(-14)
+            make.width.equalTo(381)
+            make.height.equalTo(95)
+            make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-100)
-            make.height.equalTo(59)
         }
         addButton.imageView?.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(18)
-            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.centerY.equalToSuperview().offset(-2)
         }
+        addButton.titleEdgeInsets = UIEdgeInsets(top: -2, left: -15, bottom: 0, right: 0)
         addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
     }
     

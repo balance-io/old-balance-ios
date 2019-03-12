@@ -161,10 +161,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     private let addButton: UIButton = {
         let addButton = UIButton()
         addButton.translatesAutoresizingMaskIntoConstraints = false
-        addButton.backgroundColor = UIColor(red: 57.0/255.0, green: 64.0/255.0, blue: 82.0/255.0, alpha: 0.25)
         addButton.layer.cornerRadius = 14
         addButton.setTitle("Add wallet to watchlist", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
+        addButton.setBackgroundImage(UIImage(named: "grayGradientButton"), for: .normal)
         addButton.setImage(UIImage(named: "ethLogoWhite"), for: .normal)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return addButton
@@ -282,14 +282,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.top.equalTo(includeInBalanceSwitch.snp.bottom).offset(24)
-            make.leading.equalToSuperview().offset(14)
-            make.trailing.equalToSuperview().offset(-14)
-            make.height.equalTo(59)
+            make.width.equalTo(363)
+            make.height.equalTo(77)
+            make.centerX.equalToSuperview()
         }
         addButton.imageView?.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(18)
-            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().offset(25)
+            make.centerY.equalToSuperview().offset(-2)
         }
+        addButton.titleEdgeInsets = UIEdgeInsets(top: -5, left: -15, bottom: 0, right: 0)
         addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
         
         //
