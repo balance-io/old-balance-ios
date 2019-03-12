@@ -17,8 +17,8 @@ class CDPTableViewCell: UITableViewCell {
             numberFormatter.numberStyle = NumberFormatter.Style.decimal
             numberFormatter.maximumFractionDigits = 0
             
-            if let identifier = cdpItem.identifier {
-                identityLabel.text = "Maker CDP #\(identifier)"
+            if let id = cdpItem.id {
+                identityLabel.text = "Maker CDP #\(id)"
             }
             
             if let ratio = cdpItem.ratio {

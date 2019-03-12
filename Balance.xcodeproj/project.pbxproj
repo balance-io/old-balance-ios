@@ -30,7 +30,6 @@
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* BalanceViewController.swift */; };
 		DC66984F221D7E0200C383BD /* CDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66984E221D7E0200C383BD /* CDP.swift */; };
-		DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669850221D7E9300C383BD /* CDPAPI.swift */; };
 		DC669855221ED25E00C383BD /* CDPTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669854221ED25E00C383BD /* CDPTableViewCell.swift */; };
 		DCBF852822380B010002F93F /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBF852722380B010002F93F /* Icons.xcassets */; };
 /* End PBXBuildFile section */
@@ -64,7 +63,6 @@
 		DC66983E221CA8F000C383BD /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
 		DC669848221CA8F100C383BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC66984E221D7E0200C383BD /* CDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDP.swift; sourceTree = "<group>"; };
-		DC669850221D7E9300C383BD /* CDPAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPAPI.swift; sourceTree = "<group>"; };
 		DC669854221ED25E00C383BD /* CDPTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPTableViewCell.swift; sourceTree = "<group>"; };
 		DCBF852722380B010002F93F /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				DC66984E221D7E0200C383BD /* CDP.swift */,
-				DC669850221D7E9300C383BD /* CDPAPI.swift */,
 				DC4BA4F12234617A00A4E30D /* EthereumWallet.swift */,
 				53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */,
 			);
@@ -340,7 +337,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */,
-				DC669851221D7E9300C383BD /* CDPAPI.swift in Sources */,
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,

@@ -15,59 +15,41 @@ struct MakerToolsAPI {
     
     static func loadMakerCDPs(_ makers: [NSManagedObject], completion: @escaping ([CDP]) -> ()) {
         DispatchQueue.utility.async {
-            let identifiers = makers.compactMap { maker in
+            let ids = makers.compactMap { maker in
                 maker.value(forKey: "singleCollateralDaiIdentifier") as? String
             }
-            loadCDPs(identifiers: identifiers, baseURL: cdpBaseURL, completion: completion)
+            loadCDPs(ids: ids, baseURL: cdpBaseURL, completion: completion)
         }
     }
     
     static func loadEthereumWalletCDPs(_ ethereumWallet: [NSManagedObject], completion: @escaping ([CDP]) -> ()) {
         DispatchQueue.utility.async {
-            let identifiers = ethereumWallet.compactMap { maker in
+            let ids = ethereumWallet.compactMap { maker in
                 maker.value(forKey: "address") as? String
             }
-            loadCDPs(identifiers: identifiers, baseURL: ethBaseURL, completion: completion)
+            loadCDPs(ids: ids, baseURL: ethBaseURL, completion: completion)
         }
     }
     
-    private static func loadCDPs(identifiers: [String], baseURL: URL, completion: @escaping ([CDP]) -> ()) {
+    private static func loadCDPs(ids: [String], baseURL: URL, completion: @escaping ([CDP]) -> ()) {
         DispatchQueue.utility.async {
             var CDPs = [CDP]()
             let dispatchGroup = DispatchGroup()
-            for identifier in identifiers {
-                // Biggest CDP
-                
-                let url = baseURL.appendingPathComponent(identifier)
-                print(url)
+            for id in ids {
                 dispatchGroup.enter()
+                let url = baseURL.appendingPathComponent(id)
                 let task = URLSession.shared.dataTask(with: url) { data, response, error in
                     defer {
                         dispatchGroup.leave()
                     }
                     
-                    guard let dataResponse = data, error == nil else {
+                    guard let data = data, error == nil else {
                         print(error?.localizedDescription ?? "Response Error")
                         return
                     }
                     
-                    debugPrint(String(data: dataResponse, encoding: String.Encoding.utf8)!)
-                    
                     do {
-                        guard let jsonArray = try JSONSerialization.jsonObject(with: dataResponse, options: []) as? [[String: Any]] else {
-                            return
-                        }
-                        print(jsonArray)
-                        
-                        for dic in jsonArray {
-                            guard let identifier = dic["id"] as? Int else { return }
-                            guard let ratio = dic["ratio"] as? Double else { return }
-                            guard let pip = dic["pip"] as? Double else { return }
-                            guard let art = dic["art"] as? Double else { return }
-                            guard let ink = dic["ink"] as? Double else { return }
-                            guard let liqPrice = dic["liq_price"] as? Double else { return }
-                            CDPs.append(CDP(identifier: identifier, ratio: ratio, pip: pip, art: art, ink: ink, liqPrice: liqPrice))
-                        }
+                        CDPs = try JSONDecoder().decode([CDP].self, from: data)
                     } catch {
                         print("Error", error)
                     }

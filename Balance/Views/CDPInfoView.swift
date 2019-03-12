@@ -246,8 +246,9 @@ class CDPInfoView: UIView {
             make.top.equalTo(self).offset(15)
             make.leading.equalTo(self).offset(15)
         }
-
-        identifierLabel.text = "Maker CDP #\(cdpItem.identifier!.description)"
+        
+        let id = cdpItem.id != nil ? "#\(cdpItem.id!)" : ""
+        identifierLabel.text = "Maker CDP \(id)"
         addSubview(identifierLabel)
         identifierLabel.snp.makeConstraints { make in
             make.leading.equalTo(mkrGreenImageView.snp.trailing).offset(10)
