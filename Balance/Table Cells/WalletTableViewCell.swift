@@ -30,17 +30,17 @@ class WalletTableViewCell: UITableViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let addressLabel: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .left
         return label
@@ -48,17 +48,21 @@ class WalletTableViewCell: UITableViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 5
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
+        view.backgroundColor = .clear
         return view
+    }()
+    
+    private let backgroundImageView: UIImageView = {
+        let backgroundImageView = UIImageView()
+        backgroundImageView.image = UIImage(named: "watchlistCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
+        return backgroundImageView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        contentView.backgroundColor = UIColor(hexString: "#fbfbfb")
         
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
@@ -67,6 +71,14 @@ class WalletTableViewCell: UITableViewCell {
             make.leading.equalToSuperview().offset(10)
             make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview().offset(-10).priority(999)
+        }
+        
+        containerView.addSubview(backgroundImageView)
+        backgroundImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
         
         containerView.addSubview(nameLabel)

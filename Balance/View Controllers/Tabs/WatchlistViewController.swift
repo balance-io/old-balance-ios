@@ -20,10 +20,11 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
-        walletsTableView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        walletsTableView.backgroundColor = UIColor(hexString: "#fbfbfb")
         walletsTableView.separatorStyle = .none
+        walletsTableView.rowHeight = 119
         walletsTableView.dataSource = self
         walletsTableView.delegate = self
         
@@ -100,10 +101,6 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         cell.selectionStyle = .none
         cell.wallet = ethereumWallets[indexPath.row]
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

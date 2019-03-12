@@ -176,7 +176,7 @@ class CDPTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.0)
+        contentView.backgroundColor = UIColor(hexString: "#fbfbfb")
         
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
