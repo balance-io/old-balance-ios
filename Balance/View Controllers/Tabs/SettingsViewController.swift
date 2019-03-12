@@ -29,6 +29,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         return richardImageView
     }()
     
+    private let benImageView: UIImageView = {
+        let benImageView = UIImageView()
+        benImageView.translatesAutoresizingMaskIntoConstraints = false
+        benImageView.image = UIImage(named: "ben")
+        return benImageView
+    }()
+    
     private let joinTitleLabel: UILabel = {
         let joinTitleLabel = UILabel()
         joinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -120,8 +127,14 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         view.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(wavesImageView)
-            make.centerY.equalTo(wavesImageView).offset(5)
+            make.centerX.equalTo(wavesImageView).offset(-50)
+            make.centerY.equalTo(wavesImageView).offset(10)
+        }
+        
+        view.addSubview(benImageView)
+        benImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(wavesImageView).offset(50)
+            make.centerY.equalTo(wavesImageView).offset(-10)
         }
         
         view.addSubview(joinTitleLabel)
