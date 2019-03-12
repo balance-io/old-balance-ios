@@ -152,10 +152,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         return includeInBalanceTitleLabel
     }()
     
-    private let includeInBalanceSwitch: UISwitch = {
-        let includeInBalanceSwitch = UISwitch()
-        includeInBalanceSwitch.translatesAutoresizingMaskIntoConstraints = false
-        return includeInBalanceSwitch
+    private let includeInTotalSwitch: UISwitch = {
+        let includeInTotalSwitch = UISwitch()
+        includeInTotalSwitch.translatesAutoresizingMaskIntoConstraints = false
+        return includeInTotalSwitch
     }()
     
     private let addButton: UIButton = {
@@ -273,15 +273,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.leading.equalTo(nameTitleLabel)
         }
         
-        bottomContainerView.addSubview(includeInBalanceSwitch)
-        includeInBalanceSwitch.snp.makeConstraints { make in
-            make.centerY.equalTo(includeInBalanceTitleLabel)
+        bottomContainerView.addSubview(includeInTotalSwitch)
+        includeInTotalSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(includeInTotalSwitch)
             make.trailing.equalToSuperview().offset(-14)
         }
         
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.top.equalTo(includeInBalanceSwitch.snp.bottom).offset(24)
+            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(24)
             make.width.equalTo(363)
             make.height.equalTo(77)
             make.centerX.equalToSuperview()
@@ -357,7 +357,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             return
         }
         
-        CoreDataHelper.saveEthereumWallet(name: name, address: address)
+        CoreDataHelper.saveEthereumWallet(name: name, address: address, includeInTotal: includeInTotalSwitch.isOn)
         NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     

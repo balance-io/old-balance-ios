@@ -71,7 +71,7 @@ struct CoreDataHelper {
         }
     }
     
-    @discardableResult static func saveEthereumWallet(name: String, address: String) -> Bool {
+    @discardableResult static func saveEthereumWallet(name: String, address: String, includeInTotal: Bool) -> Bool {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "Ethereum", in: managedContext) else {
             print("Could not save because entity could not be created")
@@ -81,6 +81,7 @@ struct CoreDataHelper {
         let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
         managedObject.setValue(name, forKey: "name")
         managedObject.setValue(address, forKeyPath: "address")
+        managedObject.setValue(includeInTotal, forKey: "includeInTotal")
         
         do {
             try managedContext.save()

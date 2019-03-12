@@ -16,15 +16,8 @@ class WalletTableViewCell: UITableViewCell {
                 return
             }
             
-            if let name = walletItem.name {
-                nameLabel.text = "\(name)"
-            } else {
-                nameLabel.text = "No Name"
-            }
-            
-            if let address = walletItem.address {
-                addressLabel.text = "\(address)"
-            }
+            nameLabel.text = walletItem.name.count > 0 ? walletItem.name : "No Name"
+            addressLabel.text = walletItem.address
         }
     }
     

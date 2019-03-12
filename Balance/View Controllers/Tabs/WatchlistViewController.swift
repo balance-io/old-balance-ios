@@ -77,7 +77,10 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
         ethereumWallets = [EthereumWallet]()
         if managedEthereumWallets.count > 0 {
             for wallet in managedEthereumWallets {
-                ethereumWallets.append(EthereumWallet(name: String(wallet.value(forKey: "name") as! String), address: String(wallet.value(forKey: "address") as! String)))
+                let name = wallet.value(forKey: "name") as? String ?? ""
+                let address = wallet.value(forKey: "address") as? String ?? ""
+                let includeInTotal = wallet.value(forKey: "includeInTotal") as? Bool ?? true
+                ethereumWallets.append(EthereumWallet(name: name, address: address, includeInTotal: includeInTotal))
             }
         }
         walletsTableView.reloadData()
