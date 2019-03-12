@@ -13,6 +13,7 @@ class SettingsTableViewCell: UITableViewCell {
     var isEnabled: Bool {
         didSet {
             backgroundColor = isEnabled ? .white : .gray
+            contentView.alpha = isEnabled ? 1.0 : 0.3
         }
     }
     

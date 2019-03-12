@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView)
-            make.centerY.equalTo(wavesImageView)
+            make.centerY.equalTo(wavesImageView).offset(5)
         }
         
         view.addSubview(joinTitleLabel)
@@ -198,10 +198,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
         view.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(githubButton.snp.bottom).offset(15)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(tableView.rowHeight * 4)
+            make.height.equalTo(tableView.rowHeight * 3)//4)
+            make.bottom.equalTo(view.snp.bottomMargin)
         }
         
         navigationController?.setNavigationBarHidden(true, animated: true)
@@ -231,17 +231,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     // MARK: - Table View -
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
         cell.isEnabled = false
         cell.sideLabel.text = ""
-        switch indexPath.row {
-        case 0:
-            cell.imageView?.image = UIImage(named: "notificationsIcon")
-            cell.textLabel?.text = "Notifications"
+        let row = indexPath.row + 1
+        switch row {
+//        case 0:
+//            cell.imageView?.image = UIImage(named: "notificationsIcon")
+//            cell.textLabel?.text = "Notifications"
         case 1:
             cell.imageView?.image = UIImage(named: "proIcon")
             cell.textLabel?.text = "Balance Pro"
@@ -259,10 +260,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)

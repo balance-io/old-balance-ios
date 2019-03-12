@@ -64,7 +64,7 @@ class WelcomeViewController: UIViewController {
         
         view.addSubview(balanceLogoImageView)
         balanceLogoImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(116)
+            make.centerY.equalToSuperview().multipliedBy(0.3)
             make.centerX.equalToSuperview()
         }
         
@@ -76,7 +76,7 @@ class WelcomeViewController: UIViewController {
         
         view.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(wavesAndLogosImageView.snp.bottom).offset(100)
+            make.centerY.equalToSuperview()
             make.centerX.equalToSuperview()
         }
         
