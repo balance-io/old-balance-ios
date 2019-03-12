@@ -176,7 +176,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .green
+        view.backgroundColor = .black
         
         //
         // Top Container

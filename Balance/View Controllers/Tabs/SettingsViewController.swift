@@ -18,7 +18,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     private let wavesImageView: UIImageView = {
         let wavesImageView = UIImageView()
         wavesImageView.translatesAutoresizingMaskIntoConstraints = false
-        wavesImageView.image = UIImage(named: "waves")
+        wavesImageView.image = UIImage(named: "wavesWithoutLogos")
         return wavesImageView
     }()
     
