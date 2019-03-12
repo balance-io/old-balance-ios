@@ -146,15 +146,16 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         return pasteButton
     }()
     
-    private let includeInBalanceTitleLabel: UILabel = {
-        let includeInBalanceTitleLabel = newTitleLabel()
-        includeInBalanceTitleLabel.text = "Include in total balance"
-        return includeInBalanceTitleLabel
+    private let includeInTotalTitleLabel: UILabel = {
+        let includeInTotalTitleLabel = newTitleLabel()
+        includeInTotalTitleLabel.text = "Include in total balance"
+        return includeInTotalTitleLabel
     }()
     
     private let includeInTotalSwitch: UISwitch = {
         let includeInTotalSwitch = UISwitch()
         includeInTotalSwitch.translatesAutoresizingMaskIntoConstraints = false
+        includeInTotalSwitch.isOn = true
         return includeInTotalSwitch
     }()
     
@@ -267,15 +268,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.bottom.equalToSuperview()
         }
         
-        bottomContainerView.addSubview(includeInBalanceTitleLabel)
-        includeInBalanceTitleLabel.snp.makeConstraints { make in
+        bottomContainerView.addSubview(includeInTotalTitleLabel)
+        includeInTotalTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
             make.leading.equalTo(nameTitleLabel)
         }
         
         bottomContainerView.addSubview(includeInTotalSwitch)
         includeInTotalSwitch.snp.makeConstraints { make in
-            make.centerY.equalTo(includeInTotalSwitch)
+            make.centerY.equalTo(includeInTotalTitleLabel)
             make.trailing.equalToSuperview().offset(-14)
         }
         
