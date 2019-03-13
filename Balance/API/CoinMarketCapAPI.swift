@@ -15,7 +15,10 @@ struct CoinMarketCapAPI {
             var returnWallets = [EthereumWallet]()
             for wallet in ethereumWallets {
                 var returnWallet = wallet
-                returnWallet.price = response?.priceUSD
+                if let balance = wallet.balance, let rate = response?.priceUSD {
+                    returnWallet.fiatBalance = balance * rate
+                }
+                returnWallet.rate = response?.priceUSD
                 returnWallet.currency = "USD"
                 returnWallets.append(returnWallet)
             }

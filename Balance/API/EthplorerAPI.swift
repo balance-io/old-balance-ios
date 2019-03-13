@@ -76,12 +76,22 @@ struct EthplorerAPI {
                         var tokens = [Token]()
                         for tokenInfoWrapper in tokensResponse {
                             let info = tokenInfoWrapper.tokenInfo
-                            var price: Double?
-                            if let balance = tokenInfoWrapper.balance, let rate = info?.price?.rate {
-                                price = balance * rate
+                            var decimalsInt: UInt?
+                            if let decimalsString = info?.decimals {
+                                decimalsInt = UInt(decimalsString)
                             }
                             
-                            let token = Token(balance: tokenInfoWrapper.balance, price: price, rate: info?.price?.rate, currency: info?.price?.currency, address: info?.address, name: info?.name, symbol: info?.symbol, decimals: info?.decimals)
+                            var cryptoBalance: Double?
+                            if let balance = tokenInfoWrapper.balance, let decimalsInt = decimalsInt {
+                                cryptoBalance = balance / pow(10.0, Double(decimalsInt))
+                            }
+                            
+                            var fiatBalance: Double?
+                            if let cryptoBalance = cryptoBalance, let rate = info?.price?.rate {
+                                fiatBalance = cryptoBalance * rate
+                            }
+                            
+                            let token = Token(balance: cryptoBalance, fiatBalance: fiatBalance, rate: info?.price?.rate, currency: info?.price?.currency, address: info?.address, name: info?.name, symbol: info?.symbol, decimals: decimalsInt)
                             tokens.append(token)
                         }
                         returnWallet.tokens = tokens

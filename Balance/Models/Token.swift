@@ -9,19 +9,19 @@
 import Foundation
 
 struct Token {
-    let balance: Double?  // Balance in tokens
-    let price: Double?    // Price in fiat currency
-    let rate: Double?     // Price per unit in fiat currency
-    let currency: String? // Fiat currency used for price and balance
+    let balance: Double?     // Balance in tokens
+    let fiatBalance: Double? // Balance in fiat currency
+    let rate: Double?        // Price per unit in fiat currency
+    let currency: String?    // Fiat currency used for price and balance
     
-    let address: String?  // Contract address
-    let name: String?     // Token display name
-    let symbol: String?   // Token symbol
-    let decimals: String? // Number of decimal places token can be broken down to
+    let address: String?     // Contract address
+    let name: String?        // Token display name
+    let symbol: String?      // Token symbol
+    let decimals: UInt?      // Number of decimal places token can be broken down to
     
     func withAggregatedValuesFrom(token: Token) -> Token {
         var totalBalance = balance
-        var totalPrice = price
+        var totalFiatBalance = fiatBalance
         
         if let otherBalance = token.balance {
             if totalBalance == nil {
@@ -31,14 +31,14 @@ struct Token {
             }
         }
         
-        if let otherPrice = token.price {
-            if totalPrice == nil {
-                totalPrice = otherPrice
+        if let otherFiatBalance = token.fiatBalance {
+            if totalFiatBalance == nil {
+                totalFiatBalance = otherFiatBalance
             } else {
-                totalPrice! += otherPrice
+                totalFiatBalance! += otherFiatBalance
             }
         }
         
-        return Token(balance: totalBalance, price: totalPrice, rate: rate, currency: currency, address: address, name: name, symbol: symbol, decimals: decimals)
+        return Token(balance: totalBalance, fiatBalance: totalFiatBalance, rate: rate, currency: currency, address: address, name: name, symbol: symbol, decimals: decimals)
     }
 }
