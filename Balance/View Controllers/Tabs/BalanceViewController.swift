@@ -94,48 +94,9 @@ class BalanceViewController: UITableViewController {
             dispatchGroup.wait()
             
             // Aggregate the balances
-            // NOTE: This currently assumes all wallets have the same fiat currency
-            if newEthereumWallets.count == 1 {
-                // There's only one wallet, so just use that
-                newAggregatedEthereumWallet = newEthereumWallets[0]
-            } else {
-                // Combine all of the balances
-                newAggregatedEthereumWallet = EthereumWallet(name: "___Aggregated___", address: "", includeInTotal: false)
-                newAggregatedEthereumWallet?.price = newEthereumWallets[0].price
-                newAggregatedEthereumWallet?.currency = newEthereumWallets[0].currency
-                var totalBalance: Double = 0
-                var totalTokens = [Token]()
-                for wallet in newEthereumWallets {
-                    if let balance = wallet.balance {
-                        totalBalance += balance
-                    }
-                    if let tokens = wallet.tokens {
-                        if totalTokens.count == 0 {
-                            totalTokens = tokens
-                        } else {
-                            var tempTotalTokens = [Token]()
-                            for token in tokens {
-                                if let existingToken = totalTokens.first(where: { $0.address == token.address }) {
-                                    tempTotalTokens.append(existingToken.withAggregatedValuesFrom(token: token))
-                                } else {
-                                    tempTotalTokens.append(token)
-                                }
-                            }
-                            
-                            // Add back any missing tokens
-                            for existingToken in totalTokens {
-                                if tempTotalTokens.first(where: { $0.address == existingToken.address }) == nil {
-                                    tempTotalTokens.append(existingToken)
-                                }
-                            }
-                            totalTokens = tempTotalTokens
-                        }
-                    }
-                }
-                newAggregatedEthereumWallet?.balance = totalBalance
-                newAggregatedEthereumWallet?.tokens = totalTokens
-            }
+            newAggregatedEthereumWallet = EthereumWallet.aggregated(wallets: newEthereumWallets)
             
+            // Store the results and reload the table
             DispatchQueue.main.async {
                 // Sort by CDP number
                 self.CDPs = newCDPs.sorted { left, right -> Bool in
@@ -195,7 +156,13 @@ class BalanceViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 180
+        if indexPath.section == Section.ethereum.rawValue {
+            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum)
+        } else if indexPath.section == Section.erc20.rawValue {
+            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .erc20)
+        } else {
+            return 180
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

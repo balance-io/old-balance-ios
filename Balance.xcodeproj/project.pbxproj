@@ -99,8 +99,8 @@
 		53F0C9A9223571C300FF0796 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53F0C9C32236E4F100FF0796 /* Tabs */,
 				53F0C9C42236E4FF00FF0796 /* Modal */,
+				53F0C9C32236E4F100FF0796 /* Tabs */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
