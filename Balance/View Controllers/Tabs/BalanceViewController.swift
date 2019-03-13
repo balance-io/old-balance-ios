@@ -1,10 +1,24 @@
+//
+//  BalanceViewController.swift
+//  Balance
+//
+//  Created by Richard Burton on 3/9/19.
+//  Copyright © 2019 Balance. All rights reserved.
+//
+
 import UIKit
 import CoreData
 import SwiftEntryKit
 
-class BalanceViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BalanceViewController: UITableViewController {
+    enum Section: Int {
+        case ethereum = 0
+        case erc20    = 1
+        case cdp      = 2
+    }
 
-    private let cdpsTableView = UITableView()
+    private var ethereumWallets = [EthereumWallet]()
+    private var aggregatedEthereumWallet: EthereumWallet?
     private var CDPs = [CDP]()
     
     // MARK - View Lifecycle -
@@ -12,22 +26,11 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(hexString: "#fbfbfb")
-        cdpsTableView.backgroundColor = UIColor(hexString: "#fbfbfb")
+        view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
-        cdpsTableView.dataSource = self
-        cdpsTableView.delegate = self
-        
-        cdpsTableView.register(CDPTableViewCell.self, forCellReuseIdentifier: "cdpCell")
-        view.addSubview(cdpsTableView)
-        cdpsTableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        cdpsTableView.topAnchor.constraint(equalTo:view.topAnchor).isActive = true
-        cdpsTableView.leftAnchor.constraint(equalTo:view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        cdpsTableView.rightAnchor.constraint(equalTo:view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        cdpsTableView.bottomAnchor.constraint(equalTo:view.bottomAnchor).isActive = true
-        
-        cdpsTableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.backgroundColor = UIColor(hexString: "#fbfbfb")
+        tableView.separatorStyle = .none
+        tableView.register(CDPBalanceTableViewCell.self, forCellReuseIdentifier: "cdpCell")
         
         setupNavigation()
         loadData()
@@ -48,30 +51,102 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private func loadData() {
         DispatchQueue.utility.async {
+            var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+            var newAggregatedEthereumWallet: EthereumWallet?
             var newCDPs = [CDP]()
+            
+            guard newEthereumWallets.count > 0 else {
+                // This should never happen
+                self.CDPs = newCDPs
+                self.ethereumWallets = newEthereumWallets
+                self.aggregatedEthereumWallet = newAggregatedEthereumWallet
+                self.tableView.reloadData()
+                return
+            }
+            
             let dispatchGroup = DispatchGroup()
             
-            // Load MakerDAO CDPs
+            // Load balances first
             dispatchGroup.enter()
-            let makers = CoreDataHelper.loadAllMakers()
-            MakerToolsAPI.loadMakerCDPs(makers) { CDPs in
-                newCDPs.append(contentsOf: CDPs)
+            EthplorerAPI.loadWalletBalances(newEthereumWallets) { wallets in
+                newEthereumWallets = wallets
                 dispatchGroup.leave()
             }
             
-            // Load Ethereum Wallets
+            // Load CDPs
             dispatchGroup.enter()
-            let ethereumWallets = CoreDataHelper.loadAllEthereumWallets()
-            MakerToolsAPI.loadEthereumWalletCDPs(ethereumWallets) { CDPs in
+            MakerToolsAPI.loadEthereumWalletCDPs(newEthereumWallets) { CDPs in
                 newCDPs.append(contentsOf: CDPs)
                 dispatchGroup.leave()
             }
             
             // Wait for results
             dispatchGroup.wait()
+            
+            // Load ethereum price
+            dispatchGroup.enter()
+            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, success in
+                newEthereumWallets = wallets
+                dispatchGroup.leave()
+            }
+            
+            // Wait for results
+            dispatchGroup.wait()
+            
+            // Aggregate the balances
+            // NOTE: This currently assumes all wallets have the same fiat currency
+            if newEthereumWallets.count == 1 {
+                // There's only one wallet, so just use that
+                newAggregatedEthereumWallet = newEthereumWallets[0]
+            } else {
+                // Combine all of the balances
+                newAggregatedEthereumWallet = EthereumWallet(name: "___Aggregated___", address: "", includeInTotal: false)
+                newAggregatedEthereumWallet?.price = newEthereumWallets[0].price
+                newAggregatedEthereumWallet?.currency = newEthereumWallets[0].currency
+                var totalBalance: Double = 0
+                var totalTokens = [Token]()
+                for wallet in newEthereumWallets {
+                    if let balance = wallet.balance {
+                        totalBalance += balance
+                    }
+                    if let tokens = wallet.tokens {
+                        if totalTokens.count == 0 {
+                            totalTokens = tokens
+                        } else {
+                            var tempTotalTokens = [Token]()
+                            for token in tokens {
+                                if let existingToken = totalTokens.first(where: { $0.address == token.address }) {
+                                    tempTotalTokens.append(existingToken.withAggregatedValuesFrom(token: token))
+                                } else {
+                                    tempTotalTokens.append(token)
+                                }
+                            }
+                            
+                            // Add back any missing tokens
+                            for existingToken in totalTokens {
+                                if tempTotalTokens.first(where: { $0.address == existingToken.address }) == nil {
+                                    tempTotalTokens.append(existingToken)
+                                }
+                            }
+                            totalTokens = tempTotalTokens
+                        }
+                    }
+                }
+                newAggregatedEthereumWallet?.balance = totalBalance
+                newAggregatedEthereumWallet?.tokens = totalTokens
+            }
+            
             DispatchQueue.main.async {
-                self.CDPs = newCDPs
-                self.cdpsTableView.reloadData()
+                // Sort by CDP number
+                self.CDPs = newCDPs.sorted { left, right -> Bool in
+                    if let leftId = left.id, let rightId = right.id {
+                        return leftId < rightId
+                    }
+                    return false
+                }
+                self.ethereumWallets = newEthereumWallets
+                self.aggregatedEthereumWallet = newAggregatedEthereumWallet
+                self.tableView.reloadData()
             }
         }
     }
@@ -81,27 +156,54 @@ class BalanceViewController: UIViewController, UITableViewDataSource, UITableVie
     }
         
     // MARK - Table View -
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return CDPs.count
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let sectionEnum = Section(rawValue: section) else {
+            return 0
+        }
+        
+        switch sectionEnum {
+        case .ethereum:
+            return ethereumWallets.count > 0 ? 1 : 0
+        case .erc20:
+            // Check if there are any tokens
+            for wallet in ethereumWallets {
+                if let count = wallet.tokens?.count, count > 0 {
+                    return 1
+                }
+            }
+            return 0
+        case .cdp:
+            return CDPs.count
+        }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPTableViewCell
-        cell.selectionStyle = .none
-        cell.cdp = CDPs[indexPath.row]
-
-        return cell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == Section.ethereum.rawValue {
+            return CryptoBalanceTableViewCell(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum)
+        } else if indexPath.section == Section.erc20.rawValue {
+            return CryptoBalanceTableViewCell(wallet: aggregatedEthereumWallet!, cryptoType: .erc20)
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPBalanceTableViewCell
+            cell.cdp = CDPs[indexPath.row]
+            return cell
+        }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        print("Row: \(indexPath.row)")
+        guard indexPath.section == Section.cdp.rawValue else {
+            return
+        }
         
         var attributes = EKAttributes()
         attributes = .centerFloat

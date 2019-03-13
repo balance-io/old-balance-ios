@@ -22,11 +22,12 @@ struct MakerToolsAPI {
         }
     }
     
-    static func loadEthereumWalletCDPs(_ ethereumWallet: [NSManagedObject], completion: @escaping ([CDP]) -> ()) {
+    static func loadEthereumWalletCDPs(_ ethereumWallets: [EthereumWallet], completion: @escaping ([CDP]) -> ()) {
         DispatchQueue.utility.async {
-            let ids = ethereumWallet.compactMap { maker in
-                maker.value(forKey: "address") as? String
+            let ids = ethereumWallets.compactMap { wallet in
+                wallet.address
             }
+            
             loadCDPs(ids: ids, baseURL: ethBaseURL, completion: completion)
         }
     }

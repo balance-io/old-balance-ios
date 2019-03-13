@@ -358,7 +358,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             return
         }
         
-        CoreDataHelper.saveEthereumWallet(name: name, address: address, includeInTotal: includeInTotalSwitch.isOn)
+        let ethereumWallet = EthereumWallet(name: name, address: address, includeInTotal: includeInTotalSwitch.isOn)
+        CoreDataHelper.save(ethereumWallet: ethereumWallet)
         NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     

@@ -9,29 +9,21 @@
 import Foundation
 
 struct CoinMarketCapAPI {
-    static func loadTicker(completion: @escaping ([TickerResponse]) -> ()) {
-        DispatchQueue.utility.async {
-            var tickerResponses = [TickerResponse]()
-            // NOTE: Remove "ethereum/" from the end to get all cryptocurrencies
-            let url = URL(string: "https://api.coinmarketcap.com/v1/ticker")!
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
-                guard let data = data, error == nil else {
-                    print(error?.localizedDescription ?? "Response Error")
-                    return
-                }
-                debugPrint(String(data: data, encoding: .utf8)!)
-                
-                do {
-                    tickerResponses = try JSONDecoder().decode([TickerResponse].self, from: data)
-                } catch {
-                    print("Error getting ticker from CoinMarketCap: ", error)
-                }
-                
-                DispatchQueue.main.async {
-                    completion(tickerResponses)
-                }
+    
+    static func loadEthereumPrice(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet], Bool) -> ()) {
+        loadEthereumTicker { response in
+            var returnWallets = [EthereumWallet]()
+            for wallet in ethereumWallets {
+                var returnWallet = wallet
+                returnWallet.price = response?.priceUSD
+                returnWallet.currency = "USD"
+                returnWallets.append(returnWallet)
             }
-            task.resume()
+            
+            DispatchQueue.main.async {
+                let success = (response != nil)
+                completion(returnWallets, success)
+            }
         }
     }
     
@@ -54,6 +46,32 @@ struct CoinMarketCapAPI {
                 
                 DispatchQueue.main.async {
                     completion(tickerResponse)
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    static func loadTicker(completion: @escaping ([TickerResponse]) -> ()) {
+        DispatchQueue.utility.async {
+            var tickerResponses = [TickerResponse]()
+            // NOTE: Remove "ethereum/" from the end to get all cryptocurrencies
+            let url = URL(string: "https://api.coinmarketcap.com/v1/ticker")!
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return
+                }
+                debugPrint(String(data: data, encoding: .utf8)!)
+                
+                do {
+                    tickerResponses = try JSONDecoder().decode([TickerResponse].self, from: data)
+                } catch {
+                    print("Error getting ticker from CoinMarketCap: ", error)
+                }
+                
+                DispatchQueue.main.async {
+                    completion(tickerResponses)
                 }
             }
             task.resume()

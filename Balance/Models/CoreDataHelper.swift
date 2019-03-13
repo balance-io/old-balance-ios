@@ -14,15 +14,27 @@ struct CoreDataHelper {
         static let ethereumWalletAdded = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletAdded")
     }
     
-    static func loadAllMakers() -> [NSManagedObject] {
-        return loadAllData(entity: "Maker")
+    static func loadAllEthereumWallets(managedWallets: [NSManagedObject]? = nil) -> [EthereumWallet] {
+        let managedEthereumWallets = managedWallets ?? loadAllManagedEthereumWallets()
+        var ethereumWallets = [EthereumWallet]()
+        for managedWallet in managedEthereumWallets {
+            let name = managedWallet.value(forKey: "name") as? String ?? ""
+            let address = managedWallet.value(forKey: "address") as? String ?? ""
+            let includeInTotal = managedWallet.value(forKey: "includeInTotal") as? Bool ?? true
+            ethereumWallets.append(EthereumWallet(name: name, address: address, includeInTotal: includeInTotal))
+        }
+        return ethereumWallets
     }
     
-    static func loadAllEthereumWallets() -> [NSManagedObject] {
-        return loadAllData(entity: "Ethereum")
+    static func loadAllManangedMakers() -> [NSManagedObject] {
+        return loadAll(entity: "Maker")
     }
     
-    static func loadAllData(entity: String) -> [NSManagedObject] {
+    static func loadAllManagedEthereumWallets() -> [NSManagedObject] {
+        return loadAll(entity: "Ethereum")
+    }
+    
+    static func loadAll(entity: String) -> [NSManagedObject] {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entity)
         var managedObjects = [NSManagedObject]()
@@ -71,7 +83,7 @@ struct CoreDataHelper {
         }
     }
     
-    @discardableResult static func saveEthereumWallet(name: String, address: String, includeInTotal: Bool) -> Bool {
+    @discardableResult static func save(ethereumWallet: EthereumWallet) -> Bool {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         guard let entity = NSEntityDescription.entity(forEntityName: "Ethereum", in: managedContext) else {
             print("Could not save because entity could not be created")
@@ -79,9 +91,9 @@ struct CoreDataHelper {
         }
         
         let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
-        managedObject.setValue(name, forKey: "name")
-        managedObject.setValue(address, forKeyPath: "address")
-        managedObject.setValue(includeInTotal, forKey: "includeInTotal")
+        managedObject.setValue(ethereumWallet.name, forKey: "name")
+        managedObject.setValue(ethereumWallet.address, forKeyPath: "address")
+        managedObject.setValue(ethereumWallet.includeInTotal, forKey: "includeInTotal")
         
         do {
             try managedContext.save()
@@ -104,11 +116,9 @@ struct CoreDataHelper {
         }
     }
     
-    static func deleteAllData(entity: String) {
+    static func delete(entity: String) {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
-        print("FETCHING")
-        print(fetchRequest)
         fetchRequest.returnsObjectsAsFaults = false
         
         do {

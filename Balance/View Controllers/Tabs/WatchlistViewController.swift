@@ -1,3 +1,11 @@
+//
+//  WatchlistViewController.swift
+//  Balance
+//
+//  Created by Richard Burton on 3/9/19.
+//  Copyright © 2019 Balance. All rights reserved.
+//
+
 import UIKit
 import CoreData
 import SwiftEntryKit
@@ -73,16 +81,8 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Data Loading -
     
     private func loadData() {
-        managedEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
-        ethereumWallets = [EthereumWallet]()
-        if managedEthereumWallets.count > 0 {
-            for wallet in managedEthereumWallets {
-                let name = wallet.value(forKey: "name") as? String ?? ""
-                let address = wallet.value(forKey: "address") as? String ?? ""
-                let includeInTotal = wallet.value(forKey: "includeInTotal") as? Bool ?? true
-                ethereumWallets.append(EthereumWallet(name: name, address: address, includeInTotal: includeInTotal))
-            }
-        }
+        managedEthereumWallets = CoreDataHelper.loadAllManagedEthereumWallets()
+        ethereumWallets = CoreDataHelper.loadAllEthereumWallets(managedWallets: managedEthereumWallets)
         walletsTableView.reloadData()
     }
     
