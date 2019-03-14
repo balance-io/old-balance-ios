@@ -50,7 +50,8 @@ struct MakerToolsAPI {
                     }
                     
                     do {
-                        CDPs = try JSONDecoder().decode([CDP].self, from: data)
+                        let loadedCDPs = try JSONDecoder().decode([CDP].self, from: data)
+                        CDPs.append(contentsOf: loadedCDPs)
                     } catch {
                         print("Error", error)
                     }
