@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>3</string>
+	<string>4</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -29,21 +29,21 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Reads QR codes to add ethereum addresses</string>
-	<key>UILaunchStoryboardName</key>
-	<string></string>
 	<key>UILaunchImages</key>
-    <array>
-        <dict>
-            <key>UILaunchImageMinimumOSVersion</key>
-            <string>7.0</string>
-            <key>UILaunchImageName</key>
-            <string>Default-568h</string>
-            <key>UILaunchImageOrientation</key>
-            <string>Portrait</string>
-            <key>UILaunchImageSize</key>
-            <string>{320, 568}</string>
-        </dict>
-    </array>
+	<array>
+		<dict>
+			<key>UILaunchImageMinimumOSVersion</key>
+			<string>7.0</string>
+			<key>UILaunchImageName</key>
+			<string>Default-568h</string>
+			<key>UILaunchImageOrientation</key>
+			<string>Portrait</string>
+			<key>UILaunchImageSize</key>
+			<string>{320, 568}</string>
+		</dict>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -25,7 +25,7 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
         
         let watchlistNavigationController = UINavigationController(rootViewController: watchlistViewController)
-        watchlistNavigationController.tabBarItem = UITabBarItem(title: "Watchlist",
+        watchlistNavigationController.tabBarItem = UITabBarItem(title: "Wallets",
                                                                 image: UIImage(named: "watchlistTabBarItemImage"),
                                                                 selectedImage: UIImage(named: "watchlistTabBarItemImageSelected"))
         
