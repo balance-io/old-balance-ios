@@ -37,14 +37,17 @@ struct EthereumWallet {
         } else {
             // Combine all of the balances
             aggregatedEthereumWallet = EthereumWallet(name: "___Aggregated___", address: "", includeInTotal: false)
-            aggregatedEthereumWallet?.fiatBalance = wallets[0].fiatBalance
             aggregatedEthereumWallet?.rate = wallets[0].rate
             aggregatedEthereumWallet?.currency = wallets[0].currency
             var totalBalance: Double = 0
+            var totalFiatBalance: Double = 0
             var totalTokens = [Token]()
             for wallet in wallets {
                 if let balance = wallet.balance {
                     totalBalance += balance
+                }
+                if let fiatBalance = wallet.fiatBalance {
+                    totalFiatBalance += fiatBalance
                 }
                 if let tokens = wallet.tokens {
                     if totalTokens.count == 0 {
@@ -70,6 +73,7 @@ struct EthereumWallet {
                 }
             }
             aggregatedEthereumWallet?.balance = totalBalance
+            aggregatedEthereumWallet?.fiatBalance = totalFiatBalance
             aggregatedEthereumWallet?.tokens = totalTokens
         }
         return aggregatedEthereumWallet
