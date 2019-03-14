@@ -24,6 +24,10 @@ struct EthplorerAPI {
         return "freekey"
     }()
     
+    public static let isFreeApiKey: Bool = {
+        return apiKey == "freekey"
+    }()
+    
     static func loadWalletBalances(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> ()) {
         DispatchQueue.utility.async {
             var returnWallets = [EthereumWallet]()
@@ -33,6 +37,12 @@ struct EthplorerAPI {
                 loadWalletBalance(ethereumWallet) { wallet, success in
                     returnWallets.append(wallet)
                     dispatchGroup.leave()
+                }
+                
+                // If we're using the free api key, serialize the api calls with a delay in between
+                if isFreeApiKey {
+                    dispatchGroup.wait()
+                    Thread.sleep(forTimeInterval: 2.0)
                 }
             }
             dispatchGroup.wait()

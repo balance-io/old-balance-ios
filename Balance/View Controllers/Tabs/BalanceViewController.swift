@@ -21,6 +21,9 @@ class BalanceViewController: UITableViewController {
     private var aggregatedEthereumWallet: EthereumWallet?
     private var CDPs = [CDP]()
     
+    private var isLoading = false
+    private var lastLoadTimestamp = 0.0
+    
     // MARK - View Lifecycle -
     
     override func viewDidLoad() {
@@ -50,7 +53,24 @@ class BalanceViewController: UITableViewController {
     
     // MARK - Data Loading -
     
-    func loadData() {
+    @objc func loadData() {
+        if isLoading {
+            // Wait a bit and try again
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData), object: nil)
+            perform(#selector(loadData), with: nil, afterDelay: 0.5)
+            return
+        }
+        
+        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0
+        let secondsSinceLastLoad = NSDate().timeIntervalSince1970 - lastLoadTimestamp
+        if secondsSinceLastLoad < delay {
+            // Wait a few seconds and try again
+            NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData), object: nil)
+            perform(#selector(loadData), with: nil, afterDelay: delay - secondsSinceLastLoad)
+            return
+        }
+        
+        isLoading = true
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
@@ -109,6 +129,8 @@ class BalanceViewController: UITableViewController {
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
                 self.tableView.reloadData()
+                self.lastLoadTimestamp = Date().timeIntervalSince1970
+                self.isLoading = false
             }
         }
     }
