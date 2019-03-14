@@ -131,7 +131,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
     }()
     
     private let ratioLabel: UILabel = {
-        let label = UILabel()
+        let label = PaddedLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center

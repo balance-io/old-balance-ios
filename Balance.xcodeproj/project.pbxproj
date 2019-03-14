@@ -14,6 +14,7 @@
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
 		538AACF52239ACDA004C3706 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF42239ACDA004C3706 /* QRCode.swift */; };
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
+		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
@@ -31,7 +32,6 @@
 		DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */; };
 		DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4F12234617A00A4E30D /* EthereumWallet.swift */; };
 		DC4BA4F42234747100A4E30D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4F32234747100A4E30D /* SettingsViewController.swift */; };
-		DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5B07682225B0A200107A8B /* UILabel+Padding.swift */; };
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* BalanceViewController.swift */; };
 		DC66984F221D7E0200C383BD /* CDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66984E221D7E0200C383BD /* CDP.swift */; };
@@ -48,6 +48,7 @@
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
 		538AACF42239ACDA004C3706 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
+		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -67,7 +68,6 @@
 		DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		DC4BA4F12234617A00A4E30D /* EthereumWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumWallet.swift; sourceTree = "<group>"; };
 		DC4BA4F32234747100A4E30D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		DC5B07682225B0A200107A8B /* UILabel+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Padding.swift"; sourceTree = "<group>"; };
 		DC669839221CA8F000C383BD /* Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Balance.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC66983C221CA8F000C383BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC66983E221CA8F000C383BD /* BalanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +133,7 @@
 			children = (
 				53F0C9B5223596B400FF0796 /* CDPInfoView.swift */,
 				538AACF62239C5B4004C3706 /* WalletInfoView.swift */,
+				538AACF8223A3083004C3706 /* PaddedLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */,
-				DC5B07682225B0A200107A8B /* UILabel+Padding.swift */,
 				53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */,
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 			);
@@ -365,12 +365,12 @@
 				538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
+				538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */,
 				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
 				538AACF52239ACDA004C3706 /* QRCode.swift in Sources */,
-				DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */,
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */,
 				5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */,

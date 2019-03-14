@@ -1,31 +1,15 @@
 //
-//  UILabel+Padding.swift
+//  PaddedLabel.swift
 //  Balance
 //
-//  Created by Richard Burton on 26/02/2019.
+//  Created by Benjamin Baron on 3/14/19.
 //  Copyright © 2019 Balance. All rights reserved.
 //
 
-//https://stackoverflow.com/a/44145859
-
-import Foundation
 import UIKit
 
-extension UILabel {
-    private struct AssociatedKeys {
-        static var padding = UIEdgeInsets()
-    }
-    
-    public var padding: UIEdgeInsets? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.padding) as? UIEdgeInsets
-        }
-        set {
-            if let newValue = newValue {
-                objc_setAssociatedObject(self, &AssociatedKeys.padding, newValue as UIEdgeInsets?, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            }
-        }
-    }
+class PaddedLabel: UILabel {
+    public var padding: UIEdgeInsets?
     
     override open func draw(_ rect: CGRect) {
         if let insets = padding {
@@ -36,7 +20,9 @@ extension UILabel {
     }
     
     override open var intrinsicContentSize: CGSize {
-        guard let text = self.text else { return super.intrinsicContentSize }
+        guard let text = self.text else {
+            return super.intrinsicContentSize
+        }
         
         var contentSize = super.intrinsicContentSize
         var textWidth: CGFloat = frame.size.width
@@ -58,4 +44,5 @@ extension UILabel {
         
         return contentSize
     }
+
 }
