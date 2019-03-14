@@ -174,7 +174,7 @@ class BalanceViewController: UITableViewController {
         
         var attributes = EKAttributes()
         attributes = .centerFloat
-        attributes.name = "Top Note"
+        attributes.name = "CDP Info"
         attributes.hapticFeedbackType = .success
         attributes.popBehavior = .animated(animation: .translation)
         attributes.entryBackground = .color(color: .black)

@@ -36,6 +36,7 @@ class CryptoBalanceTableViewCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 18)
         titleLabel.textColor = UIColor(hexString: "#333333")
         return titleLabel
@@ -162,13 +163,13 @@ private let fiatNumberFormatter: NumberFormatter = {
 }()
 
 private class CryptoRow: UIView {
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         return iconImageView
     }()
     
-    let cryptoBalanceLabel: UILabel = {
+    private let cryptoBalanceLabel: UILabel = {
         let cryptoBalanceLabel = UILabel()
         cryptoBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
@@ -176,7 +177,7 @@ private class CryptoRow: UIView {
         return cryptoBalanceLabel
     }()
     
-    let rateLabel: UILabel = {
+    private let rateLabel: UILabel = {
         let rateLabel = UILabel()
         rateLabel.translatesAutoresizingMaskIntoConstraints = false
         rateLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
@@ -184,7 +185,7 @@ private class CryptoRow: UIView {
         return rateLabel
     }()
     
-    let fiatBalanceLabel: UILabel = {
+    private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
         fiatBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 25, weight: .regular)

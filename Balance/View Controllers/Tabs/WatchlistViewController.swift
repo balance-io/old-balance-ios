@@ -108,7 +108,29 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Row: \(indexPath.row)")
+        
+        var attributes = EKAttributes()
+        attributes = .centerFloat
+        attributes.name = "Wallet Info"
+        attributes.hapticFeedbackType = .success
+        attributes.popBehavior = .animated(animation: .translation)
+        attributes.entryBackground = .color(color: .clear)//.color(color: .black)
+        attributes.border = .none
+        attributes.statusBar = .hidden
+        attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
+        attributes.positionConstraints.rotation.isEnabled = false
+        attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
+        attributes.statusBar = .ignored
+        attributes.displayDuration = .infinity
+        attributes.screenInteraction = .dismiss
+        attributes.entryInteraction = .forward
+        attributes.positionConstraints.rotation.isEnabled = false
+        let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
+        let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
+        attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
+        
+        let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row])
+        SwiftEntryKit.display(entry: walletInfoView, using: attributes)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

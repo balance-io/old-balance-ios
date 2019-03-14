@@ -12,6 +12,8 @@
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AAD22381D3F001C1883 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53721AAC22381D3F001C1883 /* apikeys.plist */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
+		538AACF52239ACDA004C3706 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF42239ACDA004C3706 /* QRCode.swift */; };
+		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
@@ -44,6 +46,8 @@
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AAC22381D3F001C1883 /* apikeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = apikeys.plist; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
+		538AACF42239ACDA004C3706 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
+		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -85,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		538AACF32239ACCA004C3706 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				538AACF42239ACDA004C3706 /* QRCode.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		53F0C9A8223571B900FF0796 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				53F0C9B5223596B400FF0796 /* CDPInfoView.swift */,
+				538AACF62239C5B4004C3706 /* WalletInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -211,6 +224,7 @@
 				53F0C9A9223571C300FF0796 /* View Controllers */,
 				53F0C9AB223571E800FF0796 /* Views */,
 				53F0C9AA223571D500FF0796 /* Table Cells */,
+				538AACF32239ACCA004C3706 /* Utils */,
 				DC4BA4EA223437D800A4E30D /* Balance.playground */,
 				DC452001222050F80077813C /* Assets.xcassets */,
 				DCBF852722380B010002F93F /* Icons.xcassets */,
@@ -348,12 +362,14 @@
 				53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */,
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
+				538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
 				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
+				538AACF52239ACDA004C3706 /* QRCode.swift in Sources */,
 				DC5B07692225B0A200107A8B /* UILabel+Padding.swift in Sources */,
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */,

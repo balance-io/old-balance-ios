@@ -243,8 +243,8 @@ class CDPInfoView: UIView {
         
         addSubview(mkrGreenImageView)
         mkrGreenImageView.snp.makeConstraints { make in
-            make.top.equalTo(self).offset(15)
-            make.leading.equalTo(self).offset(15)
+            make.top.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(15)
         }
         
         let id = cdpItem.id != nil ? "#\(cdpItem.id!)" : ""
@@ -286,7 +286,7 @@ class CDPInfoView: UIView {
         }
         addSubview(collateralBreakdownLabel)
         collateralBreakdownLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(self).offset(-15)
+            make.trailing.equalToSuperview().offset(-15)
             make.top.equalTo(collateralTitleLabel.snp.bottom).offset(10)
         }
 
@@ -318,7 +318,7 @@ class CDPInfoView: UIView {
         }
         addSubview(debtBreakdownLabel)
         debtBreakdownLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(self).offset(-10)
+            make.trailing.equalToSuperview().offset(-10)
             make.centerY.equalTo(daiCircleImageView)
         }
 
@@ -336,13 +336,13 @@ class CDPInfoView: UIView {
 
         addSubview(priceTitleLabel)
         priceTitleLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(self)
+            make.centerX.equalToSuperview()
             make.centerY.equalTo(riskTitleLabel)
         }
 
         addSubview(ratioTitleLabel)
         ratioTitleLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(self).offset(-15)
+            make.trailing.equalToSuperview().offset(-15)
             make.centerY.equalTo(riskTitleLabel)
         }
 
@@ -394,8 +394,8 @@ class CDPInfoView: UIView {
         addSubview(riskBarImageView)
         riskBarImageView.snp.makeConstraints { make in
             make.top.equalTo(riskLabel.snp.bottom).offset(20)
-            make.leading.equalTo(self).offset(15)
-            make.trailing.equalTo(self).offset(-15)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
         }
 
         addSubview(riskDotImageView)
@@ -442,7 +442,7 @@ class CDPInfoView: UIView {
             make.leading.equalTo(mkrGreenImageView)
             make.trailing.equalTo(saferLabel)
             make.top.equalTo(rektLabel.snp.bottom).offset(15)
-            make.bottom.equalTo(self).offset(-15)
+            make.bottom.equalToSuperview().offset(-15)
         }
         
         var textForPlainEnglishExplanationLabel = ""
@@ -456,7 +456,7 @@ class CDPInfoView: UIView {
             make.leading.equalTo(mkrGreenImageView)
             make.trailing.equalTo(saferLabel)
             make.top.equalTo(rektLabel.snp.bottom).offset(15)
-            make.bottom.equalTo(self).offset(-15)
+            make.bottom.equalToSuperview().offset(-15)
         }
     }
     
