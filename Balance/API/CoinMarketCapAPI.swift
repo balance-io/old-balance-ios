@@ -23,10 +23,8 @@ struct CoinMarketCapAPI {
                 returnWallets.append(returnWallet)
             }
             
-            DispatchQueue.main.async {
-                let success = (response != nil)
-                completion(returnWallets, success)
-            }
+            let success = (response != nil)
+            completion(returnWallets, success)
         }
     }
     
