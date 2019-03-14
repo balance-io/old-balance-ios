@@ -22,6 +22,6 @@ struct CDP: Codable {
         case pip = "pip"
         case art = "art"
         case ink = "ink"
-        case liqPrice = "liqPrice"
+        case liqPrice = "liq_price"
     }
 }
