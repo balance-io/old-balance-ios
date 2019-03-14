@@ -139,6 +139,7 @@ class WatchlistViewController: UIViewController, UITableViewDataSource, UITableV
                 managedEthereumWallets.remove(at: indexPath.row)
                 ethereumWallets.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
             }
         }
     }

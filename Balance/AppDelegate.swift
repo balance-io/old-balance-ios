@@ -15,15 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Convenience accessor
     static let shared = UIApplication.shared.delegate as! AppDelegate
 
-    var window: UIWindow?
+    let window = UIWindow(frame: UIScreen.main.bounds)
+    let tabBarController = TabBarController()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // HACK: Ensure "shared" property is loaded on the main thread (yeah it's not "good" code but it's short, sweet, and most importantly it works ;)
         print(AppDelegate.shared)
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = TabBarController()
-        window?.makeKeyAndVisible()
+        window.rootViewController = TabBarController()
+        window.makeKeyAndVisible()
         return true
     }
 
@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        tabBarController.balanceViewController.loadData()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

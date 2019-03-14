@@ -36,6 +36,7 @@ class BalanceViewController: UITableViewController {
         loadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
     }
     
     private func setupNavigation() {
@@ -49,7 +50,7 @@ class BalanceViewController: UITableViewController {
     
     // MARK - Data Loading -
     
-    private func loadData() {
+    func loadData() {
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
@@ -113,6 +114,10 @@ class BalanceViewController: UITableViewController {
     }
     
     @objc private func walletAdded() {
+        loadData()
+    }
+    
+    @objc private func walletRemoved() {
         loadData()
     }
         

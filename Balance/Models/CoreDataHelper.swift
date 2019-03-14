@@ -12,6 +12,7 @@ import CoreData
 struct CoreDataHelper {
     struct Notifications {
         static let ethereumWalletAdded = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletAdded")
+        static let ethereumWalletRemoved = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletRemoved")
     }
     
     static func loadAllEthereumWallets(managedWallets: [NSManagedObject]? = nil) -> [EthereumWallet] {
