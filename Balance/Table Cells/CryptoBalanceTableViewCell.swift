@@ -229,7 +229,7 @@ private class CryptoRow: UIView {
         
         var cryptoBalance = "0"
         if let balance = balance {
-            cryptoBalance = wholeNumberFormatter.string(from: balance as NSNumber) ?? "0"
+            cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
         }
         if let symbol = symbol {
             cryptoBalance += " \(symbol.uppercased())"
