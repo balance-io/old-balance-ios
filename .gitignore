@@ -1,6 +1,3 @@
-# Don't check in updates to the apikeys plist to keep our keys out of git
-Balance/apikeys.plist
-
 # VIM swap files
 *.swp
 
