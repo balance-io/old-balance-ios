@@ -91,8 +91,14 @@ struct CoreDataHelper {
             return false
         }
         
-        // First check if this wallet address already exists
+        // First check if there are already 10 wallets (this will be a Pro feature)
         let ethereumWallets = loadAllEthereumWallets()
+        guard ethereumWallets.count < 10 else {
+            print("There are already 10 wallets, so not saving: \(ethereumWallet.address)")
+            return false
+        }
+        
+        // Then check if this wallet address already exists
         guard !ethereumWallets.contains(where: { $0.address == ethereumWallet.address }) else {
             print("This wallet address already exists, so not saving: \(ethereumWallet.address)")
             return false

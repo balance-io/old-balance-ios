@@ -74,8 +74,16 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Button Actions -
     
     @objc private func addAction() {
-        let addEthereumWalletViewController = AddEthereumWalletViewController()
-        present(addEthereumWalletViewController, animated: true)
+        if ethereumWallets.count >= 10 {
+            let alert = UIAlertController(title: "Upgrade to Balance Pro", message: "Upgrade to add more than 10 wallets (coming soon)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            let addEthereumWalletViewController = AddEthereumWalletViewController()
+            present(addEthereumWalletViewController, animated: true)
+        }
     }
     
     // MARK: - Data Loading -
