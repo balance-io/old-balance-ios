@@ -51,6 +51,22 @@ class BalanceViewController: UITableViewController {
         }
     }
     
+    private func addLoadingSpinner() {
+        // Only show on first load since we reload so often
+        if ethereumWallets.count == 0 {
+            refreshControl = UIRefreshControl()
+            let tintColor = UIColor.gray
+            refreshControl?.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: tintColor])
+            refreshControl?.tintColor = tintColor
+            refreshControl?.beginRefreshing()
+        }
+    }
+    
+    private func removeLoadingSpinner() {
+        refreshControl?.endRefreshing()
+        refreshControl = nil
+    }
+    
     // MARK - Data Loading -
     
     @objc func loadData() {
@@ -71,6 +87,7 @@ class BalanceViewController: UITableViewController {
         }
         
         isLoading = true
+        addLoadingSpinner()
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
@@ -131,6 +148,7 @@ class BalanceViewController: UITableViewController {
                 self.tableView.reloadData()
                 self.lastLoadTimestamp = Date().timeIntervalSince1970
                 self.isLoading = false
+                self.removeLoadingSpinner()
             }
         }
     }
