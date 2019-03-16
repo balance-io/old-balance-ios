@@ -14,12 +14,7 @@ struct EthereumWallet {
     
     var tokens: [Token]?
     var nonZeroTokens: [Token]? {
-        return tokens?.filter{
-            if let fiat = $0.fiatBalance {
-                return fiat >= 10.0
-            }
-            return false
-        }
+        return tokens?.filter{ $0.fiatBalance ?? 0 >= 10 }
     }
     
     init(name: String, address: String, includeInTotal: Bool) {
