@@ -13,8 +13,11 @@ struct EthereumWallet {
     var currency: String?    // Fiat currency used for price and balance
     
     var tokens: [Token]?
-    var nonZeroTokens: [Token]? {
-        return tokens?.filter{ $0.fiatBalance ?? 0 >= 10 }
+    var valuableTokens: [Token]? {
+        return tokens?.filter{ $0.fiatBalance ?? 0 >= Token.fiatValueCutoff }
+    }
+    var nonValuableTokens: [Token]? {
+        return tokens?.filter{ $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
     }
     
     init(name: String, address: String, includeInTotal: Bool) {

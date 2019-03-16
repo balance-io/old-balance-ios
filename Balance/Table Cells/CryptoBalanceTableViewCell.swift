@@ -9,13 +9,22 @@
 import UIKit
 import SnapKit
 
-class CryptoBalanceTableViewCell: UITableViewCell {
+class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     enum CryptoType {
         case ethereum
         case erc20
     }
     
+    let wallet: EthereumWallet
     let cryptoType: CryptoType
+    
+    override var isExpanded: Bool {
+        didSet {
+            UIView.animate(withDuration: 0.2) {
+                self.setupLowValueTokensContainer(show: self.isExpanded)
+            }
+        }
+    }
     
     private let containerView: UIView = {
         let view = UIView()
@@ -39,9 +48,14 @@ class CryptoBalanceTableViewCell: UITableViewCell {
         return titleLabel
     }()
     
-    init(wallet: EthereumWallet, cryptoType: CryptoType) {
+    private let lowValueTokensContainer = UIView()
+    
+    init(withIdentifier reuseIdentifier: String, wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool, indexPath: IndexPath) {
+        self.wallet = wallet
         self.cryptoType = cryptoType
-        super.init(style: .default, reuseIdentifier: "cryptoCell")
+        super.init(style: .default, reuseIdentifier: reuseIdentifier, isExpanded: isExpanded, indexPath: indexPath)
+        
+        isExpandable = (cryptoType == .erc20)
         
         selectionStyle = .none
         contentView.backgroundColor = UIColor(hexString: "#fbfbfb")
@@ -72,7 +86,7 @@ class CryptoBalanceTableViewCell: UITableViewCell {
             titleLabel.text = "Ethereum"
             
             let cryptoRow = CryptoRow(wallet: wallet)
-            addSubview(cryptoRow)
+            containerView.addSubview(cryptoRow)
             cryptoRow.snp.makeConstraints { make in
                 make.top.equalTo(titleIconView.snp.bottom).offset(20)
                 make.leading.equalToSuperview()
@@ -83,7 +97,7 @@ class CryptoBalanceTableViewCell: UITableViewCell {
             titleIconView.image = UIImage(named: "erc20SquircleGreen")
             titleLabel.text = "ERC-20 Tokens"
             
-            if let tokens = wallet.nonZeroTokens {
+            if let tokens = wallet.tokens {
                 let sortedTokens = tokens.sorted { left, right in
                     let leftFiatbalance = left.fiatBalance ?? 0
                     let rightFiatBalance = right.fiatBalance ?? 0
@@ -102,9 +116,22 @@ class CryptoBalanceTableViewCell: UITableViewCell {
                 }
                 
                 var topView: UIView = titleIconView
+                var isHighValueToken = true
                 for token in sortedTokens {
                     let cryptoRow = CryptoRow(token: token)
-                    addSubview(cryptoRow)
+                    if isHighValueToken && !cryptoRow.isHighValue {
+                        isHighValueToken = false
+                        setupLowValueTokensContainer(show: isExpanded)
+                        addSubview(lowValueTokensContainer)
+                        lowValueTokensContainer.snp.makeConstraints { make in
+                            make.top.equalTo(topView.snp.bottom)
+                            make.leading.equalToSuperview()
+                            make.trailing.equalToSuperview()
+                        }
+                    }
+                    
+                    let container = isHighValueToken ? containerView : lowValueTokensContainer
+                    container.addSubview(cryptoRow)
                     cryptoRow.snp.makeConstraints { make in
                         let topOffset = topView == titleIconView ? 20 : 5
                         make.top.equalTo(topView.snp.bottom).offset(topOffset)
@@ -122,12 +149,22 @@ class CryptoBalanceTableViewCell: UITableViewCell {
         fatalError("unimplemented")
     }
     
-    static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType) -> CGFloat {
+    override func calculatedHeight() -> CGFloat {
+        return CryptoBalanceTableViewCell.calculatedHeight(wallet: wallet, cryptoType: cryptoType, isExpanded: isExpanded)
+    }
+    
+    private func setupLowValueTokensContainer(show: Bool) {
+        lowValueTokensContainer.alpha = show ? 1.0 : 0.0
+        lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
+    }
+    
+    static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool) -> CGFloat {
         switch cryptoType {
         case .ethereum:
             return CGFloat(30 + 14 + 25 + 10 + 50)
         case .erc20:
-            let tokensCount = wallet.nonZeroTokens?.count ?? 0
+            let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
+            let tokensCount = tokens?.count ?? 0
             return CGFloat(30 + 14 + 25 + 10 + (tokensCount * 45) + 5)
         }
     }
@@ -160,6 +197,12 @@ private let fiatNumberFormatter: NumberFormatter = {
 }()
 
 private class CryptoRow: UIView {
+    var isHighValue: Bool {
+        return token?.fiatBalance ?? 0 >= Token.fiatValueCutoff
+    }
+    
+    private var token: Token?
+    
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
         return iconImageView
@@ -193,12 +236,13 @@ private class CryptoRow: UIView {
     
     convenience init(token: Token) {
         self.init(balance: token.balance, fiatBalance: token.fiatBalance, rate: token.rate, symbol: token.symbol, currency: token.currency)
+        self.token = token
     }
     
     init(balance: Double?, fiatBalance: Double?, rate: Double?, symbol: String?, currency: String?) {
         super.init(frame: CGRect.zero)
         
-        if let symbol = symbol {
+        if let symbol = symbol, symbol.count > 0 {
             iconImageView.image = UIImage(named: symbol.lowercased()) ?? UIImage(named: "erc20SquircleGreen")
         }
         addSubview(iconImageView)
