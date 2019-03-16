@@ -15,7 +15,6 @@ class WalletInfoView: UIView {
     
     private let topContainer: UIView = {
         let topContainer = UIView()
-        topContainer.translatesAutoresizingMaskIntoConstraints = false
         topContainer.backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
         topContainer.clipsToBounds = true
         topContainer.layer.cornerRadius = 20
@@ -24,7 +23,6 @@ class WalletInfoView: UIView {
     
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.font = UIFont.systemFont(ofSize: 18)
         nameLabel.textColor = .white
         return nameLabel
@@ -32,7 +30,6 @@ class WalletInfoView: UIView {
 
     private let qrCodeImageView: UIImageView = {
         let qrCodeImageView = UIImageView()
-        qrCodeImageView.translatesAutoresizingMaskIntoConstraints = false
         qrCodeImageView.clipsToBounds = true
         qrCodeImageView.layer.cornerRadius = 10
         return qrCodeImageView
@@ -40,7 +37,6 @@ class WalletInfoView: UIView {
 
     private let addressLabel: UILabel = {
         let addressLabel = UILabel()
-        addressLabel.translatesAutoresizingMaskIntoConstraints = false
         addressLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
         addressLabel.textColor = .white
         return addressLabel
@@ -48,7 +44,6 @@ class WalletInfoView: UIView {
     
     private let bottomContainer: UIVisualEffectView = {
         let bottomContainer = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-        bottomContainer.translatesAutoresizingMaskIntoConstraints = false
         bottomContainer.clipsToBounds = true
         bottomContainer.layer.cornerRadius = 20
         return bottomContainer
@@ -56,7 +51,6 @@ class WalletInfoView: UIView {
     
     private let shareButton: UIButton = {
         let shareButton = UIButton()
-        shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.contentHorizontalAlignment = .left
         shareButton.setTitle("Share", for: .normal)
         shareButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
@@ -66,14 +60,12 @@ class WalletInfoView: UIView {
     
     private let buttonSeparatorLine: UIView = {
         let buttonSeparatorLine = UIView()
-        buttonSeparatorLine.translatesAutoresizingMaskIntoConstraints = false
         buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         return buttonSeparatorLine
     }()
     
     private let copyButton: UIButton = {
         let copyButton = UIButton()
-        copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.contentHorizontalAlignment = .left
         copyButton.setTitle("Copy", for: .normal)
         copyButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)

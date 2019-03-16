@@ -59,7 +59,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         view.backgroundColor = darkCardBackgroundColor
         view.layer.cornerRadius = 10
@@ -69,7 +68,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let identityLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .white
         return label
@@ -77,35 +75,30 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let ethCircleImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "ethWhiteCircle"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
         return imageView
     }()
     
     private let mkrSquircle: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "mkrSquircle"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
         return imageView
     }()
     
     private let daiCircle: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "daiCircle"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
         return imageView
     }()
     
     private let checkCircle: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "checkCircle"))
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
         return imageView
     }()
     
     private let collateralizedTitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Collateral"
         label.textColor = .white
@@ -114,7 +107,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let debtTitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Debt"
         label.textColor = .white
@@ -123,7 +115,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let positionTitleLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18)
         label.text = "Position"
         label.textColor = .white
@@ -132,7 +123,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let ratioLabel: UILabel = {
         let label = PaddedLabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
         label.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
@@ -144,7 +134,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let artLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
         label.textColor = .white
@@ -155,7 +144,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let inkLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
         label.textColor = .white
@@ -166,7 +154,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
     
     private let liqPriceLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .light)
         label.textAlignment = .right
         label.textColor = .white

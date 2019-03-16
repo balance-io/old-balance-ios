@@ -12,21 +12,18 @@ import SnapKit
 class WelcomeViewController: UIViewController {
     private let balanceLogoImageView: UIImageView = {
         let balanceLogoImageView = UIImageView()
-        balanceLogoImageView.translatesAutoresizingMaskIntoConstraints = false
         balanceLogoImageView.image = UIImage(named: "balanceLogo")
         return balanceLogoImageView
     }()
     
     private let wavesAndLogosImageView: UIImageView = {
         let wavesAndLogosImageView = UIImageView()
-        wavesAndLogosImageView.translatesAutoresizingMaskIntoConstraints = false
         wavesAndLogosImageView.image = UIImage(named: "wavesAndLogos")
         return wavesAndLogosImageView
     }()
     
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 24)
         titleLabel.textColor = UIColor(hexString: "#191817")
         titleLabel.text = "Keep track of your wallets"
@@ -35,7 +32,6 @@ class WelcomeViewController: UIViewController {
     
     private let subtitleLabel: UILabel = {
         let subtitleLabel = UILabel()
-        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.font = UIFont.systemFont(ofSize: 17)
         subtitleLabel.textColor = UIColor(hexString: "#191817")
         subtitleLabel.numberOfLines = 3
@@ -47,7 +43,6 @@ class WelcomeViewController: UIViewController {
     
     private let addButton: UIButton = {
         let addButton = UIButton()
-        addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.layer.cornerRadius = 14
         addButton.setTitle("Add an Ethereum Wallet", for: .normal)
         addButton.setTitleColor(.white, for: .normal)

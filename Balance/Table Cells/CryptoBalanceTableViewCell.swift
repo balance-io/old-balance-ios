@@ -19,7 +19,6 @@ class CryptoBalanceTableViewCell: UITableViewCell {
     
     private let containerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.layer.cornerRadius = 11
         view.clipsToBounds = true
@@ -30,13 +29,11 @@ class CryptoBalanceTableViewCell: UITableViewCell {
     
     private let titleIconView: UIImageView = {
         let titleIconView = UIImageView()
-        titleIconView.translatesAutoresizingMaskIntoConstraints = false
         return titleIconView
     }()
     
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 18)
         titleLabel.textColor = UIColor(hexString: "#333333")
         return titleLabel
@@ -165,13 +162,11 @@ private let fiatNumberFormatter: NumberFormatter = {
 private class CryptoRow: UIView {
     private let iconImageView: UIImageView = {
         let iconImageView = UIImageView()
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
         return iconImageView
     }()
     
     private let cryptoBalanceLabel: UILabel = {
         let cryptoBalanceLabel = UILabel()
-        cryptoBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         cryptoBalanceLabel.textColor = UIColor(hexString: "#333333")
         return cryptoBalanceLabel
@@ -179,7 +174,6 @@ private class CryptoRow: UIView {
     
     private let rateLabel: UILabel = {
         let rateLabel = UILabel()
-        rateLabel.translatesAutoresizingMaskIntoConstraints = false
         rateLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         rateLabel.textColor = UIColor(hexString: "#333333")
         return rateLabel
@@ -187,7 +181,6 @@ private class CryptoRow: UIView {
     
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.translatesAutoresizingMaskIntoConstraints = false
         fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 25, weight: .regular)
         fiatBalanceLabel.textColor = UIColor(hexString: "#333333")
         fiatBalanceLabel.textAlignment = .right
