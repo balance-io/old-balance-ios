@@ -1,3 +1,6 @@
+# Prevent accidentally checking in API keys
+apikeys.plist
+
 # VIM swap files
 *.swp
 
