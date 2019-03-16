@@ -165,7 +165,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addButton.layer.cornerRadius = 14
         addButton.setTitle("Add wallet to watchlist", for: .normal)
         addButton.setTitleColor(.white, for: .normal)
-        addButton.setBackgroundImage(UIImage(named: "grayGradientButton"), for: .normal)
+        addButton.setBackgroundImage(UIImage(named: "blueGradientButton"), for: .normal)
         addButton.setImage(UIImage(named: "ethLogoWhite"), for: .normal)
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return addButton
@@ -282,16 +282,16 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(24)
-            make.width.equalTo(363)
-            make.height.equalTo(77)
+            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(10)
+            make.width.equalTo(381)
+            make.height.equalTo(95)
             make.centerX.equalToSuperview()
         }
         addButton.imageView?.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)
             make.centerY.equalToSuperview().offset(-2)
         }
-        addButton.titleEdgeInsets = UIEdgeInsets(top: -5, left: -15, bottom: 0, right: 0)
+        addButton.titleEdgeInsets = UIEdgeInsets(top: -2, left: -20, bottom: 0, right: 0)
         addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
         
         //
@@ -357,7 +357,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         guard (address.hasPrefix("0x") && address.count == 42) || (address.hasPrefix("ENS") && address.count > 3) else {
             return
         }
-        
+
         let ethereumWallet = EthereumWallet(name: name, address: address, includeInTotal: includeInTotalSwitch.isOn)
         CoreDataHelper.save(ethereumWallet: ethereumWallet)
         NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)

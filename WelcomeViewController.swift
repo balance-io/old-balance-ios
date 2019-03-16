@@ -99,7 +99,7 @@ class WelcomeViewController: UIViewController {
             make.leading.equalToSuperview().offset(25)
             make.centerY.equalToSuperview().offset(-2)
         }
-        addButton.titleEdgeInsets = UIEdgeInsets(top: -2, left: -15, bottom: 0, right: 0)
+        addButton.titleEdgeInsets = UIEdgeInsets(top: -2, left: -20, bottom: 0, right: 0)
         addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
     }
     

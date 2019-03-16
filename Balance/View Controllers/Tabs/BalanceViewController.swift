@@ -35,6 +35,11 @@ class BalanceViewController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.register(CDPBalanceTableViewCell.self, forCellReuseIdentifier: "cdpCell")
         
+        refreshControl = UIRefreshControl()
+        let tintColor = UIColor.gray
+        refreshControl?.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: tintColor])
+        refreshControl?.tintColor = tintColor
+        
         setupNavigation()
         loadData()
         
@@ -51,25 +56,17 @@ class BalanceViewController: UITableViewController {
         }
     }
     
-    private func addLoadingSpinner() {
-        // Only show on first load since we reload so often
-        if ethereumWallets.count == 0 {
-            refreshControl = UIRefreshControl()
-            let tintColor = UIColor.gray
-            refreshControl?.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: tintColor])
-            refreshControl?.tintColor = tintColor
-            refreshControl?.beginRefreshing()
-        }
-    }
-    
-    private func removeLoadingSpinner() {
-        refreshControl?.endRefreshing()
-        refreshControl = nil
-    }
-    
     // MARK - Data Loading -
     
     @objc func loadData() {
+        guard CoreDataHelper.ethereumWalletCount() > 0 else {
+            CDPs = [CDP]()
+            ethereumWallets = [EthereumWallet]()
+            aggregatedEthereumWallet = nil
+            self.tableView.reloadData()
+            return
+        }
+        
         if isLoading {
             // Wait a bit and try again
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData), object: nil)
@@ -87,18 +84,21 @@ class BalanceViewController: UITableViewController {
         }
         
         isLoading = true
-        addLoadingSpinner()
+        self.refreshControl?.beginRefreshing()
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
             var newCDPs = [CDP]()
             
+            // Extra check in case of race condition
             guard newEthereumWallets.count > 0 else {
-                // This should never happen
                 self.CDPs = newCDPs
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
-                self.tableView.reloadData()
+                self.isLoading = false
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
                 return
             }
             
@@ -145,10 +145,13 @@ class BalanceViewController: UITableViewController {
                 }
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
-                self.tableView.reloadData()
                 self.lastLoadTimestamp = Date().timeIntervalSince1970
                 self.isLoading = false
-                self.removeLoadingSpinner()
+                self.tableView.reloadData()
+                
+                // Remove the refresh control so we only show it on first load
+                self.refreshControl?.endRefreshing()
+                self.refreshControl = nil
             }
         }
     }

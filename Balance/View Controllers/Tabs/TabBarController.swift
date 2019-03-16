@@ -40,8 +40,9 @@ class TabBarController: UITabBarController {
                                                                selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
 
         viewControllers = [walletsNavigationController, balanceNavigationController, settingsNavigationController]
+        selectedIndex = 1
         
-        self.selectedIndex = 1
+        NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
