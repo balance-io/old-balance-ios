@@ -1,5 +1,5 @@
 //
-//  WatchlistViewController.swift
+//  WalletsViewController.swift
 //  Balance
 //
 //  Created by Richard Burton on 3/9/19.
@@ -11,7 +11,7 @@ import CoreData
 import SwiftEntryKit
 import SnapKit
 
-class WatchlistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class WalletsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private var managedEthereumWallets = [NSManagedObject]()
     private var ethereumWallets = [EthereumWallet]()

@@ -48,7 +48,7 @@ class WalletTableViewCell: UITableViewCell {
     
     private let backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
-        backgroundImageView.image = UIImage(named: "watchlistCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
+        backgroundImageView.image = UIImage(named: "walletCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
         return backgroundImageView
     }()
     

@@ -28,7 +28,7 @@
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EB2234583900A4E30D /* TabBarController.swift */; };
-		DC4BA4EE22345FC900A4E30D /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */; };
+		DC4BA4EE22345FC900A4E30D /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4ED22345FC900A4E30D /* WalletsViewController.swift */; };
 		DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */; };
 		DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4F12234617A00A4E30D /* EthereumWallet.swift */; };
 		DC4BA4F42234747100A4E30D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4F32234747100A4E30D /* SettingsViewController.swift */; };
@@ -65,7 +65,7 @@
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC4BA4EA223437D800A4E30D /* Balance.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Balance.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		DC4BA4EB2234583900A4E30D /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		DC4BA4ED22345FC900A4E30D /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
 		DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		DC4BA4F12234617A00A4E30D /* EthereumWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthereumWallet.swift; sourceTree = "<group>"; };
 		DC4BA4F32234747100A4E30D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				DC4BA4EB2234583900A4E30D /* TabBarController.swift */,
-				DC4BA4ED22345FC900A4E30D /* WatchlistViewController.swift */,
+				DC4BA4ED22345FC900A4E30D /* WalletsViewController.swift */,
 				DC66983E221CA8F000C383BD /* BalanceViewController.swift */,
 				DC4BA4F32234747100A4E30D /* SettingsViewController.swift */,
 			);
@@ -378,7 +378,7 @@
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */,
 				5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */,
-				DC4BA4EE22345FC900A4E30D /* WatchlistViewController.swift in Sources */,
+				DC4BA4EE22345FC900A4E30D /* WalletsViewController.swift in Sources */,
 				DC66983F221CA8F000C383BD /* BalanceViewController.swift in Sources */,
 				53BABFB222394005009DCF63 /* Token.swift in Sources */,
 				53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */,

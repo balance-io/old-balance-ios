@@ -15,7 +15,7 @@ class TabBarController: UITabBarController {
         case settings  = 2
     }
     
-    let watchlistViewController = WatchlistViewController()
+    let walletsViewController = WalletsViewController()
     let balanceViewController = BalanceViewController()
     let settingsViewController = SettingsViewController()
     
@@ -24,10 +24,10 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let watchlistNavigationController = UINavigationController(rootViewController: watchlistViewController)
-        watchlistNavigationController.tabBarItem = UITabBarItem(title: "Wallets",
-                                                                image: UIImage(named: "watchlistTabBarItemImage"),
-                                                                selectedImage: UIImage(named: "watchlistTabBarItemImageSelected"))
+        let walletsNavigationController = UINavigationController(rootViewController: walletsViewController)
+        walletsNavigationController.tabBarItem = UITabBarItem(title: "Wallets",
+                                                              image: UIImage(named: "walletsTabBarItemImage"),
+                                                              selectedImage: UIImage(named: "walletsTabBarItemImageSelected"))
         
         let balanceNavigationController = UINavigationController(rootViewController: balanceViewController)
         balanceNavigationController.tabBarItem = UITabBarItem(title: "Balance",
@@ -39,7 +39,7 @@ class TabBarController: UITabBarController {
                                                                image: UIImage(named: "settingsTabBarItemImage"),
                                                                selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
 
-        viewControllers = [watchlistNavigationController, balanceNavigationController, settingsNavigationController]
+        viewControllers = [walletsNavigationController, balanceNavigationController, settingsNavigationController]
         
         self.selectedIndex = 1
     }
