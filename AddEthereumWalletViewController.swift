@@ -453,5 +453,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         }
         
         cameraHighlightBoxLayer.frame = highlightBoxRect
+        
+    }
+    
+    func animateSuccess() {
+        
     }
 }
