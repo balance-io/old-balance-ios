@@ -86,7 +86,7 @@ class CryptoBalanceTableViewCell: UITableViewCell {
             titleIconView.image = UIImage(named: "erc20SquircleGreen")
             titleLabel.text = "ERC-20 Tokens"
             
-            if let tokens = wallet.tokens {
+            if let tokens = wallet.nonZeroTokens {
                 let sortedTokens = tokens.sorted { left, right in
                     let leftFiatbalance = left.fiatBalance ?? 0
                     let rightFiatBalance = right.fiatBalance ?? 0
@@ -130,7 +130,7 @@ class CryptoBalanceTableViewCell: UITableViewCell {
         case .ethereum:
             return CGFloat(30 + 14 + 25 + 10 + 50)
         case .erc20:
-            let tokensCount = wallet.tokens?.count ?? 0
+            let tokensCount = wallet.nonZeroTokens?.count ?? 0
             return CGFloat(30 + 14 + 25 + 10 + (tokensCount * 45) + 5)
         }
     }

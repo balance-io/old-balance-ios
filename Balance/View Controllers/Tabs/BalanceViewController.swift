@@ -1,3 +1,4 @@
+
 //
 //  BalanceViewController.swift
 //  Balance
@@ -181,7 +182,7 @@ class BalanceViewController: UITableViewController {
         case .erc20:
             // Check if there are any tokens
             for wallet in ethereumWallets {
-                if let count = wallet.tokens?.count, count > 0 {
+                if let count = wallet.nonZeroTokens?.count, count > 0 {
                     return 1
                 }
             }
