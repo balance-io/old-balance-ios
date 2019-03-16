@@ -12,7 +12,6 @@ import SnapKit
 
 private func newTitleLabel() -> UILabel {
     let titleLabel = UILabel()
-    titleLabel.translatesAutoresizingMaskIntoConstraints = false
     titleLabel.font = UIFont.systemFont(ofSize: 18)
     titleLabel.textColor = UIColor(hexString: "#191817")
     return titleLabel
@@ -20,7 +19,6 @@ private func newTitleLabel() -> UILabel {
 
 private func newTextFieldContainer() -> UIView {
     let textFieldContainer = UIView()
-    textFieldContainer.translatesAutoresizingMaskIntoConstraints = false
     textFieldContainer.backgroundColor = .white
     textFieldContainer.layer.cornerRadius = 8
     textFieldContainer.layer.borderColor = UIColor(hexString: "#43464B")?.cgColor
@@ -31,7 +29,6 @@ private func newTextFieldContainer() -> UIView {
 class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate {
     private let topContainerView: UIView = {
         let topContainerView = UIView()
-        topContainerView.translatesAutoresizingMaskIntoConstraints = false
         topContainerView.backgroundColor = .white
         topContainerView.layer.cornerRadius = 10
         return topContainerView
@@ -39,14 +36,12 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let closeButton: UIButton = {
         let closeButton = UIButton()
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.setImage(UIImage(named: "closeButton"), for: .normal)
         return closeButton
     }()
     
     private let middleContainerView: UIView = {
         let middleContainerView = UIView()
-        middleContainerView.translatesAutoresizingMaskIntoConstraints = false
         middleContainerView.backgroundColor = .black
         return middleContainerView
     }()
@@ -63,21 +58,18 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let cameraPreviewView: UIView = {
         let cameraPreviewView = UIView()
-        cameraPreviewView.translatesAutoresizingMaskIntoConstraints = false
         cameraPreviewView.backgroundColor = .black
         return cameraPreviewView
     }()
     
     private let scanQRCodeImageView: UIImageView = {
         let scanQRCodeImageView = UIImageView()
-        scanQRCodeImageView.translatesAutoresizingMaskIntoConstraints = false
         scanQRCodeImageView.image = UIImage(named: "qrCode")
         return scanQRCodeImageView
     }()
     
     private let scanQRCodeLabel: UILabel = {
         let scanQRCodeLabel = UILabel()
-        scanQRCodeLabel.translatesAutoresizingMaskIntoConstraints = false
         scanQRCodeLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         scanQRCodeLabel.textColor = .white
         scanQRCodeLabel.text = "Scan a QR code"
@@ -86,7 +78,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let bottomContainerView: UIView = {
         let bottomContainerView = UIView()
-        bottomContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.backgroundColor = .white
         bottomContainerView.layer.cornerRadius = 10
         return bottomContainerView
@@ -102,7 +93,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let nameTextField: UITextField = {
         let nameTextField = UITextField()
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
         nameTextField.font = UIFont.systemFont(ofSize: 19)
         nameTextField.textColor = UIColor(hexString: "#3C4252")
         nameTextField.minimumFontSize = 8;
@@ -122,7 +112,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let addressTextField: UITextField = {
         let addressTextField = UITextField()
-        addressTextField.translatesAutoresizingMaskIntoConstraints = false
         addressTextField.placeholder = "Address starting with 0x or ENS"
         addressTextField.font = UIFont.systemFont(ofSize: 15)
         addressTextField.textColor = UIColor(hexString: "#3C4252")
@@ -136,7 +125,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let pasteButton: UIButton = {
         let pasteButton = UIButton()
-        pasteButton.translatesAutoresizingMaskIntoConstraints = false
         pasteButton.backgroundColor = UIColor(hexString: "#0E76FD")
         pasteButton.layer.cornerRadius = 14.5
         pasteButton.setImage(UIImage(named: "pasteWhite"), for: .normal)
@@ -154,14 +142,12 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let includeInTotalSwitch: UISwitch = {
         let includeInTotalSwitch = UISwitch()
-        includeInTotalSwitch.translatesAutoresizingMaskIntoConstraints = false
         includeInTotalSwitch.isOn = true
         return includeInTotalSwitch
     }()
     
     private let addButton: UIButton = {
         let addButton = UIButton()
-        addButton.translatesAutoresizingMaskIntoConstraints = false
         addButton.layer.cornerRadius = 14
         addButton.setTitle("Add wallet to watchlist", for: .normal)
         addButton.setTitleColor(.white, for: .normal)

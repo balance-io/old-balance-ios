@@ -39,7 +39,6 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         walletsTableView.register(WalletTableViewCell.self, forCellReuseIdentifier: "walletCell")
         view.addSubview(walletsTableView)
         
-        walletsTableView.translatesAutoresizingMaskIntoConstraints = false
         walletsTableView.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.leading.equalTo(view.safeAreaLayoutGuide)

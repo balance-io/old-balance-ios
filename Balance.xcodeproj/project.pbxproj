@@ -15,6 +15,7 @@
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
+		53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
 		53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */; };
@@ -49,6 +50,7 @@
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewCell.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerToolsAPI.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 		53F0C9AA223571D500FF0796 /* Table Cells */ = {
 			isa = PBXGroup;
 			children = (
+				53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */,
 				5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */,
 				DC669854221ED25E00C383BD /* CDPBalanceTableViewCell.swift */,
 				DC4BA4EF223460C700A4E30D /* WalletTableViewCell.swift */,
@@ -361,6 +364,7 @@
 			files = (
 				53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */,
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
+				53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
 				538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
