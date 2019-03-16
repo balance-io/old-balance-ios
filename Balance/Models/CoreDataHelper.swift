@@ -91,6 +91,13 @@ struct CoreDataHelper {
             return false
         }
         
+        // First check if this wallet address already exists
+        let ethereumWallets = loadAllEthereumWallets()
+        guard !ethereumWallets.contains(where: { $0.address == ethereumWallet.address }) else {
+            print("This wallet address already exists, so not saving: \(ethereumWallet.address)")
+            return false
+        }
+        
         let managedObject = NSManagedObject(entity: entity, insertInto: managedContext)
         managedObject.setValue(ethereumWallet.name, forKey: "name")
         managedObject.setValue(ethereumWallet.address, forKeyPath: "address")
