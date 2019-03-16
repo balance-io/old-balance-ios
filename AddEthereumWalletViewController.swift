@@ -143,6 +143,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         pasteButton.setTitle("Paste", for: .normal)
         pasteButton.setTitleColor(.white, for: .normal)
         pasteButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        
+        pasteButton.setImage(UIImage(named: "checkCircle"), for: .highlighted)
+        pasteButton.setTitle("Done", for: .highlighted)
+
         return pasteButton
     }()
     
@@ -389,6 +393,11 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         return false
     }
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        self.resetStateQR()
+        return true
+    }
+    
     // MARK - QR Code Scanning -
     
     private func setupCameraPreviewView() {
@@ -453,10 +462,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         }
         
         cameraHighlightBoxLayer.frame = highlightBoxRect
+        self.showSuccessQR()
         
     }
     
-    func animateSuccess() {
-        
+    private func showSuccessQR() {
+        pasteButton.isHighlighted = true
+    }
+    
+    private func resetStateQR() {
+        pasteButton.isHighlighted = false
     }
 }
