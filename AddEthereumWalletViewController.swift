@@ -340,6 +340,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         if let string = UIPasteboard.general.string {
             addressTextField.text = string
             self.pasteButton.removeFromSuperview()
+            self.scanQRCodeLabel.removeFromSuperview()
+            scanQRCodeImageView.image = UIImage(named: "addressSuccess")
             addressTextField.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
@@ -451,6 +453,9 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             
             addressTextField.text = finalDetectedString
             self.pasteButton.removeFromSuperview()
+            self.scanQRCodeLabel.removeFromSuperview()
+            scanQRCodeImageView.image = UIImage(named: "addressSuccess")
+            
             addressTextField.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
