@@ -260,7 +260,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
             make.bottom.equalToSuperview()
         }
         
@@ -348,6 +348,9 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         if let string = UIPasteboard.general.string {
             addressTextField.text = string
             self.pasteButton.removeFromSuperview()
+            addressTextField.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().offset(-10)
+            }
         }
     }
     
@@ -456,6 +459,9 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             
             addressTextField.text = finalDetectedString
             self.pasteButton.removeFromSuperview()
+            addressTextField.snp.makeConstraints { make in
+                make.trailing.equalToSuperview().offset(-10)
+            }
         }
         
         cameraHighlightBoxLayer.frame = highlightBoxRect
