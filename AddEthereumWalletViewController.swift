@@ -112,7 +112,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let addressTextField: UITextField = {
         let addressTextField = UITextField()
-        addressTextField.placeholder = "0x Ethereum address or ENS"
+        addressTextField.placeholder = "0x or Ethereum Name Service"
         addressTextField.font = UIFont.systemFont(ofSize: 15)
         addressTextField.textColor = UIColor(hexString: "#3C4252")
         addressTextField.minimumFontSize = 8;
@@ -126,7 +126,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     private let pasteButton: UIButton = {
         let pasteButton = UIButton()
         pasteButton.backgroundColor = UIColor(hexString: "#0E76FD")
-        pasteButton.layer.cornerRadius = 14
+        pasteButton.layer.cornerRadius = 12
         pasteButton.titleLabel?.textAlignment = .center
         pasteButton.setImage(UIImage(named: "pasteWhite"), for: .normal)
         pasteButton.setTitle("Paste", for: .normal)
@@ -259,8 +259,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressFieldContainer.addSubview(addressTextField)
         addressTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(14)
-            make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview()
         }
         
@@ -336,6 +336,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     // MARK - Button Actions -
     
+    //TODO Add a proper function for adding and removing the paste button. This is a hack.
+    //TODO Grey out the paste button if the address in the clipboard does not contain an Ethereum address.
+    
+    
     @objc private func closeAction() {
         dismiss(animated: true)
     }
@@ -343,9 +347,11 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     @objc private func pasteAction() {
         if let string = UIPasteboard.general.string {
             addressTextField.text = string
+            self.pasteButton.removeFromSuperview()
         }
     }
     
+    //TODO Grey out the add button if all the conditions for adding are not met.
     @objc private func addAction() {
         guard let name = nameTextField.text, let address = addressTextField.text, name.count > 0 else {
             return
@@ -362,6 +368,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     // MARK - Keyboard -
     
+    //TODO Fix for 3rd part keyboards
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
@@ -437,6 +444,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             lastDetectedString = finalDetectedString
             
             // Fix for MetaMask QR codes (and maybe others)
+            // TODO support EIP 681 ethereum:<address> is valid
             let prefixes = ["ethereum:"]
             for prefix in prefixes {
                 if finalDetectedString.hasPrefix(prefix) {
@@ -447,6 +455,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             }
             
             addressTextField.text = finalDetectedString
+            self.pasteButton.removeFromSuperview()
         }
         
         cameraHighlightBoxLayer.frame = highlightBoxRect
