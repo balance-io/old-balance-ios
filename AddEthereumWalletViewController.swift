@@ -254,21 +254,22 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.bottom.equalToSuperview()
         }
         
-        bottomContainerView.addSubview(includeInTotalTitleLabel)
-        includeInTotalTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
-            make.leading.equalTo(nameTitleLabel)
-        }
+//        bottomContainerView.addSubview(includeInTotalTitleLabel)
+//        includeInTotalTitleLabel.snp.makeConstraints { make in
+//            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
+//            make.leading.equalTo(nameTitleLabel)
+//        }
         
-        bottomContainerView.addSubview(includeInTotalSwitch)
-        includeInTotalSwitch.snp.makeConstraints { make in
-            make.centerY.equalTo(includeInTotalTitleLabel)
-            make.trailing.equalToSuperview().offset(-14)
-        }
+//        bottomContainerView.addSubview(includeInTotalSwitch)
+//        includeInTotalSwitch.snp.makeConstraints { make in
+//            make.centerY.equalTo(includeInTotalTitleLabel)
+//            make.trailing.equalToSuperview().offset(-14)
+//        }
         
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(10)
+//            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(10)
+            make.top.equalTo(addressTextField.snp.bottom).offset(10)
             make.width.equalTo(381)
             make.height.equalTo(95)
             make.centerX.equalToSuperview()
