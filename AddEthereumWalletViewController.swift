@@ -112,7 +112,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     
     private let addressTextField: UITextField = {
         let addressTextField = UITextField()
-        addressTextField.placeholder = "Address starting with 0x or ENS"
+        addressTextField.placeholder = "0x Ethereum address or ENS"
         addressTextField.font = UIFont.systemFont(ofSize: 15)
         addressTextField.textColor = UIColor(hexString: "#3C4252")
         addressTextField.minimumFontSize = 8;
@@ -126,7 +126,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     private let pasteButton: UIButton = {
         let pasteButton = UIButton()
         pasteButton.backgroundColor = UIColor(hexString: "#0E76FD")
-        pasteButton.layer.cornerRadius = 14.5
+        pasteButton.layer.cornerRadius = 14
+        pasteButton.titleLabel?.textAlignment = .center
         pasteButton.setImage(UIImage(named: "pasteWhite"), for: .normal)
         pasteButton.setTitle("Paste", for: .normal)
         pasteButton.setTitleColor(.white, for: .normal)
@@ -234,15 +235,24 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         
         addressFieldContainer.addSubview(pasteButton)
         pasteButton.snp.makeConstraints { make in
-            make.height.equalTo(29)
-            make.width.equalTo(90)
-            make.trailing.equalToSuperview().offset(-11)
+            make.height.equalTo(30)
+            make.width.equalTo(78)
+            make.trailing.equalToSuperview().offset(-10)
             make.centerY.equalToSuperview()
         }
         pasteButton.imageView?.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(11)
-            make.centerY.equalToSuperview()
+            make.width.equalTo(13)
+            make.leading.equalToSuperview().offset(9)
+            make.centerY.equalToSuperview().offset(-1)
         }
+        //TODO: Get the label perfectly centered
+//        pasteButton.titleLabel?.snp.makeConstraints { make in
+//            make.leading.equalTo(pasteButton).offset(30)
+//            make.leading.equalToSuperview().offset(30)
+//            make.trailing.equalToSuperview().offset(0)
+//            make.leading.equalTo(pasteButton.imageView?.snp.trailing ?? pasteButton.snp.leading).offset(100)
+            
+//        }
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
         
         addressTextField.delegate = self
