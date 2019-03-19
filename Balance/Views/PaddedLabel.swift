@@ -1,11 +1,3 @@
-//
-//  PaddedLabel.swift
-//  Balance
-//
-//  Created by Benjamin Baron on 3/14/19.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 
 class PaddedLabel: UILabel {

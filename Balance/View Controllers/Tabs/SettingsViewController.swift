@@ -1,11 +1,3 @@
-//
-//  SettingsViewController.swift
-//  Balance
-//
-//  Created by Richard Burton on 3/9/19.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {

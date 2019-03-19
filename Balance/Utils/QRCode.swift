@@ -1,11 +1,3 @@
-//
-//  QRCode.swift
-//  Balance
-//
-//  Created by Benjamin Baron on 3/13/19.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 import CoreImage
 
