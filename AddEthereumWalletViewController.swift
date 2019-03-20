@@ -434,15 +434,12 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     }
 
     @objc private func addAction() {
-        guard let name = nameTextField.text, let address = addressTextField.text, name.count > 0 else {
+        guard let address = addressTextField.text else {
             return
         }
 
-        guard (address.hasPrefix("0x") && address.count == 42) || (address.hasPrefix("ENS") && address.count > 3) else {
-            return
-        }
+        let ethereumWallet = EthereumWallet(name: nameTextField.text ?? "", address: address, includeInTotal: includeInTotalSwitch.isOn)
 
-        let ethereumWallet = EthereumWallet(name: name, address: address, includeInTotal: includeInTotalSwitch.isOn)
         CoreDataHelper.save(ethereumWallet: ethereumWallet)
         NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }

@@ -16,7 +16,11 @@ class WalletTableViewCell: UITableViewCell {
                 return
             }
             
-            nameLabel.text = walletItem.name.count > 0 ? walletItem.name : "No Name"
+            nameLabel.isHidden = walletItem.name == nil
+            if (walletItem.name != nil) {   
+                nameLabel.text = walletItem.name!
+            }
+            
             addressLabel.text = walletItem.address
         }
     }
