@@ -101,34 +101,14 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         return bottomContainerView
     }()
 
-    private let nameTitleLabel: UILabel = {
-        let nameTitleLabel = newTitleLabel()
-        nameTitleLabel.text = "Name"
-        return nameTitleLabel
-    }()
-
-    private let nameOptionalLabel: UILabel = {
-        return newOptionalLabel()
-    }()
-
-    private let nameFieldContainer: UIView = newTextFieldContainer()
-
-    private let nameTextField: UITextField = {
-        let nameTextField = UITextField()
-        nameTextField.translatesAutoresizingMaskIntoConstraints = false
-        nameTextField.font = UIFont.systemFont(ofSize: 19)
-        nameTextField.textColor = UIColor(hexString: "#3C4252")
-        nameTextField.minimumFontSize = 8;
-        nameTextField.adjustsFontSizeToFitWidth = true;
-        nameTextField.autocorrectionType = .no
-        nameTextField.spellCheckingType = .no
-        return nameTextField
-    }()
-
     private let addressTitleLabel: UILabel = {
         let addressTitleLabel = newTitleLabel()
         addressTitleLabel.text = "Ethereum Wallet Address"
         return addressTitleLabel
+    }()
+
+    private let nameOptionalLabel: UILabel = {
+        return newOptionalLabel()
     }()
 
     private let addressFieldContainer: UIView = newTextFieldContainer()
@@ -145,6 +125,26 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.autocapitalizationType = .none
         addressTextField.spellCheckingType = .no
         return addressTextField
+    }()
+
+    private let nameTitleLabel: UILabel = {
+        let nameTitleLabel = newTitleLabel()
+        nameTitleLabel.text = "Name"
+        return nameTitleLabel
+    }()
+
+    private let nameFieldContainer: UIView = newTextFieldContainer()
+
+    private let nameTextField: UITextField = {
+        let nameTextField = UITextField()
+        nameTextField.translatesAutoresizingMaskIntoConstraints = false
+        nameTextField.font = UIFont.systemFont(ofSize: 19)
+        nameTextField.textColor = UIColor(hexString: "#3C4252")
+        nameTextField.minimumFontSize = 8;
+        nameTextField.adjustsFontSizeToFitWidth = true;
+        nameTextField.autocorrectionType = .no
+        nameTextField.spellCheckingType = .no
+        return nameTextField
     }()
 
     private let pasteButton: UIButton = {
@@ -222,48 +222,29 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.height.equalTo(370)
         }
 
-        bottomContainerView.addSubview(nameTitleLabel)
-        nameTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.leading.equalToSuperview().offset(14)
-        }
-
-        bottomContainerView.addSubview(nameOptionalLabel)
-        nameOptionalLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(16)
-            make.trailing.equalToSuperview().offset(-14)
-        }
-
-        bottomContainerView.addSubview(nameFieldContainer)
-        nameFieldContainer.snp.makeConstraints { make in
-            make.top.equalTo(nameTitleLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().offset(7)
-            make.trailing.equalToSuperview().offset(-14)
-            make.height.equalTo(53)
-        }
-
-        nameTextField.delegate = self
-        nameFieldContainer.addSubview(nameTextField)
-        nameTextField.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(14)
-            make.trailing.equalToSuperview().offset(-14)
-            make.bottom.equalToSuperview()
-        }
-
         bottomContainerView.addSubview(addressTitleLabel)
         addressTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameFieldContainer.snp.bottom).offset(19)
-            make.leading.equalTo(nameTitleLabel)
+            make.top.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(14)
         }
 
         bottomContainerView.addSubview(addressFieldContainer)
         addressFieldContainer.snp.makeConstraints { make in
             make.top.equalTo(addressTitleLabel.snp.bottom).offset(8)
-            make.leading.equalTo(nameFieldContainer)
-            make.trailing.equalTo(nameFieldContainer)
-            make.height.equalTo(nameFieldContainer)
+            make.leading.equalToSuperview().offset(7)
+            make.trailing.equalToSuperview().offset(-14)
+            make.height.equalTo(53)
         }
+
+        addressTextField.delegate = self
+        addressFieldContainer.addSubview(addressTextField)
+        addressTextField.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(14)
+            make.trailing.equalToSuperview().offset(-14)
+            make.bottom.equalToSuperview()
+        }
+        addressTextField.addTarget(self, action: #selector(validate), for: .editingChanged)
 
         addressFieldContainer.addSubview(pasteButton)
         pasteButton.snp.makeConstraints { make in
@@ -278,20 +259,41 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         }
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
 
-        addressTextField.delegate = self
-        addressFieldContainer.addSubview(addressTextField)
-        addressTextField.snp.makeConstraints { make in
+        // @todo validation messages
+
+        bottomContainerView.addSubview(nameTitleLabel)
+        nameTitleLabel.snp.makeConstraints { make in
+            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
+            make.leading.equalTo(addressTitleLabel)
+        }
+
+        bottomContainerView.addSubview(nameOptionalLabel)
+        nameOptionalLabel.snp.makeConstraints { make in
+            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
+            make.trailing.equalToSuperview().offset(-14)
+        }
+
+        bottomContainerView.addSubview(nameFieldContainer)
+        nameFieldContainer.snp.makeConstraints { make in
+            make.top.equalTo(nameTitleLabel.snp.bottom).offset(8)
+            make.leading.equalTo(addressFieldContainer)
+            make.trailing.equalTo(addressFieldContainer)
+            make.height.equalTo(addressFieldContainer)
+        }
+
+        nameTextField.delegate = self
+        nameFieldContainer.addSubview(nameTextField)
+        nameTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(14)
             make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
             make.bottom.equalToSuperview()
         }
-        addressTextField.addTarget(self, action: #selector(validate), for: .editingChanged)
 
         bottomContainerView.addSubview(includeInTotalTitleLabel)
         includeInTotalTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
-            make.leading.equalTo(nameTitleLabel)
+            make.top.equalTo(nameFieldContainer.snp.bottom).offset(19)
+            make.leading.equalTo(addressTitleLabel)
         }
 
         bottomContainerView.addSubview(includeInTotalSwitch)
@@ -463,8 +465,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == nameTextField {
-            addressTextField.becomeFirstResponder()
+        if textField == addressTextField {
+            nameTextField.becomeFirstResponder()
         } else {
             view.endEditing(true)
         }
