@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // HACK: Ensure "shared" property is loaded on the main thread (yeah it's not "good" code but it's short, sweet, and most importantly it works ;)
         print(AppDelegate.shared)
         
+        Chat.setup()
+        
         window.rootViewController = TabBarController()
         window.makeKeyAndVisible()
         return true

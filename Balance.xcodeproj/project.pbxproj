@@ -11,6 +11,7 @@
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
+		53897A11224413CB009CACC4 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53897A10224413CB009CACC4 /* Chat.swift */; };
 		538AACF52239ACDA004C3706 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF42239ACDA004C3706 /* QRCode.swift */; };
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
@@ -50,6 +51,7 @@
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
+		53897A10224413CB009CACC4 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		538AACF42239ACDA004C3706 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				538AACF42239ACDA004C3706 /* QRCode.swift */,
+				53897A10224413CB009CACC4 /* Chat.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				DC669836221CA8F000C383BD /* Frameworks */,
 				DC669837221CA8F000C383BD /* Resources */,
 				E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */,
+				0866835E8D9A64B95AFF72A9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -336,6 +340,30 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0866835E8D9A64B95AFF72A9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-resources.sh",
+				"${PODS_ROOT}/Intercom/Intercom/Intercom.framework/Versions/A/Resources/Intercom.bundle",
+				"${PODS_ROOT}/Intercom/Intercom/Intercom.framework/Versions/A/Resources/IntercomTranslations.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Intercom.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/IntercomTranslations.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1498338121071E6253D9E871 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -398,11 +426,12 @@
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* NamedWalletTableViewCell.swift in Sources */,
 				53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */,
-				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
+				DC4BA4F0223460C700A4E30D /* NamedWalletTableViewCell.swift in Sources */,
 				538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
 				538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */,
+				53897A11224413CB009CACC4 /* Chat.swift in Sources */,
 				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
