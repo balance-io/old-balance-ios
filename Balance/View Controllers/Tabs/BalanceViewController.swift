@@ -13,9 +13,9 @@ import SwiftEntryKit
 
 class BalanceViewController: UITableViewController {
     enum Section: Int {
-        case ethereum = 0
-        case erc20    = 1
-        case cdp      = 2
+        case cdp      = 0
+        case ethereum = 1
+        case erc20    = 2
     }
 
     private var ethereumWallets = [EthereumWallet]()
