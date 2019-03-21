@@ -77,10 +77,10 @@ class WelcomeViewController: UIViewController {
         
         view.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-            make.width.equalTo(381)
+            make.width.equalToSuperview().offset(-15)
             make.height.equalTo(95)
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-100)
+            make.top.equalTo(subtitleLabel.snp.bottom).offset(40)
         }
         addButton.imageView?.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(25)

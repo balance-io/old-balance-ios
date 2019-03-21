@@ -1,36 +1,44 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.clipsToBounds = true
+        return scrollView
+    }()
+
+    private let contentView = UIView()
+
     private let balanceLogoImageView: UIImageView = {
         let balanceLogoImageView = UIImageView()
         balanceLogoImageView.image = UIImage(named: "balanceLogo")
         return balanceLogoImageView
     }()
-    
+
     private let balanceNameImageView: UIImageView = {
         let balanceNameImageView = UIImageView()
         balanceNameImageView.image = UIImage(named: "balanceName")
         return balanceNameImageView
     }()
-    
+
     private let wavesImageView: UIImageView = {
         let wavesImageView = UIImageView()
         wavesImageView.image = UIImage(named: "wavesWithoutLogos")
         return wavesImageView
     }()
-    
+
     private let richardImageView: UIImageView = {
         let richardImageView = UIImageView()
         richardImageView.image = UIImage(named: "richard")
         return richardImageView
     }()
-    
+
     private let benImageView: UIImageView = {
         let benImageView = UIImageView()
         benImageView.image = UIImage(named: "ben")
         return benImageView
     }()
-    
+
     private let joinTitleLabel: UILabel = {
         let joinTitleLabel = UILabel()
         joinTitleLabel.font = UIFont.systemFont(ofSize: 24)
@@ -38,7 +46,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         joinTitleLabel.text = "Join the community"
         return joinTitleLabel
     }()
-    
+
     private let joinSubtitleLabel: UILabel = {
         let joinSubtitleLabel = UILabel()
         joinSubtitleLabel.font = UIFont.systemFont(ofSize: 17)
@@ -49,7 +57,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         joinSubtitleLabel.text = "Creating interfaces for the open source financial system"
         return joinSubtitleLabel
     }()
-    
+
     private let mediumButton: UIButton = {
         let mediumButton = UIButton()
         mediumButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
@@ -59,7 +67,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         mediumButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return mediumButton
     }()
-    
+
     private let discordButton: UIButton = {
         let discordButton = UIButton()
         discordButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
@@ -69,7 +77,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         discordButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return discordButton
     }()
-    
+
     private let twitterButton: UIButton = {
         let twitterButton = UIButton()
         twitterButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
@@ -79,7 +87,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         twitterButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return twitterButton
     }()
-    
+
     private let githubButton: UIButton = {
         let githubButton = UIButton()
         githubButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
@@ -89,59 +97,82 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         githubButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.4)
         return githubButton
     }()
-    
+
     private let tableView = UITableView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
-        
-        view.addSubview(balanceLogoImageView)
+
+        // Setup scroll view
+        // -----------------------------------------
+
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        if (UIScreen.main.bounds.height < 800) {
+            scrollView.alwaysBounceVertical = true
+        }
+
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(scrollView)
+            make.left.right.equalTo(view)
+            make.width.equalTo(scrollView)
+            make.height.equalTo(610)
+        }
+
+        // Draw
+        // -----------------------------------------
+
+        contentView.addSubview(balanceLogoImageView)
         balanceLogoImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.topMargin).offset(15)
+            make.top.equalTo(contentView.snp.topMargin).offset(15)
             make.centerX.equalToSuperview()
         }
-        
-        view.addSubview(balanceNameImageView)
+
+        contentView.addSubview(balanceNameImageView)
         balanceNameImageView.snp.makeConstraints { make in
             make.top.equalTo(balanceLogoImageView.snp.bottom).offset(20)
             make.centerX.equalTo(balanceLogoImageView)
         }
-        
-        view.addSubview(wavesImageView)
+
+        contentView.addSubview(wavesImageView)
         wavesImageView.snp.makeConstraints { make in
             make.top.equalTo(balanceNameImageView.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
-        
-        view.addSubview(richardImageView)
+
+        contentView.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(-50)
             make.centerY.equalTo(wavesImageView).offset(10)
         }
-        
-        view.addSubview(benImageView)
+
+        contentView.addSubview(benImageView)
         benImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(50)
             make.centerY.equalTo(wavesImageView).offset(-10)
         }
-        
-        view.addSubview(joinTitleLabel)
+
+        contentView.addSubview(joinTitleLabel)
         joinTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(wavesImageView.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
         }
-        
-        view.addSubview(joinSubtitleLabel)
+
+        contentView.addSubview(joinSubtitleLabel)
         joinSubtitleLabel.snp.makeConstraints { make in
             make.top.equalTo(joinTitleLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
             make.height.equalTo(60)
         }
-        
+
         mediumButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
-        view.addSubview(mediumButton)
+        contentView.addSubview(mediumButton)
         mediumButton.snp.makeConstraints { make in
             make.top.equalTo(joinSubtitleLabel.snp.bottom).offset(15)
             make.centerX.equalToSuperview().multipliedBy(0.5)
@@ -152,9 +183,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.leading.equalToSuperview().offset(19)
             make.centerY.equalToSuperview()
         }
-        
+
         discordButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
-        view.addSubview(discordButton)
+        contentView.addSubview(discordButton)
         discordButton.snp.makeConstraints { make in
             make.top.equalTo(mediumButton)
             make.centerX.equalToSuperview().multipliedBy(1.5)
@@ -165,9 +196,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
         }
-        
+
         twitterButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
-        view.addSubview(twitterButton)
+        contentView.addSubview(twitterButton)
         twitterButton.snp.makeConstraints { make in
             make.top.equalTo(mediumButton.snp.bottom).offset(10)
             make.centerX.equalTo(mediumButton)
@@ -180,7 +211,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         }
 
         githubButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
-        view.addSubview(githubButton)
+        contentView.addSubview(githubButton)
         githubButton.snp.makeConstraints { make in
             make.top.equalTo(twitterButton)
             make.centerX.equalTo(discordButton)
@@ -191,26 +222,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalToSuperview()
         }
-        
+
         tableView.backgroundColor = .white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 44
         tableView.isScrollEnabled = false
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
-        view.addSubview(tableView)
+        contentView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(tableView.rowHeight * 3)//4)
-            make.bottom.equalTo(view.snp.bottomMargin)
+            make.bottom.equalTo(contentView.snp.bottom)
         }
-        
+
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
-    
+
     // MARK: - Button Actions -
-    
+
     @objc private func socialButtonAction(_ sender: UIButton) {
         var urlString: String?
         switch sender {
@@ -229,13 +260,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             UIApplication.shared.open(url)
         }
     }
-    
+
     // MARK: - Table View -
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "settingsCell", for: indexPath) as! SettingsTableViewCell
         cell.isEnabled = false
@@ -259,10 +290,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             break
         }
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         print("Row: \(indexPath.row)")

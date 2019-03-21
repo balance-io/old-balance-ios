@@ -1,24 +1,28 @@
 PODS:
+  - CryptoSwift (0.14.0)
   - QuickLayout (2.1.1)
   - SnapKit (4.0.1)
   - SwiftEntryKit (0.8.8):
     - QuickLayout (= 2.1.1)
 
 DEPENDENCIES:
+  - CryptoSwift
   - SnapKit (~> 4.0.0)
   - SwiftEntryKit (= 0.8.8)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - CryptoSwift
     - QuickLayout
     - SnapKit
     - SwiftEntryKit
 
 SPEC CHECKSUMS:
+  CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
   QuickLayout: 9af2b7fd89a6552828f51a5aba28d1bcdb8b340c
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftEntryKit: c50f25a14772713ded1591c852d1c1dc74c95b9e
 
-PODFILE CHECKSUM: ce317b0bcbf90e72f0c536bddd2a27fa6c5cbbd0
+PODFILE CHECKSUM: 030eab1988f2b371c12d1b6c3fd393c7076228ce
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.6.1
