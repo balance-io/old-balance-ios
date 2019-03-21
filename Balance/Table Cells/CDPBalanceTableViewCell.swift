@@ -1,11 +1,3 @@
-//
-//  CDPBalanceTableViewCell.swift
-//  Balance
-//
-//  Created by Richard Burton on 21/02/2019.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 import SnapKit
 

@@ -1,11 +1,3 @@
-//
-//  DispatchQueue.swift
-//  Balance
-//
-//  Created by Benjamin Baron on 1/23/17.
-//  Copyright © 2017 Ben Baron. All rights reserved.
-//
-
 import Foundation
 
 extension DispatchQueue {

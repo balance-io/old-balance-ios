@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 
 class UnnamedWalletTableViewCell: WalletTableViewCell {
-    override internal func renderTableViewCellContentFor(containerView: UIView) {
+    override func renderTableViewCellContentFor(containerView: UIView) {
         containerView.addSubview(addressLabel)
         addressLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         addressLabel.snp.makeConstraints { make in
