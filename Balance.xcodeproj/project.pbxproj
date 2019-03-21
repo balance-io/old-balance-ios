@@ -40,6 +40,7 @@
 		DCBF852822380B010002F93F /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBF852722380B010002F93F /* Icons.xcassets */; };
 		F1D844E22242A4F0007245E9 /* UnnamedWalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E12242A4F0007245E9 /* UnnamedWalletTableViewCell.swift */; };
 		F1D844E42242A512007245E9 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E32242A512007245E9 /* WalletTableViewCell.swift */; };
+		F1D844EA2243A881007245E9 /* EIP55.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E92243A881007245E9 /* EIP55.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		DCBF852722380B010002F93F /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		F1D844E12242A4F0007245E9 /* UnnamedWalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnnamedWalletTableViewCell.swift; sourceTree = "<group>"; };
 		F1D844E32242A512007245E9 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
+		F1D844E92243A881007245E9 /* EIP55.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP55.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
 				DC5B07672225B07800107A8B /* Extensions */,
 				53F0C9B02235796000FF0796 /* API */,
+				F1D844E72243A86B007245E9 /* Core */,
 				53F0C9A8223571B900FF0796 /* Models */,
 				53F0C9A9223571C300FF0796 /* View Controllers */,
 				53F0C9AB223571E800FF0796 /* Views */,
@@ -242,6 +245,22 @@
 				53721AAC22381D3F001C1883 /* apikeys.plist */,
 			);
 			path = Balance;
+			sourceTree = "<group>";
+		};
+		F1D844E72243A86B007245E9 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				F1D844E82243A871007245E9 /* Ethereum */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F1D844E82243A871007245E9 /* Ethereum */ = {
+			isa = PBXGroup;
+			children = (
+				F1D844E92243A881007245E9 /* EIP55.swift */,
+			);
+			path = Ethereum;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,6 +364,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework",
@@ -353,6 +373,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEntryKit.framework",
@@ -381,6 +402,7 @@
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
+				F1D844EA2243A881007245E9 /* EIP55.swift in Sources */,
 				538AACF52239ACDA004C3706 /* QRCode.swift in Sources */,
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */,

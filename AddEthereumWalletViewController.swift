@@ -126,6 +126,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.spellCheckingType = .no
         return addressTextField
     }()
+    
+    private let addressFieldValidationLabel: UILabel = {
+        let addressFieldValidationLabel = UILabel()
+        addressFieldValidationLabel.isHidden = true
+        addressFieldValidationLabel.translatesAutoresizingMaskIntoConstraints = false
+        addressFieldValidationLabel.font = UIFont.systemFont(ofSize: 14)
+        addressFieldValidationLabel.textColor = UIColor(hexString: "#cc0000")
+        return addressFieldValidationLabel
+    }()
 
     private let nameTitleLabel: UILabel = {
         let nameTitleLabel = newTitleLabel()
@@ -233,7 +242,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.top.equalTo(addressTitleLabel.snp.bottom).offset(8)
             make.leading.equalToSuperview().offset(7)
             make.trailing.equalToSuperview().offset(-14)
-            make.height.equalTo(53)
+            make.height.equalTo(60)
         }
 
         addressTextField.delegate = self
@@ -258,18 +267,23 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.centerY.equalToSuperview()
         }
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
-
-        // @todo validation messages
+        
+        addressFieldContainer.addSubview(addressFieldValidationLabel)
+        addressFieldValidationLabel.snp.makeConstraints { make in
+            make.top.equalTo(addressTextField.snp.bottom).offset(8)
+            make.leading.equalTo(addressTextField.snp.leading)
+            make.trailing.equalTo(addressTextField.snp.trailing)
+        }
 
         bottomContainerView.addSubview(nameTitleLabel)
         nameTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
+            make.top.equalTo(addressFieldContainer.snp.bottom).offset(21)
             make.leading.equalTo(addressTitleLabel)
         }
 
         bottomContainerView.addSubview(nameOptionalLabel)
         nameOptionalLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
+            make.top.equalTo(addressFieldContainer.snp.bottom).offset(21)
             make.trailing.equalToSuperview().offset(-14)
         }
 
@@ -364,9 +378,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     @objc private func validate() {
         addButton.isEnabled = false
+        
+        // Address: don't show error if no content entered
+        guard let address = addressTextField.text, address.count > 0 else {
+            addressFieldValidationLabel.isHidden = true
+            return
+        }
 
         // Address: length should be 42
-        guard let address = addressTextField.text, address.count == 42 else {
+        guard address.count == 42 else {
             throwValidationError("Wallet address should be 42 characters long")
             return
         }
@@ -391,19 +411,24 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
         // We're valid
         addButton.isEnabled = true
+        addressFieldValidationLabel.isHidden = true
     }
 
     private func addressIsValid(_ address: String) -> Bool {
         // Does the address contain only alphanumeric characters?
-        // @todo
+        if (address.range(of: "[^a-zA-Z0-9]", options: .regularExpression) != nil) {
+            return false
+        }
 
         // Are the address's alpha chars all-lower case or all-upper case?
         if (address == address.lowercased() || address == address.uppercased()) {
             return true
         }
-
+        
         // Does the address match the ERC-55 checksum?
-        // @todo
+        if (EIP55.test(address)) {
+            return true
+        }
 
         return false
     }
@@ -414,7 +439,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     }
 
     private func throwValidationError(_ message: String) {
-        print(message)
+        addressFieldValidationLabel.isHidden = false
+        addressFieldValidationLabel.text = message
     }
 
     private func throwValidationWarning(_ message: String) {
@@ -430,6 +456,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     @objc private func pasteAction() {
         if let string = UIPasteboard.general.string {
             addressTextField.text = string
+            validate()
         }
     }
 
