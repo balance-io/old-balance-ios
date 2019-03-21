@@ -10,15 +10,14 @@ import UIKit
 import SnapKit
 
 class NamedWalletTableViewCell: WalletTableViewCell {
-    internal let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.textColor = .black
         return label
     }()
     
-    override internal func renderTableViewCellContentFor(containerView: UIView) {
+    override func renderTableViewCellContentFor(containerView: UIView) {
         if (wallet != nil) {
             nameLabel.text = wallet!.name
         }
@@ -38,7 +37,7 @@ class NamedWalletTableViewCell: WalletTableViewCell {
         }
     }
     
-    override internal func walletWasSet(walletItem: EthereumWallet) {
+    override func walletWasSet(walletItem: EthereumWallet) {
         addressLabel.text = walletItem.address
         nameLabel.text = walletItem.name
     }

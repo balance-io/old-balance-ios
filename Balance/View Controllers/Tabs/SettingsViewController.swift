@@ -1,18 +1,9 @@
-//
-//  SettingsViewController.swift
-//  Balance
-//
-//  Created by Richard Burton on 3/9/19.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.clipsToBounds = true
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
 

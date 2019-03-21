@@ -20,7 +20,7 @@ class WalletTableViewCell: UITableViewCell {
         }
     }
 
-    internal let addressLabel: UILabel = {
+    let addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
@@ -29,7 +29,7 @@ class WalletTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let containerView: UIView = {
+    let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view

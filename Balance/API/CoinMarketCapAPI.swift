@@ -1,11 +1,3 @@
-//
-//  CoinMarketCapAPI.swift
-//  Balance
-//
-//  Created by Benjamin Baron on 3/12/19.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import Foundation
 
 struct CoinMarketCapAPI {
