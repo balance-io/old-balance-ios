@@ -117,7 +117,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.spellCheckingType = .no
         return addressTextField
     }()
-    
+
     private let addressFieldValidationLabel: UILabel = {
         let addressFieldValidationLabel = UILabel()
         addressFieldValidationLabel.isHidden = true
@@ -186,6 +186,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let smallFormat = view.bounds.height < 700
+
         view.backgroundColor = .black
 
         //
@@ -197,13 +199,13 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.top.equalToSuperview().offset(-10)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(140)
+            make.height.equalTo(min(140, view.bounds.height / 7))
         }
 
         topContainerView.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(20)
+            make.centerY.equalToSuperview().offset(smallFormat ? 10 : 20)
         }
         closeButton.addTarget(self, action: #selector(closeAction), for: .touchUpInside)
 
@@ -211,12 +213,21 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         // Bottom Container
         //
 
+        // Adjust the font sizes if we're on a small-format screen
+        if (smallFormat) {
+            addressTitleLabel.font = UIFont.systemFont(ofSize: 14)
+            addressTextField.font = UIFont.systemFont(ofSize: 12)
+            nameTitleLabel.font = UIFont.systemFont(ofSize: 14)
+            nameTextField.font = UIFont.systemFont(ofSize: 12)
+            nameOptionalLabel.font = UIFont.systemFont(ofSize: 12)
+        }
+
         view.addSubview(bottomContainerView)
         bottomContainerView.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(10)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(370)
+            make.height.equalTo(min(370, view.bounds.height / 2))
         }
 
         bottomContainerView.addSubview(addressTitleLabel)
@@ -230,7 +241,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.top.equalTo(addressTitleLabel.snp.bottom).offset(8)
             make.leading.equalToSuperview().offset(7)
             make.trailing.equalToSuperview().offset(-14)
-            make.height.equalTo(60)
+            make.height.equalTo(smallFormat ? 40 : 60)
         }
 
         addressTextField.delegate = self
@@ -255,7 +266,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.centerY.equalToSuperview()
         }
         pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
-        
+
         addressFieldContainer.addSubview(addressFieldValidationLabel)
         addressFieldValidationLabel.snp.makeConstraints { make in
             make.top.equalTo(addressTextField.snp.bottom).offset(8)
@@ -307,7 +318,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(10)
-            make.width.equalTo(381)
+            make.width.equalTo(min(381, view.bounds.width - 40))
             make.height.equalTo(95)
             make.centerX.equalToSuperview()
         }
@@ -366,7 +377,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     @objc private func validate() {
         addButton.isEnabled = false
-        
+
         // Address: don't show error if no content entered
         guard let address = addressTextField.text, address.count > 0 else {
             addressFieldValidationLabel.isHidden = true
@@ -412,7 +423,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         if (address == address.lowercased() || address == address.uppercased()) {
             return true
         }
-        
+
         // Does the address match the ERC-55 checksum?
         if (EIP55.test(address)) {
             return true
