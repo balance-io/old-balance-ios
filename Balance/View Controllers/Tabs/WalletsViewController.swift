@@ -36,7 +36,8 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         walletsTableView.dataSource = self
         walletsTableView.delegate = self
         
-        walletsTableView.register(WalletTableViewCell.self, forCellReuseIdentifier: "walletCell")
+        walletsTableView.register(NamedWalletTableViewCell.self, forCellReuseIdentifier: "namedWalletCell")
+        walletsTableView.register(UnnamedWalletTableViewCell.self, forCellReuseIdentifier: "unnamedWalletCell")
         view.addSubview(walletsTableView)
         
         walletsTableView.snp.makeConstraints { make in
@@ -107,9 +108,18 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "walletCell", for: indexPath) as! WalletTableViewCell
+        let wallet = ethereumWallets[indexPath.row]
+        var cell: WalletTableViewCell
+        
+        if (wallet.name != nil && wallet.name != "") {
+            cell = tableView.dequeueReusableCell(withIdentifier: "namedWalletCell", for: indexPath) as! NamedWalletTableViewCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "unnamedWalletCell", for: indexPath) as! UnnamedWalletTableViewCell
+        }
+        
         cell.selectionStyle = .none
-        cell.wallet = ethereumWallets[indexPath.row]
+        cell.wallet = wallet
+        
         return cell
     }
     
