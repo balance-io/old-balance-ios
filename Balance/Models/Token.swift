@@ -9,6 +9,9 @@
 import Foundation
 
 struct Token {
+    // Constant that defines the minimum fiat value to be considered a "valuable" token
+    static let fiatValueCutoff = 10.0
+    
     let balance: Double?     // Balance in tokens
     let fiatBalance: Double? // Balance in fiat currency
     let rate: Double?        // Price per unit in fiat currency

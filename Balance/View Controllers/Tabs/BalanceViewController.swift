@@ -1,3 +1,4 @@
+
 //
 //  BalanceViewController.swift
 //  Balance
@@ -24,6 +25,8 @@ class BalanceViewController: UITableViewController {
     private var isLoading = false
     private var lastLoadTimestamp = 0.0
     
+    private var expandedIndexPath: IndexPath?
+    
     // MARK - View Lifecycle -
     
     override func viewDidLoad() {
@@ -45,6 +48,8 @@ class BalanceViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
     }
     
     private func setupNavigation() {
@@ -151,6 +156,8 @@ class BalanceViewController: UITableViewController {
                 
                 // Remove the refresh control so we only show it on first load
                 self.refreshControl?.endRefreshing()
+            }
+            DispatchQueue.main.async(after: 0.5) {
                 self.refreshControl = nil
             }
         }
@@ -162,6 +169,28 @@ class BalanceViewController: UITableViewController {
     
     @objc private func walletRemoved() {
         loadData()
+    }
+    
+    private func reloadTableCellHeights() {
+        // "hack" to reload the sizes without loading the table cell again
+        // Note it's not really a hack, it's actually the recommended way to do this, it just feels hackish since Apple
+        // doesn't provide a proper method for this
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    @objc private func cellExpanded(_ notification: Notification) {
+        if let userInfo = notification.userInfo, userInfo[ExpandableTableViewCell.Notifications.Keys.reuseIdentifier] as? String == "cryptoCell", let indexPath = userInfo[ExpandableTableViewCell.Notifications.Keys.indexPath] as? IndexPath {
+            expandedIndexPath = indexPath
+            reloadTableCellHeights()
+        }
+    }
+    
+    @objc private func cellCollapsed(_ notification: Notification) {
+        if let userInfo = notification.userInfo, userInfo[ExpandableTableViewCell.Notifications.Keys.reuseIdentifier] as? String == "cryptoCell" {
+            expandedIndexPath = nil
+            reloadTableCellHeights()
+        }
     }
         
     // MARK - Table View -
@@ -180,10 +209,8 @@ class BalanceViewController: UITableViewController {
             return ethereumWallets.count > 0 ? 1 : 0
         case .erc20:
             // Check if there are any tokens
-            for wallet in ethereumWallets {
-                if let count = wallet.tokens?.count, count > 0 {
-                    return 1
-                }
+            if let count = aggregatedEthereumWallet?.tokens?.count, count > 0 {
+                return 1
             }
             return 0
         case .cdp:
@@ -192,10 +219,11 @@ class BalanceViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let isExpanded = (indexPath == expandedIndexPath)
         if indexPath.section == Section.ethereum.rawValue {
-            return CryptoBalanceTableViewCell(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum)
+            return CryptoBalanceTableViewCell(withIdentifier: "cryptoCell", wallet: aggregatedEthereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
         } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell(wallet: aggregatedEthereumWallet!, cryptoType: .erc20)
+            return CryptoBalanceTableViewCell(withIdentifier: "cryptoCell", wallet: aggregatedEthereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPBalanceTableViewCell
             cell.cdp = CDPs[indexPath.row]
@@ -204,10 +232,11 @@ class BalanceViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let isExpanded = (indexPath == expandedIndexPath)
         if indexPath.section == Section.ethereum.rawValue {
-            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum)
+            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded)
         } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .erc20)
+            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .erc20, isExpanded: isExpanded)
         } else {
             return 180
         }

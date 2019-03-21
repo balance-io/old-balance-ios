@@ -22,7 +22,6 @@ class WalletTableViewCell: UITableViewCell {
     
     internal let addressLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth = true
@@ -32,7 +31,6 @@ class WalletTableViewCell: UITableViewCell {
     
     internal let containerView: UIView = {
         let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
     }()

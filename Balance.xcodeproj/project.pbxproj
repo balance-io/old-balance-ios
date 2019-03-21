@@ -10,12 +10,12 @@
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
-		53721AAD22381D3F001C1883 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 53721AAC22381D3F001C1883 /* apikeys.plist */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
 		538AACF52239ACDA004C3706 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF42239ACDA004C3706 /* QRCode.swift */; };
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
+		53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
 		53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */; };
@@ -48,12 +48,12 @@
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
-		53721AAC22381D3F001C1883 /* apikeys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = apikeys.plist; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
 		538AACF42239ACDA004C3706 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewCell.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakerToolsAPI.swift; sourceTree = "<group>"; };
@@ -128,6 +128,7 @@
 		53F0C9AA223571D500FF0796 /* Table Cells */ = {
 			isa = PBXGroup;
 			children = (
+				53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */,
 				5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */,
 				DC669854221ED25E00C383BD /* CDPBalanceTableViewCell.swift */,
 				DC4BA4EF223460C700A4E30D /* NamedWalletTableViewCell.swift */,
@@ -242,7 +243,6 @@
 				DCBF852722380B010002F93F /* Icons.xcassets */,
 				DC669848221CA8F100C383BD /* Info.plist */,
 				DC3455062221686D00136F8F /* Balance.xcdatamodeld */,
-				53721AAC22381D3F001C1883 /* apikeys.plist */,
 			);
 			path = Balance;
 			sourceTree = "<group>";
@@ -324,7 +324,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCBF852822380B010002F93F /* Icons.xcassets in Resources */,
-				53721AAD22381D3F001C1883 /* apikeys.plist in Resources */,
 				DC4EF031223A3B9600B8EFA4 /* Launch Screen.storyboard in Resources */,
 				DC452002222050F80077813C /* Assets.xcassets in Resources */,
 			);
@@ -394,6 +393,8 @@
 				53F0C9B6223596B400FF0796 /* CDPInfoView.swift in Sources */,
 				DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */,
 				DC4BA4F0223460C700A4E30D /* NamedWalletTableViewCell.swift in Sources */,
+				53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */,
+				DC4BA4F0223460C700A4E30D /* WalletTableViewCell.swift in Sources */,
 				538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */,
 				53F0C9B422357D4500FF0796 /* DispatchQueue+Async.swift in Sources */,
 				DC66984F221D7E0200C383BD /* CDP.swift in Sources */,
@@ -547,7 +548,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q4G66XSS36;
+				DEVELOPMENT_TEAM = 9SDMDTJ5TT;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Balance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -568,7 +569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = Q4G66XSS36;
+				DEVELOPMENT_TEAM = 9SDMDTJ5TT;
 				INFOPLIST_FILE = Balance/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

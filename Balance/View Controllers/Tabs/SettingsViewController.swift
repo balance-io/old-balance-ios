@@ -11,42 +11,36 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let balanceLogoImageView: UIImageView = {
         let balanceLogoImageView = UIImageView()
-        balanceLogoImageView.translatesAutoresizingMaskIntoConstraints = false
         balanceLogoImageView.image = UIImage(named: "balanceLogo")
         return balanceLogoImageView
     }()
     
     private let balanceNameImageView: UIImageView = {
         let balanceNameImageView = UIImageView()
-        balanceNameImageView.translatesAutoresizingMaskIntoConstraints = false
         balanceNameImageView.image = UIImage(named: "balanceName")
         return balanceNameImageView
     }()
     
     private let wavesImageView: UIImageView = {
         let wavesImageView = UIImageView()
-        wavesImageView.translatesAutoresizingMaskIntoConstraints = false
         wavesImageView.image = UIImage(named: "wavesWithoutLogos")
         return wavesImageView
     }()
     
     private let richardImageView: UIImageView = {
         let richardImageView = UIImageView()
-        richardImageView.translatesAutoresizingMaskIntoConstraints = false
         richardImageView.image = UIImage(named: "richard")
         return richardImageView
     }()
     
     private let benImageView: UIImageView = {
         let benImageView = UIImageView()
-        benImageView.translatesAutoresizingMaskIntoConstraints = false
         benImageView.image = UIImage(named: "ben")
         return benImageView
     }()
     
     private let joinTitleLabel: UILabel = {
         let joinTitleLabel = UILabel()
-        joinTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         joinTitleLabel.font = UIFont.systemFont(ofSize: 24)
         joinTitleLabel.textColor = UIColor(hexString: "#191817")
         joinTitleLabel.text = "Join the community"
@@ -55,7 +49,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let joinSubtitleLabel: UILabel = {
         let joinSubtitleLabel = UILabel()
-        joinSubtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         joinSubtitleLabel.font = UIFont.systemFont(ofSize: 17)
         joinSubtitleLabel.textColor = UIColor(hexString: "#191817")
         joinSubtitleLabel.numberOfLines = 2
@@ -67,7 +60,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let mediumButton: UIButton = {
         let mediumButton = UIButton()
-        mediumButton.translatesAutoresizingMaskIntoConstraints = false
         mediumButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         mediumButton.setImage(UIImage(named: "mediumLogo"), for: .normal)
         mediumButton.setTitle("Medium", for: .normal)
@@ -78,7 +70,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let discordButton: UIButton = {
         let discordButton = UIButton()
-        discordButton.translatesAutoresizingMaskIntoConstraints = false
         discordButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         discordButton.setImage(UIImage(named: "discordLogo"), for: .normal)
         discordButton.setTitle("Discord", for: .normal)
@@ -89,7 +80,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let twitterButton: UIButton = {
         let twitterButton = UIButton()
-        twitterButton.translatesAutoresizingMaskIntoConstraints = false
         twitterButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         twitterButton.setImage(UIImage(named: "twitterLogo"), for: .normal)
         twitterButton.setTitle("Twitter", for: .normal)
@@ -100,7 +90,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     private let githubButton: UIButton = {
         let githubButton = UIButton()
-        githubButton.translatesAutoresizingMaskIntoConstraints = false
         githubButton.setBackgroundImage(UIImage(named: "socialButtonBackground"), for: .normal)
         githubButton.setImage(UIImage(named: "githubLogo"), for: .normal)
         githubButton.setTitle("GitHub", for: .normal)
