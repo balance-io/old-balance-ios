@@ -1,8 +1,8 @@
 //
-//  CDPTableViewCell.swift
+//  UnnamedWalletTableViewCell.swift
 //  Balance
 //
-//  Created by Richard Burton on 21/02/2019.
+//  Created by Jamie Rumbelow on 20/03/2019.
 //  Copyright © 2019 Balance. All rights reserved.
 //
 
@@ -16,24 +16,11 @@ class WalletTableViewCell: UITableViewCell {
                 return
             }
             
-            nameLabel.isHidden = walletItem.name == nil
-            if (walletItem.name != nil) {   
-                nameLabel.text = walletItem.name!
-            }
-            
-            addressLabel.text = walletItem.address
+            walletWasSet(walletItem: walletItem)
         }
     }
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = .black
-        return label
-    }()
-    
-    private let addressLabel: UILabel = {
+    internal let addressLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12)
@@ -43,14 +30,14 @@ class WalletTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let containerView: UIView = {
+    internal let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         return view
     }()
     
-    private let backgroundImageView: UIImageView = {
+    internal let backgroundImageView: UIImageView = {
         let backgroundImageView = UIImageView()
         backgroundImageView.image = UIImage(named: "walletCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
         return backgroundImageView
@@ -78,22 +65,14 @@ class WalletTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview()
         }
         
-        containerView.addSubview(nameLabel)
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(15)
-            make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().offset(-15)
-        }
-        
-        containerView.addSubview(addressLabel)
-        addressLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
-            make.leading.equalTo(nameLabel)
-            make.trailing.equalTo(nameLabel)
-        }
+        self.renderTableViewCellContentFor(containerView: containerView)
         
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
+    }
+    
+    internal func renderTableViewCellContentFor(containerView: UIView) {
+        fatalError("unimplemented")
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -103,5 +82,9 @@ class WalletTableViewCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("unimplemented")
+    }
+    
+    internal func walletWasSet(walletItem: EthereumWallet) {
+        addressLabel.text = walletItem.address
     }
 }
