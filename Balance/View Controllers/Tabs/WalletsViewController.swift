@@ -56,6 +56,13 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
             make.width.equalTo(72)
         }
         
+        if Chat.showButton {
+            let chatButton = UIButton()
+            chatButton.setImage(UIImage(named: "chatButton"), for: .normal)
+            chatButton.addTarget(self, action: #selector(chatAction), for: .touchUpInside)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(customView: chatButton)
+        }
+        
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.barTintColor = .white
             navigationBar.isTranslucent = false
@@ -76,6 +83,10 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
             let addEthereumWalletViewController = AddEthereumWalletViewController()
             present(addEthereumWalletViewController, animated: true)
         }
+    }
+    
+    @objc private func chatAction() {
+        Chat.show()
     }
     
     // MARK: - Data Loading -
