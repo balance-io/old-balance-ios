@@ -8,4 +8,5 @@ target 'Balance' do
   # Pods for Balance
   pod 'SwiftEntryKit', '0.8.8'
   pod 'SnapKit', '~> 4.0.0'
+  pod 'CryptoSwift'
 end

@@ -1,7 +1,7 @@
 import Foundation
 
 struct EthereumWallet {
-    let name: String
+    let name: String?
     let address: String
     let includeInTotal: Bool
     
@@ -20,7 +20,7 @@ struct EthereumWallet {
         return tokens?.filter{ $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
     }
     
-    init(name: String, address: String, includeInTotal: Bool) {
+    init(name: String?, address: String, includeInTotal: Bool) {
         self.name = name
         self.address = address
         self.includeInTotal = includeInTotal
