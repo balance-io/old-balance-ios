@@ -15,7 +15,7 @@ class ExpandableTableViewCell: UITableViewCell {
     
     var indexPath: IndexPath
     var isExpanded: Bool
-    
+
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, isExpanded: Bool, indexPath: IndexPath) {
         self.isExpanded = isExpanded
         self.indexPath = indexPath

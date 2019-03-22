@@ -11,9 +11,11 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     let cryptoType: CryptoType
     
     override var isExpanded: Bool {
-        didSet {
-            UIView.animate(withDuration: 0.2) {
-                self.setupLowValueTokensContainer(show: self.isExpanded)
+        willSet {
+            if isExpanded != newValue {
+                UIView.animate(withDuration: 0.2) {
+                    self.setupLowValueTokensContainer(show: newValue)
+                }
             }
         }
     }
