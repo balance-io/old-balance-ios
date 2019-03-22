@@ -2,7 +2,7 @@
 # platform :ios, '9.0'
 
 target 'Balance' do
-  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  platform :ios, '12.1'
   use_frameworks!
 
   # Pods for Balance
@@ -10,7 +10,8 @@ target 'Balance' do
   pod 'SnapKit', '~> 4.0.0'
   pod 'CryptoSwift'
   pod 'Intercom'
-  pod "PagingKit"
+  pod 'PagingKit'
+  pod 'web3.swift', :git => 'https://github.com/balance-io/web3.swift.git'
 
   # For PagingKit
   inherit! :search_paths

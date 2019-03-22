@@ -27,6 +27,8 @@ private func newTextFieldContainer() -> UIView {
 }
 
 class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate {
+    private var resolvedAddress: String?
+    
     private let topContainerView: UIView = {
         let topContainerView = UIView()
         topContainerView.backgroundColor = .white
@@ -97,7 +99,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let addressTextField: UITextField = {
         let addressTextField = UITextField()
-        addressTextField.placeholder = "Address starting with 0x"
+        addressTextField.placeholder = "starting with 0x or ending with .eth"
         addressTextField.font = UIFont.systemFont(ofSize: 15)
         addressTextField.textColor = UIColor(hexString: "#3C4252")
         addressTextField.minimumFontSize = 8;
@@ -232,7 +234,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.trailing.equalToSuperview().offset(-14)
             make.height.equalTo(smallFormat ? 40 : 60)
         }
-
+        
+        addressTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         addressTextField.delegate = self
         addressFieldContainer.addSubview(addressTextField)
         addressTextField.snp.makeConstraints { make in
@@ -382,40 +385,74 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     @objc private func validate() {
         addButton.isEnabled = false
+        
+        func markValid() {
+            addButton.isEnabled = true
+            addressFieldValidationLabel.isHidden = true
+        }
 
-        // Address: don't show error if no content entered
+        // Address: don't show error if no content entered (accounding for
         guard let address = addressTextField.text, address.count > 0 else {
             addressFieldValidationLabel.isHidden = true
             return
         }
-
-        // Address: length should be 42
-        guard address.count == 42 else {
-            throwValidationError("Wallet address should be 42 characters long")
-            return
+        
+        if address.hasPrefix("0x") {
+            // Address: length should be 42
+            guard address.count == 42 else {
+                throwValidationError("Wallet address must be 42 characters long")
+                return
+            }
+            
+            // Address: should be valid
+            guard addressIsValid(address) else {
+                throwValidationError("Wallet address is invalid")
+                return
+            }
+            
+            // Address: warn if no transactions
+            guard addressHasTransactions(address) else {
+                throwValidationWarning("We couldn't find any transactions in this wallet address.\nAre you sure it's correct?")
+                return
+            }
+        } else if address.hasSuffix(".eth") {
+            // Check ENS address
+            Web3.resolve(ensAddress: address) { resolved, error in
+                guard error == nil, let resolved = resolved else {
+                    guard let error = error else {
+                        self.throwValidationError("ENS lookup failed, unknown issue")
+                        return
+                    }
+                    
+                    switch error {
+                    case .noNetwork:
+                        self.throwValidationError("ENS lookup failed, no network")
+                    case .noResolver:
+                        self.throwValidationError("ENS lookup failed, no resolver")
+                    case .ensUnknown:
+                        self.throwValidationError("ENS address does not exist")
+                    case .contractIssue:
+                        self.throwValidationError("ENS lookup failed, contract issue")
+                    case .decodeIssue:
+                        self.throwValidationError("ENS lookup failed, decode issue")
+                    }
+                    return
+                }
+                
+                // We're valid
+                self.resolvedAddress = resolved
+                markValid()
+            }
         }
 
-        // Address: should begin with 0x
+        // Address: should begin with 0x or end with .eth (ENS)
         guard address.hasPrefix("0x") else {
-            throwValidationError("Wallet address should begin with 0x")
-            return
-        }
-
-        // Address: should be valid
-        guard addressIsValid(address) else {
-            throwValidationError("Wallet address is invalid")
-            return
-        }
-
-        // Address: warn if no transactions
-        guard addressHasTransactions(address) else {
-            throwValidationWarning("We couldn't find any transactions in this wallet address.\nAre you sure it's correct?")
+            throwValidationError("Wallet address must begin with 0x or end with .eth")
             return
         }
 
         // We're valid
-        addButton.isEnabled = true
-        addressFieldValidationLabel.isHidden = true
+        markValid()
     }
 
     private func addressIsValid(_ address: String) -> Bool {
@@ -471,17 +508,18 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
                 make.trailing.equalToSuperview().offset(-10)
             }
 
-            //TODO Grey out the add button if all the conditions for adding are not met.
             validate()
         }
     }
 
     @objc private func addAction() {
-        guard let address = addressTextField.text else {
+        guard let addressFieldText = addressTextField.text else {
             return
         }
-
-        let ethereumWallet = EthereumWallet(name: nameTextField.text, address: address, includeInTotal: includeInTotalSwitch.isOn)
+        
+        let address = resolvedAddress == nil ? addressFieldText : resolvedAddress!
+        let ensAddress = resolvedAddress == nil ? nil : addressFieldText
+        let ethereumWallet = EthereumWallet(name: nameTextField.text, address: address, ensAddress: ensAddress, includeInTotal: includeInTotalSwitch.isOn)
 
         CoreDataHelper.save(ethereumWallet: ethereumWallet)
         NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
@@ -513,6 +551,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             view.endEditing(true)
         }
         return false
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(textFieldDidChangeRateLimited(_:)), object: textField)
+        perform(#selector(textFieldDidChangeRateLimited(_:)), with: textField, afterDelay: 0.5)
+    }
+    
+    @objc private func textFieldDidChangeRateLimited(_ textField: UITextField) {
+        validate()
     }
 
     // MARK - QR Code Scanning -

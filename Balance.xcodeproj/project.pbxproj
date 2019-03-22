@@ -19,6 +19,7 @@
 		538AACF52239ACDA004C3706 /* QRCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF42239ACDA004C3706 /* QRCode.swift */; };
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
+		5395B7B12245742800E61607 /* Web3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5395B7B02245742800E61607 /* Web3.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
 		53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
@@ -61,6 +62,7 @@
 		538AACF42239ACDA004C3706 /* QRCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCode.swift; sourceTree = "<group>"; };
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
+		5395B7B02245742800E61607 /* Web3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewCell.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				F1D844E92243A881007245E9 /* EIP55.swift */,
 				538AACF42239ACDA004C3706 /* QRCode.swift */,
 				53897A10224413CB009CACC4 /* Chat.swift */,
+				5395B7B02245742800E61607 /* Web3.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -388,21 +391,27 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Balance/Pods-Balance-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/PagingKit/PagingKit.framework",
 				"${BUILT_PRODUCTS_DIR}/QuickLayout/QuickLayout.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftEntryKit/SwiftEntryKit.framework",
+				"${BUILT_PRODUCTS_DIR}/web3.swift/web3.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PagingKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QuickLayout.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftEntryKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -428,6 +437,7 @@
 				538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */,
 				53897A11224413CB009CACC4 /* Chat.swift in Sources */,
 				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
+				5395B7B12245742800E61607 /* Web3.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
@@ -581,6 +591,7 @@
 				DEVELOPMENT_TEAM = Q4G66XSS36;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = Balance/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -601,6 +612,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Q4G66XSS36;
 				INFOPLIST_FILE = Balance/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

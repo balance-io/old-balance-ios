@@ -13,8 +13,9 @@ struct CoreDataHelper {
         for managedWallet in managedEthereumWallets {
             let name = managedWallet.value(forKey: "name") as? String ?? ""
             let address = managedWallet.value(forKey: "address") as? String ?? ""
+            let ensAddress = managedWallet.value(forKey: "ensAddress") as? String
             let includeInTotal = managedWallet.value(forKey: "includeInTotal") as? Bool ?? true
-            ethereumWallets.append(EthereumWallet(name: name, address: address, includeInTotal: includeInTotal))
+            ethereumWallets.append(EthereumWallet(name: name, address: address, ensAddress: ensAddress, includeInTotal: includeInTotal))
         }
         return ethereumWallets
     }

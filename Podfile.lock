@@ -1,11 +1,16 @@
 PODS:
+  - BigInt (3.0.1):
+    - SipHash (~> 1.2)
   - CryptoSwift (0.14.0)
   - Intercom (5.2.1)
   - PagingKit (1.9.0)
   - QuickLayout (2.1.1)
+  - SipHash (1.2.2)
   - SnapKit (4.0.1)
   - SwiftEntryKit (0.8.8):
     - QuickLayout (= 2.1.1)
+  - web3.swift (0.0.5):
+    - BigInt (~> 3.0.1)
 
 DEPENDENCIES:
   - CryptoSwift
@@ -13,24 +18,39 @@ DEPENDENCIES:
   - PagingKit
   - SnapKit (~> 4.0.0)
   - SwiftEntryKit (= 0.8.8)
+  - web3.swift (from `https://github.com/balance-io/web3.swift.git`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - BigInt
     - CryptoSwift
     - Intercom
     - PagingKit
     - QuickLayout
+    - SipHash
     - SnapKit
     - SwiftEntryKit
 
+EXTERNAL SOURCES:
+  web3.swift:
+    :git: https://github.com/balance-io/web3.swift.git
+
+CHECKOUT OPTIONS:
+  web3.swift:
+    :commit: b72da50d830738b7fcc7ebb4e026005c8ef30f0a
+    :git: https://github.com/balance-io/web3.swift.git
+
 SPEC CHECKSUMS:
+  BigInt: 8e8a52161c745cd3ab78e3dc346a9fbee51e6cf6
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
   Intercom: 53f07c24f0ca18c1e910750e79b75f9c9867338f
   PagingKit: a65ffc616296d617ac89897a986263fdae766db4
   QuickLayout: 9af2b7fd89a6552828f51a5aba28d1bcdb8b340c
+  SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftEntryKit: c50f25a14772713ded1591c852d1c1dc74c95b9e
+  web3.swift: f9cf574f41e2c49ba12d7fe9021cf38eb8e20c6a
 
-PODFILE CHECKSUM: 2c051df6864c9616c976d29fee7d33f3b04cd022
+PODFILE CHECKSUM: ca690cc3a39583dec14818500aac6b324d325f69
 
 COCOAPODS: 1.6.1

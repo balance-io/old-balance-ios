@@ -3,6 +3,7 @@ import Foundation
 struct EthereumWallet {
     let name: String?
     let address: String
+    let ensAddress: String?
     let includeInTotal: Bool
     
     let symbol = "ETH"
@@ -22,9 +23,10 @@ struct EthereumWallet {
     
     var CDPs: [CDP]?
     
-    init(name: String?, address: String, includeInTotal: Bool) {
+    init(name: String?, address: String, ensAddress: String?, includeInTotal: Bool) {
         self.name = name
         self.address = address
+        self.ensAddress = ensAddress
         self.includeInTotal = includeInTotal
         
         self.balance = nil
@@ -44,7 +46,7 @@ struct EthereumWallet {
             aggregatedEthereumWallet = wallets[0]
         } else {
             // Combine all of the balances
-            aggregatedEthereumWallet = EthereumWallet(name: "___Aggregated___", address: "", includeInTotal: false)
+            aggregatedEthereumWallet = EthereumWallet(name: "___Aggregated___", address: "", ensAddress: nil, includeInTotal: false)
             aggregatedEthereumWallet?.rate = wallets[0].rate
             aggregatedEthereumWallet?.currency = wallets[0].currency
             var totalBalance: Double = 0
