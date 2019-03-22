@@ -452,7 +452,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             self.pasteButton.isHidden = true
             self.scanQRCodeLabel.isHidden = true
             scanQRCodeImageView.image = UIImage(named: "addressSuccess")
-            addressTextField.snp.makeConstraints { make in
+            addressTextField.snp.updateConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
             

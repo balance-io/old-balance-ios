@@ -39,8 +39,16 @@ struct EthplorerAPI {
             }
             dispatchGroup.wait()
             
+            // Sort the new array to match the original array
+            var sortedReturnWallets = [EthereumWallet]()
+            for ethereumWallet in ethereumWallets {
+                if let returnWallet = returnWallets.first(where: { $0.address == ethereumWallet.address }) {
+                    sortedReturnWallets.append(returnWallet)
+                }
+            }
+            
             DispatchQueue.main.async {
-                completion(returnWallets)
+                completion(sortedReturnWallets)
             }
         }
     }

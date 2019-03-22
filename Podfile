@@ -10,4 +10,8 @@ target 'Balance' do
   pod 'SnapKit', '~> 4.0.0'
   pod 'CryptoSwift'
   pod 'Intercom'
+  pod "PagingKit"
+
+  # For PagingKit
+  inherit! :search_paths
 end

@@ -16,4 +16,11 @@ struct CDP: Codable {
         case ink = "ink"
         case liqPrice = "liq_price"
     }
+    
+    static func sortById(left: CDP, right: CDP) -> Bool {
+        if let leftId = left.id, let rightId = right.id {
+            return leftId < rightId
+        }
+        return false
+    }
 }
