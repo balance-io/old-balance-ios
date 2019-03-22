@@ -104,10 +104,12 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         if contentViewControllers.count == 0 {
             addPagingController()
             
-            let balanceContentViewController = BalanceContentViewController()
-            balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
-            balanceContentViewController.title = "All Wallets"
-            contentViewControllers.append(balanceContentViewController)
+            if let aggregatedEthereumWallet = aggregatedEthereumWallet {
+                let balanceContentViewController = BalanceContentViewController()
+                balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
+                balanceContentViewController.title = "All Wallets"
+                contentViewControllers.append(balanceContentViewController)
+            }
             
             for ethereumWallet in ethereumWallets {
                 let balanceContentViewController = BalanceContentViewController()
@@ -116,10 +118,14 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 contentViewControllers.append(balanceContentViewController)
             }
         } else {
-            contentViewControllers[0].ethereumWallet = aggregatedEthereumWallet
+            var offset = 0
+            if let aggregatedEthereumWallet = aggregatedEthereumWallet {
+                contentViewControllers[0].ethereumWallet = aggregatedEthereumWallet
+                offset = 1
+            }
             for (index, ethereumWallet) in ethereumWallets.enumerated() {
-                contentViewControllers[index + 1].ethereumWallet = ethereumWallet
-                contentViewControllers[index + 1].title = ethereumWallet.name ?? ethereumWallet.address
+                contentViewControllers[index + offset].ethereumWallet = ethereumWallet
+                contentViewControllers[index + offset].title = ethereumWallet.name ?? ethereumWallet.address
             }
         }
         
@@ -165,8 +171,8 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             
             // Extra check in case of race condition
             guard newEthereumWallets.count > 0 else {
-                self.ethereumWallets = newEthereumWallets
-                self.aggregatedEthereumWallet = newAggregatedEthereumWallet
+                self.ethereumWallets = [EthereumWallet]()
+                self.aggregatedEthereumWallet = nil
                 self.contentViewControllers = [BalanceContentViewController]()
                 self.isLoading = false
                 DispatchQueue.main.async {
@@ -212,7 +218,9 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             dispatchGroup.wait()
             
             // Aggregate the balances
-            newAggregatedEthereumWallet = EthereumWallet.aggregated(wallets: newEthereumWallets)
+            if newEthereumWallets.count > 1 {
+                newAggregatedEthereumWallet = EthereumWallet.aggregated(wallets: newEthereumWallets)
+            }
             
             // Store the results and reload the table
             DispatchQueue.main.async {
