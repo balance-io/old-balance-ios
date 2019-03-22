@@ -1,13 +1,3 @@
-//
-//  EIP55.swift
-//  Balance
-//
-//  Based on: https://github.com/Boilertalk/Web3.swift/blob/master/Web3/Classes/Core/Transaction/EthereumAddress.swift
-//
-//  Created by Jamie Rumbelow on 21/03/2019.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import Foundation
 import CryptoSwift
 

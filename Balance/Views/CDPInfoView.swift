@@ -202,7 +202,7 @@ class CDPInfoView: UIView {
         return plainEnglishExplanationLabel
     }()
     
-    init(cdpItem: CDP) {
+    init(cdp: CDP) {
         super.init(frame: CGRect.zero)
         
         backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
@@ -215,7 +215,7 @@ class CDPInfoView: UIView {
             make.leading.equalToSuperview().offset(15)
         }
         
-        let id = cdpItem.id != nil ? "#\(cdpItem.id!)" : ""
+        let id = cdp.id != nil ? "#\(cdp.id!)" : ""
         identifierLabel.text = "Maker CDP \(id)"
         addSubview(identifierLabel)
         identifierLabel.snp.makeConstraints { make in
@@ -241,8 +241,8 @@ class CDPInfoView: UIView {
             make.centerY.equalTo(ethCircleImageView)
         }
 
-        if let ink = cdpItem.ink {
-            if let pip = cdpItem.pip {
+        if let ink = cdp.ink {
+            if let pip = cdp.pip {
                 let inkString = numberFormatter.string(from: NSNumber(value: ink))
                 let pipString = numberFormatter.string(from: NSNumber(value: pip))
                 if let inkString = inkString, let pipString = pipString {
@@ -276,7 +276,7 @@ class CDPInfoView: UIView {
             make.centerY.equalTo(daiCircleImageView)
         }
 
-        if let art = cdpItem.art {
+        if let art = cdp.art {
             let artString = numberFormatter.string(from: NSNumber(value:art))
             if let artString = artString {
                 debtBreakdownLabel.text = "\(artString) DAI * 1.00 USD"
@@ -316,7 +316,7 @@ class CDPInfoView: UIView {
 
         var riskColor = UIColor.white
         var riskRange = "Unknown"
-        if let ratio = cdpItem.ratio {
+        if let ratio = cdp.ratio {
             if ratio < 150.00 {
                 riskColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
                 riskRange = "Liquidated"
@@ -339,7 +339,7 @@ class CDPInfoView: UIView {
             make.top.equalTo(riskTitleLabel.snp.bottom).offset(5)
         }
 
-        if let liqPrice = cdpItem.liqPrice, let pip = cdpItem.pip {
+        if let liqPrice = cdp.liqPrice, let pip = cdp.pip {
             liqPriceLabel.text = "$\(String(format:"%.0f", pip)) / \(String(format:"%.0f", liqPrice))"
         }
         liqPriceLabel.backgroundColor = riskColor
@@ -349,7 +349,7 @@ class CDPInfoView: UIView {
             make.top.equalTo(priceTitleLabel.snp.bottom).offset(5)
         }
 
-        if let ratio = cdpItem.ratio {
+        if let ratio = cdp.ratio {
             ratioLabel.text = " \(String(format:"%.0f", ratio))%"
         }
         ratioLabel.backgroundColor = riskColor
@@ -375,7 +375,7 @@ class CDPInfoView: UIView {
         print(width)
         let widthPercent:Double = Double(width / 100.00)
         print(widthPercent)
-        if let ratio = cdpItem.ratio {
+        if let ratio = cdp.ratio {
             if ratio <= 150.00 {
                 riskDotImageView.leadingAnchor.constraint(equalTo: riskBarImageView.leadingAnchor, constant: 0).isActive = true
             } else if ratio >= 320.00 {
@@ -414,7 +414,7 @@ class CDPInfoView: UIView {
         }
         
         var textForPlainEnglishExplanationLabel = ""
-        if let liqPrice = cdpItem.liqPrice {
+        if let liqPrice = cdp.liqPrice {
             textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the ratio of 150% and be liquidated."
         }
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel

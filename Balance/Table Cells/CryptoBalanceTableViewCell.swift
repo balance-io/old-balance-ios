@@ -236,6 +236,8 @@ private class CryptoRow: UIView {
         
         if let symbol = symbol, symbol.count > 0 {
             iconImageView.image = UIImage(named: symbol.lowercased()) ?? UIImage(named: "erc20SquircleGreen")
+        } else {
+            iconImageView.image = UIImage(named: "erc20SquircleGreen")
         }
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in

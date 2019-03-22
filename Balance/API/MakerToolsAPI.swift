@@ -2,31 +2,28 @@ import Foundation
 import CoreData
 
 struct MakerToolsAPI {
-    private static let cdpBaseURL = URL(string: "https://mkr.tools/api/v1/cdp/")!
     private static let ethBaseURL = URL(string: "https://mkr.tools/api/v1/lad/")!
     
-    static func loadMakerCDPs(_ makers: [NSManagedObject], completion: @escaping ([CDP]) -> ()) {
-        DispatchQueue.utility.async {
-            let ids = makers.compactMap { maker in
-                maker.value(forKey: "singleCollateralDaiIdentifier") as? String
-            }
-            loadCDPs(ids: ids, baseURL: cdpBaseURL, completion: completion)
+    static func loadEthereumWalletCDPs(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> ()) {
+        let ids = ethereumWallets.compactMap { wallet in
+            wallet.address
         }
-    }
-    
-    static func loadEthereumWalletCDPs(_ ethereumWallets: [EthereumWallet], completion: @escaping ([CDP]) -> ()) {
-        DispatchQueue.utility.async {
-            let ids = ethereumWallets.compactMap { wallet in
-                wallet.address
+        
+        loadCDPs(ids: ids, baseURL: ethBaseURL) { CDPsDict in
+            var returnWallets = [EthereumWallet]()
+            for ethereumWallet in ethereumWallets {
+                var returnWallet = ethereumWallet
+                returnWallet.CDPs = CDPsDict[ethereumWallet.address]
+                returnWallets.append(returnWallet)
             }
             
-            loadCDPs(ids: ids, baseURL: ethBaseURL, completion: completion)
+            completion(returnWallets)
         }
     }
     
-    private static func loadCDPs(ids: [String], baseURL: URL, completion: @escaping ([CDP]) -> ()) {
+    private static func loadCDPs(ids: [String], baseURL: URL, completion: @escaping ([String: [CDP]]) -> ()) {
         DispatchQueue.utility.async {
-            var CDPs = [CDP]()
+            var CDPs = [String: [CDP]]()
             let dispatchGroup = DispatchGroup()
             for id in ids {
                 dispatchGroup.enter()
@@ -43,7 +40,7 @@ struct MakerToolsAPI {
                     
                     do {
                         let loadedCDPs = try JSONDecoder().decode([CDP].self, from: data)
-                        CDPs.append(contentsOf: loadedCDPs)
+                        CDPs[id] = loadedCDPs
                     } catch {
                         print("Error", error)
                     }

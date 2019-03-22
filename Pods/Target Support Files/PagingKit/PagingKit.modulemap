@@ -1,0 +1,6 @@
+framework module PagingKit {
+  umbrella header "PagingKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

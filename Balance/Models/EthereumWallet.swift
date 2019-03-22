@@ -20,6 +20,8 @@ struct EthereumWallet {
         return tokens?.filter{ $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
     }
     
+    var CDPs: [CDP]?
+    
     init(name: String?, address: String, includeInTotal: Bool) {
         self.name = name
         self.address = address
@@ -48,13 +50,16 @@ struct EthereumWallet {
             var totalBalance: Double = 0
             var totalFiatBalance: Double = 0
             var totalTokens = [Token]()
+            var totalCDPs = [CDP]()
             for wallet in wallets {
                 if let balance = wallet.balance {
                     totalBalance += balance
                 }
+                
                 if let fiatBalance = wallet.fiatBalance {
                     totalFiatBalance += fiatBalance
                 }
+                
                 if let tokens = wallet.tokens {
                     if totalTokens.count == 0 {
                         totalTokens = tokens
@@ -77,10 +82,23 @@ struct EthereumWallet {
                         totalTokens = tempTotalTokens
                     }
                 }
+                
+                if let CDPs = wallet.CDPs {
+                    if totalCDPs.count == 0 {
+                        totalCDPs = CDPs
+                    } else {
+                        for cdp in CDPs {
+                            if !totalCDPs.contains(where: { $0.id == cdp.id }) {
+                                totalCDPs.append(cdp)
+                            }
+                        }
+                    }
+                }
             }
             aggregatedEthereumWallet?.balance = totalBalance
             aggregatedEthereumWallet?.fiatBalance = totalFiatBalance
             aggregatedEthereumWallet?.tokens = totalTokens
+            aggregatedEthereumWallet?.CDPs = totalCDPs
         }
         return aggregatedEthereumWallet
     }

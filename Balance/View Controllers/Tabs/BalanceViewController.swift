@@ -1,22 +1,32 @@
-import UIKit
-import CoreData
-import SwiftEntryKit
+import Foundation
+import PagingKit
+import SnapKit
 
-class BalanceViewController: UITableViewController {
-    enum Section: Int {
-        case cdp      = 0
-        case ethereum = 1
-        case erc20    = 2
-    }
+class BalanceViewController: UIViewController, PagingMenuViewControllerDataSource, PagingContentViewControllerDataSource, PagingMenuViewControllerDelegate, PagingContentViewControllerDelegate {
+    
+    private var menuViewController = PagingMenuViewController()
+    private var contentViewController = PagingContentViewController()
 
-    private var ethereumWallets = [EthereumWallet]()
-    private var aggregatedEthereumWallet: EthereumWallet?
-    private var CDPs = [CDP]()
+    private let menuBackgroundView: UIView = {
+        let menuBackgroundView = UIView()
+        menuBackgroundView.backgroundColor = .white
+        return menuBackgroundView
+    }()
+    
+    private let loadingSpinner: UIActivityIndicatorView = {
+        let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
+        loadingSpinner.color = .gray
+        loadingSpinner.hidesWhenStopped = true
+        loadingSpinner.startAnimating()
+        return loadingSpinner
+    }()
     
     private var isLoading = false
     private var lastLoadTimestamp = 0.0
     
-    private var expandedIndexPath: IndexPath?
+    private var contentViewControllers = [BalanceContentViewController]()
+    private var ethereumWallets = [EthereumWallet]()
+    private var aggregatedEthereumWallet: EthereumWallet?
     
     // MARK - View Lifecycle -
     
@@ -25,41 +35,110 @@ class BalanceViewController: UITableViewController {
         
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
-        tableView.backgroundColor = UIColor(hexString: "#fbfbfb")
-        tableView.separatorStyle = .none
-        tableView.register(CDPBalanceTableViewCell.self, forCellReuseIdentifier: "cdpCell")
+        menuBackgroundView.isHidden = true
+        view.addSubview(menuBackgroundView)
+        menuBackgroundView.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.top.equalTo(view.snp.topMargin)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+        }
         
-        refreshControl = UIRefreshControl()
-        let tintColor = UIColor.gray
-        refreshControl?.attributedTitle = NSAttributedString(string: "Loading...", attributes: [NSAttributedString.Key.foregroundColor: tintColor])
-        refreshControl?.tintColor = tintColor
+        // Setup first load spinner
+        view.addSubview(loadingSpinner)
+        loadingSpinner.snp.makeConstraints { make in
+            make.top.equalTo(menuBackgroundView.snp.bottom).offset(10)
+            make.centerX.equalToSuperview()
+        }
         
-        setupNavigation()
         loadData()
         
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
     }
     
-    private func setupNavigation() {
-        navigationItem.title = ""
-        if let navigationBar = navigationController?.navigationBar {
-            navigationBar.barTintColor = .white
-            navigationBar.isTranslucent = false
-            navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+    private func addPagingController() {
+        menuBackgroundView.isHidden = false
+        
+        // Setup menu
+        menuViewController.delegate = self
+        menuViewController.dataSource = self
+        menuViewController.register(type: MenuViewTitleCell.self, forCellWithReuseIdentifier: "MenuViewTitleCell")
+        menuViewController.registerFocusView(view: MenuUnderlineView())
+        addChild(menuViewController)
+        view.addSubview(menuViewController.view)
+        menuViewController.didMove(toParent: self)
+        menuViewController.view.snp.makeConstraints { make in
+            make.height.equalTo(44)
+            make.top.equalTo(view.snp.topMargin)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
+        
+        // Setup content
+        contentViewController.delegate = self
+        contentViewController.dataSource = self
+        addChild(contentViewController)
+        view.addSubview(contentViewController.view)
+        contentViewController.didMove(toParent: self)
+        contentViewController.view.snp.makeConstraints { make in
+            make.top.equalTo(menuViewController.view.snp.bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func removePagingController() {
+        menuBackgroundView.isHidden = true
+        menuViewController.view.removeFromSuperview()
+        menuViewController.removeFromParent()
+        contentViewController.view.removeFromSuperview()
+        contentViewController.removeFromParent()
+        contentViewControllers.removeAll()
     }
     
     // MARK - Data Loading -
     
+    private func updateContentControllers() {
+        if contentViewControllers.count == 0 {
+            addPagingController()
+            
+            let balanceContentViewController = BalanceContentViewController()
+            balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
+            balanceContentViewController.title = "All Wallets"
+            contentViewControllers.append(balanceContentViewController)
+            
+            for ethereumWallet in ethereumWallets {
+                let balanceContentViewController = BalanceContentViewController()
+                balanceContentViewController.ethereumWallet = ethereumWallet
+                balanceContentViewController.title = ethereumWallet.name ?? ethereumWallet.address
+                contentViewControllers.append(balanceContentViewController)
+            }
+        } else {
+            contentViewControllers[0].ethereumWallet = aggregatedEthereumWallet
+            for (index, ethereumWallet) in ethereumWallets.enumerated() {
+                contentViewControllers[index + 1].ethereumWallet = ethereumWallet
+                contentViewControllers[index + 1].title = ethereumWallet.name ?? ethereumWallet.address
+            }
+        }
+        
+        menuViewController.reloadData()
+        contentViewController.reloadData()
+        for contentViewController in contentViewControllers {
+            contentViewController.reloadData()
+        }
+        
+        // Fix for menu not showing up on first load
+        menuViewController.menuView.contentOffset.y = 0
+    }
+    
     @objc func loadData() {
         guard CoreDataHelper.ethereumWalletCount() > 0 else {
-            CDPs = [CDP]()
             ethereumWallets = [EthereumWallet]()
             aggregatedEthereumWallet = nil
-            self.tableView.reloadData()
+            contentViewControllers = [BalanceContentViewController]()
+            updateContentControllers()
             return
         }
         
@@ -80,20 +159,18 @@ class BalanceViewController: UITableViewController {
         }
         
         isLoading = true
-        self.refreshControl?.beginRefreshing()
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
-            var newCDPs = [CDP]()
             
             // Extra check in case of race condition
             guard newEthereumWallets.count > 0 else {
-                self.CDPs = newCDPs
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
+                self.contentViewControllers = [BalanceContentViewController]()
                 self.isLoading = false
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    self.updateContentControllers()
                 }
                 return
             }
@@ -109,13 +186,20 @@ class BalanceViewController: UITableViewController {
             
             // Load CDPs
             dispatchGroup.enter()
-            MakerToolsAPI.loadEthereumWalletCDPs(newEthereumWallets) { CDPs in
-                newCDPs.append(contentsOf: CDPs)
+            var newEthereumWalletsCDPs = [EthereumWallet]()
+            MakerToolsAPI.loadEthereumWalletCDPs(newEthereumWallets) { wallets in
+                newEthereumWalletsCDPs = wallets
                 dispatchGroup.leave()
             }
             
             // Wait for results
             dispatchGroup.wait()
+            
+            // Copy the CDPs into the main wallet array
+            // NOTE: This is a little clunky but it allows us to load both APIs at once
+            for index in 0 ..< newEthereumWallets.count {
+                newEthereumWallets[index].CDPs = newEthereumWalletsCDPs[index].CDPs
+            }
             
             // Load ethereum price
             dispatchGroup.enter()
@@ -132,135 +216,83 @@ class BalanceViewController: UITableViewController {
             
             // Store the results and reload the table
             DispatchQueue.main.async {
-                // Sort by CDP number
-                self.CDPs = newCDPs.sorted { left, right -> Bool in
-                    if let leftId = left.id, let rightId = right.id {
-                        return leftId < rightId
-                    }
-                    return false
-                }
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
                 self.lastLoadTimestamp = Date().timeIntervalSince1970
                 self.isLoading = false
-                self.tableView.reloadData()
-                
-                // Remove the refresh control so we only show it on first load
-                self.refreshControl?.endRefreshing()
-            }
-            DispatchQueue.main.async(after: 0.5) {
-                self.refreshControl = nil
+                self.loadingSpinner.stopAnimating()
+                self.updateContentControllers()
             }
         }
     }
     
     @objc private func walletAdded() {
-        loadData()
+        walletsChanged()
     }
     
     @objc private func walletRemoved() {
+        walletsChanged()
+    }
+    
+    private func walletsChanged() {
+//        menuBackgroundView.isHidden = true
+//        contentViewControllers.removeAll()
+//        menuViewController.reloadData()
+//        contentViewController.reloadData()
+        removePagingController()
+        loadingSpinner.startAnimating()
         loadData()
     }
     
-    private func reloadTableCellHeights() {
-        // "hack" to reload the sizes without loading the table cell again
-        // Note it's not really a hack, it's actually the recommended way to do this, it just feels hackish since Apple
-        // doesn't provide a proper method for this
-        tableView.beginUpdates()
-        tableView.endUpdates()
+    // MARK: - PagingKit -
+    
+    func menuViewController(viewController: PagingMenuViewController, cellForItemAt index: Int) -> PagingMenuViewCell {
+        let cell = viewController.dequeueReusableCell(withReuseIdentifier: "MenuViewTitleCell", for: index)  as! MenuViewTitleCell
+        cell.titleLabel.text = contentViewControllers[index].title
+        return cell
     }
     
-    @objc private func cellExpanded(_ notification: Notification) {
-        if let userInfo = notification.userInfo, userInfo[ExpandableTableViewCell.Notifications.Keys.reuseIdentifier] as? String == "cryptoCell", let indexPath = userInfo[ExpandableTableViewCell.Notifications.Keys.indexPath] as? IndexPath {
-            expandedIndexPath = indexPath
-            reloadTableCellHeights()
-        }
+    private static let sizingCell = MenuViewTitleCell()
+    func menuViewController(viewController: PagingMenuViewController, widthForItemAt index: Int) -> CGFloat {
+        BalanceViewController.sizingCell.titleLabel.text = contentViewControllers[index].title
+        var referenceSize = UIView.layoutFittingCompressedSize
+        referenceSize.height = viewController.view.bounds.height
+        let size = BalanceViewController.sizingCell.systemLayoutSizeFitting(referenceSize)
+        return size.width
     }
     
-    @objc private func cellCollapsed(_ notification: Notification) {
-        if let userInfo = notification.userInfo, userInfo[ExpandableTableViewCell.Notifications.Keys.reuseIdentifier] as? String == "cryptoCell" {
-            expandedIndexPath = nil
-            reloadTableCellHeights()
-        }
-    }
-        
-    // MARK - Table View -
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionEnum = Section(rawValue: section) else {
-            return 0
-        }
-        
-        switch sectionEnum {
-        case .ethereum:
-            return ethereumWallets.count > 0 ? 1 : 0
-        case .erc20:
-            // Check if there are any tokens
-            if let count = aggregatedEthereumWallet?.tokens?.count, count > 0 {
-                return 1
-            }
-            return 0
-        case .cdp:
-            return CDPs.count
-        }
+    var insets: UIEdgeInsets {
+        return view.safeAreaInsets
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let isExpanded = (indexPath == expandedIndexPath)
-        if indexPath.section == Section.ethereum.rawValue {
-            return CryptoBalanceTableViewCell(withIdentifier: "cryptoCell", wallet: aggregatedEthereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
-        } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell(withIdentifier: "cryptoCell", wallet: aggregatedEthereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "cdpCell", for: indexPath) as! CDPBalanceTableViewCell
-            cell.cdp = CDPs[indexPath.row]
-            return cell
-        }
+    func numberOfItemsForMenuViewController(viewController: PagingMenuViewController) -> Int {
+        return contentViewControllers.count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let isExpanded = (indexPath == expandedIndexPath)
-        if indexPath.section == Section.ethereum.rawValue {
-            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded)
-        } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell.calculatedHeight(wallet: aggregatedEthereumWallet!, cryptoType: .erc20, isExpanded: isExpanded)
-        } else {
-            return 180
-        }
+    func numberOfItemsForContentViewController(viewController: PagingContentViewController) -> Int {
+        return contentViewControllers.count
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        guard indexPath.section == Section.cdp.rawValue else {
-            return
-        }
-        
-        var attributes = EKAttributes()
-        attributes = .centerFloat
-        attributes.name = "CDP Info"
-        attributes.hapticFeedbackType = .success
-        attributes.popBehavior = .animated(animation: .translation)
-        attributes.entryBackground = .color(color: .black)
-        attributes.roundCorners = .all(radius: 20)
-        attributes.border = .none
-        attributes.statusBar = .hidden
-        attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
-        attributes.positionConstraints.rotation.isEnabled = false
-        attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
-        attributes.statusBar = .ignored
-        attributes.displayDuration = .infinity
-        attributes.screenInteraction = .dismiss
-        attributes.positionConstraints.rotation.isEnabled = false
-        let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
-        let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
-        attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
-        
-        let cdpInfoView = CDPInfoView(cdpItem: CDPs[indexPath.row])
-        SwiftEntryKit.display(entry: cdpInfoView, using: attributes)
+    func contentViewController(viewController: PagingContentViewController, viewControllerAt index: Int) -> UIViewController {
+        return contentViewControllers[index]
     }
+    
+    func menuViewController(viewController: PagingMenuViewController, didSelect page: Int, previousPage: Int) {
+        contentViewController.scroll(to: page, animated: true)
+    }
+    
+    func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Int, percent: CGFloat) {
+        menuViewController.scroll(index: index, percent: percent, animated: false)
+    }
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
