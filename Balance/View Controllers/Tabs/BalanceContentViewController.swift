@@ -10,6 +10,7 @@ class BalanceContentViewController: UITableViewController {
     }
     
     var ethereumWallet: EthereumWallet?
+    var erc20TableCell: CryptoBalanceTableViewCell?
     
     private var expandedIndexPath: IndexPath?
     
@@ -33,6 +34,7 @@ class BalanceContentViewController: UITableViewController {
         tableView.register(CDPBalanceTableViewCell.self, forCellReuseIdentifier: cdpCellReuseIdentifier)
         
         setupNavigation()
+        preloadErc20Cell()
         
         NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
@@ -71,7 +73,14 @@ class BalanceContentViewController: UITableViewController {
         
     // MARK - Table View -
     
+    private func preloadErc20Cell() {
+        let indexPath = IndexPath(row: 0, section: Section.erc20.rawValue)
+        let isExpanded = (indexPath == expandedIndexPath)
+        erc20TableCell = CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
+    }
+    
     func reloadData() {
+        preloadErc20Cell()
         tableView.reloadData()
     }
     
@@ -103,7 +112,8 @@ class BalanceContentViewController: UITableViewController {
         if indexPath.section == Section.ethereum.rawValue {
             return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
         } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
+            // Cache this cell to prevent stuttering when scrolling
+            return erc20TableCell!
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: cdpCellReuseIdentifier, for: indexPath) as! CDPBalanceTableViewCell
             if let cdp = ethereumWallet?.CDPs?[indexPath.row] {
