@@ -27,10 +27,18 @@ class BalanceViewController: UITableViewController {
     
     private var expandedIndexPath: IndexPath?
     
+    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
+    
     // MARK - View Lifecycle -
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityIndicator.color = .black
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
         
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
@@ -64,6 +72,9 @@ class BalanceViewController: UITableViewController {
     // MARK - Data Loading -
     
     @objc func loadData() {
+        
+        activityIndicator.startAnimating()
+        
         guard CoreDataHelper.ethereumWalletCount() > 0 else {
             CDPs = [CDP]()
             ethereumWallets = [EthereumWallet]()
@@ -161,6 +172,7 @@ class BalanceViewController: UITableViewController {
                 self.refreshControl = nil
             }
         }
+        self.activityIndicator.stopAnimating()
     }
     
     @objc private func walletAdded() {
