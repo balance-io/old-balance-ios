@@ -29,7 +29,7 @@ class WelcomeViewController: UIViewController {
         subtitleLabel.numberOfLines = 3
         subtitleLabel.lineBreakMode = .byWordWrapping
         subtitleLabel.textAlignment = .center
-        subtitleLabel.text = "Add and address to see all of your Ether, ERC-20 tokens, and Maker CDPs in one place on your phone."
+        subtitleLabel.text = "Add an address to see all of your Ether, ERC-20 tokens, and Maker CDPs in one place on your phone."
         return subtitleLabel
     }()
     
