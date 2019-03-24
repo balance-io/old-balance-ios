@@ -105,6 +105,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressTextField.autocorrectionType = .no
         addressTextField.autocapitalizationType = .none
         addressTextField.spellCheckingType = .no
+        addressTextField.enablesReturnKeyAutomatically = true
+        addressTextField.returnKeyType = .done
         return addressTextField
     }()
 
@@ -132,6 +134,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         nameTextField.adjustsFontSizeToFitWidth = true;
         nameTextField.autocorrectionType = .no
         nameTextField.spellCheckingType = .no
+        nameTextField.enablesReturnKeyAutomatically = true
+        nameTextField.returnKeyType = .done
         return nameTextField
     }()
 
@@ -303,21 +307,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.bottom.equalToSuperview()
         }
 
-//        bottomContainerView.addSubview(includeInTotalTitleLabel)
-//        includeInTotalTitleLabel.snp.makeConstraints { make in
-//            make.top.equalTo(addressFieldContainer.snp.bottom).offset(19)
-//            make.leading.equalTo(nameTitleLabel)
-//        }
-
-//        bottomContainerView.addSubview(includeInTotalSwitch)
-//        includeInTotalSwitch.snp.makeConstraints { make in
-//            make.centerY.equalTo(includeInTotalTitleLabel)
-//            make.trailing.equalToSuperview().offset(-14)
-//        }
-
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
-//            make.top.equalTo(includeInTotalSwitch.snp.bottom).offset(10)
             make.top.equalTo(nameTextField.snp.bottom).offset(10)
             make.width.equalTo(min(381, view.bounds.width - 40))
             make.height.equalTo(smallFormat ? 80 : 95)
@@ -470,8 +461,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             addressTextField.snp.updateConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
-
-            //TODO Grey out the add button if all the conditions for adding are not met.
             validate()
         }
     }
@@ -584,6 +573,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             addressTextField.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
+            validate()
         }
 
         cameraHighlightBoxLayer.frame = highlightBoxRect
