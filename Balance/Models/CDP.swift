@@ -32,7 +32,7 @@ struct CDP: Codable {
     let ink: Double?
     let pep: Double?
     let ire: Double?
-    let per: Double?
+    let per: String?
     let act: String?
     let liqPrice: Double?
     

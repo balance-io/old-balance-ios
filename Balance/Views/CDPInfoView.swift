@@ -276,12 +276,12 @@ class CDPInfoView: UIView {
             make.centerY.equalTo(daiCircleImageView)
         }
 
-        if let art = cdp.art {
-            let artString = numberFormatter.string(from: NSNumber(value:art))
-            if let artString = artString {
-                debtBreakdownLabel.text = "\(artString) DAI * 1.00 USD"
+        if let ire = cdp.ire {
+            let ireString = numberFormatter.string(from: NSNumber(value:ire))
+            if let ireString = ireString {
+                debtBreakdownLabel.text = "\(ireString) DAI * 1.00 USD"
             } else {
-                print("Failed to format artString: \(String(describing: artString))")
+                print("Failed to format artString: \(String(describing: ireString))")
             }
         }
         addSubview(debtBreakdownLabel)
