@@ -1,6 +1,6 @@
 ## Balance for iOS - An interface for the open source financial system
 
-[<img src="https://d3vv6lp55qjaqc.cloudfront.net/items/1z1m2S2A17241q2t2f1s/Slicey.png">](https://balance.io)
+[<img src="https://cl.ly/5df1e73c36a7/balance-watchlist-preview.png">](https://www.figma.com/file/bJROupXp1iGJaqGIr0cmqGVk/balance-watchlist?node-id=0%3A1)
 
 ### Community
 TestFlight: https://testflight.apple.com/join/02cARQQL
