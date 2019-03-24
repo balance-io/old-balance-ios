@@ -38,6 +38,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         benImageView.image = UIImage(named: "ben")
         return benImageView
     }()
+    
+    private let wolffanImageView: UIImageView = {
+        let wolffanImageView = UIImageView()
+        wolffanImageView.image = UIImage(named: "wolffan")
+        return wolffanImageView
+    }()
+    
+    private let jamierumbelowImageView: UIImageView = {
+        let jamierumbelowImageView = UIImageView()
+        jamierumbelowImageView.image = UIImage(named: "jamierumbelow")
+        return jamierumbelowImageView
+    }()
 
     private let joinTitleLabel: UILabel = {
         let joinTitleLabel = UILabel()
@@ -144,17 +156,30 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.top.equalTo(balanceNameImageView.snp.bottom).offset(15)
             make.centerX.equalToSuperview()
         }
-
+        
+        //TODO Show people's commitments. Load the data from GitHub and let the faces float by.
         contentView.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(wavesImageView).offset(-50)
+            make.centerX.equalTo(wavesImageView).offset(-40)
             make.centerY.equalTo(wavesImageView).offset(10)
         }
-
+        
         contentView.addSubview(benImageView)
         benImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(wavesImageView).offset(50)
+            make.centerX.equalTo(wavesImageView).offset(40)
             make.centerY.equalTo(wavesImageView).offset(-10)
+        }
+        
+        contentView.addSubview(wolffanImageView)
+        wolffanImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(wavesImageView).offset(110)
+            make.centerY.equalTo(wavesImageView).offset(-15)
+        }
+        
+        contentView.addSubview(jamierumbelowImageView)
+        jamierumbelowImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(wavesImageView).offset(-110)
+            make.centerY.equalTo(wavesImageView).offset(-5)
         }
 
         contentView.addSubview(joinTitleLabel)
@@ -280,7 +305,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             cell.imageView?.image = UIImage(named: "proIcon")
             cell.textLabel?.text = "Balance Pro"
         case 2:
-            cell.isEnabled = true
+//            cell.isEnabled = true
             cell.imageView?.image = UIImage(named: "currencyIcon")
             cell.textLabel?.text = "Currency"
             cell.sideLabel.text = "USD"
