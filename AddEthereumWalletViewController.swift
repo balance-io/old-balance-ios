@@ -470,8 +470,6 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             addressTextField.snp.updateConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
-
-            //TODO Grey out the add button if all the conditions for adding are not met.
             validate()
         }
     }
@@ -584,6 +582,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             addressTextField.snp.makeConstraints { make in
                 make.trailing.equalToSuperview().offset(-10)
             }
+            validate()
         }
 
         cameraHighlightBoxLayer.frame = highlightBoxRect
