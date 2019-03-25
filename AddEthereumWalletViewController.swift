@@ -407,6 +407,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         // We're valid
         addButton.isEnabled = true
         addressFieldValidationLabel.isHidden = true
+        nameTextField.becomeFirstResponder()
     }
 
     private func addressIsValid(_ address: String) -> Bool {
@@ -566,8 +567,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             }
 
             addressTextField.text = finalDetectedString
-            self.pasteButton.removeFromSuperview()
-            self.scanQRCodeLabel.removeFromSuperview()
+            self.pasteButton.isHidden = true
+            self.scanQRCodeLabel.isHidden = true
             scanQRCodeImageView.image = UIImage(named: "addressSuccess")
 
             addressTextField.snp.makeConstraints { make in
