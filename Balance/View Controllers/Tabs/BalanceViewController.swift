@@ -155,7 +155,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             return
         }
         
-        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0
+        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0 //TODO This is super slow and we have to find a better way.
         let secondsSinceLastLoad = NSDate().timeIntervalSince1970 - lastLoadTimestamp
         if secondsSinceLastLoad < delay {
             // Wait a few seconds and try again
@@ -292,15 +292,4 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Int, percent: CGFloat) {
         menuViewController.scroll(index: index, percent: percent, animated: false)
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
