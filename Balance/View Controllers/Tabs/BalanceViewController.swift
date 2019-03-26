@@ -27,6 +27,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     private var contentViewControllers = [BalanceContentViewController]()
     private var ethereumWallets = [EthereumWallet]()
     private var aggregatedEthereumWallet: EthereumWallet?
+    private var refresh: UIRefreshControl?
     
     // MARK - View Lifecycle -
     
@@ -108,6 +109,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
                 balanceContentViewController.title = "All Wallets"
+                balanceContentViewController.refreshBlock = {
+                    self.loadData()
+                    self.refresh = balanceContentViewController.refreshControl
+                }
                 contentViewControllers.append(balanceContentViewController)
             }
             
@@ -115,6 +120,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = ethereumWallet
                 balanceContentViewController.title = ethereumWallet.name ?? ethereumWallet.address
+                balanceContentViewController.refreshBlock = {
+                    self.loadData()
+                    self.refresh = balanceContentViewController.refreshControl
+                }
                 contentViewControllers.append(balanceContentViewController)
             }
         } else {
@@ -230,6 +239,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 self.isLoading = false
                 self.loadingSpinner.stopAnimating()
                 self.updateContentControllers()
+                self.refresh?.endRefreshing()
             }
         }
     }

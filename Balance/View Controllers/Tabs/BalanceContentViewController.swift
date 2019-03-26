@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 import SwiftEntryKit
 
+typealias RefreshBlock = () -> ()
 class BalanceContentViewController: UITableViewController {
     enum Section: Int {
         case cdp      = 0
@@ -11,6 +12,7 @@ class BalanceContentViewController: UITableViewController {
     
     var ethereumWallet: EthereumWallet?
     var erc20TableCell: CryptoBalanceTableViewCell?
+    var refreshBlock: RefreshBlock?
     
     private var expandedIndexPath: IndexPath?
     
@@ -32,6 +34,9 @@ class BalanceContentViewController: UITableViewController {
         tableView.separatorStyle = .none
         
         tableView.register(CDPBalanceTableViewCell.self, forCellReuseIdentifier: cdpCellReuseIdentifier)
+        let refresh = UIRefreshControl()
+        refresh.addTarget(self, action: #selector(reload), for: .valueChanged)
+        tableView.refreshControl = refresh
         
         setupNavigation()
         preloadErc20Cell()
@@ -47,6 +52,10 @@ class BalanceContentViewController: UITableViewController {
             navigationBar.isTranslucent = false
             navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         }
+    }
+    
+    @objc private func reload() {
+        refreshBlock?()
     }
     
     private func reloadTableCellHeights() {
