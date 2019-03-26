@@ -182,13 +182,24 @@ private let cryptoNumberFormatter: NumberFormatter = {
 
 private let fiatNumberFormatter: NumberFormatter = {
     let fiatNumberFormatter = NumberFormatter()
-    fiatNumberFormatter.minimumFractionDigits = 2
+    fiatNumberFormatter.minimumFractionDigits = 0
     fiatNumberFormatter.maximumFractionDigits = 2
     fiatNumberFormatter.currencyCode = "USD"
     fiatNumberFormatter.currencySymbol = "$"
     fiatNumberFormatter.locale = Locale(identifier: "en_US")
     fiatNumberFormatter.numberStyle = .currency
     return fiatNumberFormatter
+}()
+
+private let totalFiatNumberFormatter: NumberFormatter = {
+    let totalFiatNumberFormatter = NumberFormatter()
+    totalFiatNumberFormatter.minimumFractionDigits = 0
+    totalFiatNumberFormatter.maximumFractionDigits = 0
+    totalFiatNumberFormatter.currencyCode = "USD"
+    totalFiatNumberFormatter.currencySymbol = "$"
+    totalFiatNumberFormatter.locale = Locale(identifier: "en_US")
+    totalFiatNumberFormatter.numberStyle = .currency
+    return totalFiatNumberFormatter
 }()
 
 //https://stackoverflow.com/questions/18247934/how-to-align-uilabel-text-from-bottom
@@ -232,7 +243,7 @@ private class CryptoRow: UIView {
     
     private let cryptoBalanceLabel: VerticalAlignedLabel = {
         let cryptoBalanceLabel = VerticalAlignedLabel()
-        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         cryptoBalanceLabel.textColor = UIColor(hexString: "#272727")
         return cryptoBalanceLabel
     }()
@@ -246,7 +257,7 @@ private class CryptoRow: UIView {
     
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         fiatBalanceLabel.textColor = UIColor(hexString: "#272727")
         fiatBalanceLabel.textAlignment = .right
         return fiatBalanceLabel
@@ -280,10 +291,10 @@ private class CryptoRow: UIView {
         
         addSubview(tokenNameLabel)
         tokenNameLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.4)
+            make.height.equalTo(iconImageView).multipliedBy(0.5)
             make.leading.equalTo(iconImageView.snp.trailing).offset(10)
 //            make.trailing.equalTo(fiatBalanceLabel.snp.leading).offset(-10)
-            make.top.equalToSuperview()
+            make.top.equalTo(iconImageView).offset(-2)
         }
 
         tokenNameLabel.text = name
@@ -316,26 +327,26 @@ private class CryptoRow: UIView {
             cryptoBalance += " \(symbol.uppercased())"
         }
         cryptoBalanceLabel.text = cryptoBalance
-        cryptoBalanceLabel.contentMode = .bottom
+//        cryptoBalanceLabel.contentMode = .bottom
         addSubview(cryptoBalanceLabel)
         cryptoBalanceLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.height.equalTo(iconImageView).multipliedBy(0.5)
             make.leading.equalTo(iconImageView.snp.trailing).offset(10)
-            make.bottom.equalTo(iconImageView)
+            make.bottom.equalTo(iconImageView).offset(2)
         }
         
         fiatBalanceLabel.textAlignment = .right
-        fiatBalanceLabel.contentMode = .bottom
+        fiatBalanceLabel.contentMode = .top
         fiatBalanceLabel.text = "$0"
         if let fiatBalance = fiatBalance {
-            fiatBalanceLabel.text = fiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "$0"
+            fiatBalanceLabel.text = totalFiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "$0"
         }
         addSubview(fiatBalanceLabel)
 
         fiatBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(cryptoBalanceLabel)
             make.trailing.equalToSuperview().offset(-15)
-            make.bottom.equalTo(iconImageView)
+            make.bottom.equalTo(iconImageView).offset(2)
         }
     }
     
