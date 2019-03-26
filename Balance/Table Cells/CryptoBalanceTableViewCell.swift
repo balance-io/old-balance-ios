@@ -38,7 +38,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 18)
-        titleLabel.textColor = UIColor(hexString: "#333333")
+        titleLabel.textColor = UIColor(hexString: "#272727")
         return titleLabel
     }()
     
@@ -62,33 +62,34 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
             make.bottom.equalToSuperview().offset(-10)
         }
         
-        containerView.addSubview(titleIconView)
-        titleIconView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(14)
-        }
+//        containerView.addSubview(titleIconView)
+//        titleIconView.snp.makeConstraints { make in
+//            make.top.equalToSuperview().offset(14)
+//            make.leading.equalToSuperview().offset(14)
+//        }
         
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(titleIconView.snp.trailing).offset(10)
-            make.centerY.equalTo(titleIconView)
+            make.top.equalToSuperview().offset(14)
+            make.leading.equalToSuperview().offset(15)
+//            make.centerY.equalTo(titleIconView)
         }
         
         switch cryptoType {
         case .ethereum:
-            titleIconView.image = UIImage(named: "ethSquircleDark")
+//            titleIconView.image = UIImage(named: "ethSquircleDark")
             titleLabel.text = "Ethereum"
             
             let cryptoRow = CryptoRow(wallet: wallet)
             containerView.addSubview(cryptoRow)
             cryptoRow.snp.makeConstraints { make in
-                make.top.equalTo(titleIconView.snp.bottom).offset(20)
+                make.top.equalTo(titleLabel.snp.bottom).offset(15)
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
                 make.height.equalTo(40)
             }
         case .erc20:
-            titleIconView.image = UIImage(named: "erc20SquircleGreen")
+//            titleIconView.image = UIImage(named: "erc20SquircleGreen")
             titleLabel.text = "ERC-20 Tokens"
             
             if let tokens = wallet.tokens {
@@ -109,7 +110,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     return leftSymbol < rightSymbol
                 }
                 
-                var topView: UIView = titleIconView
+                var topView: UIView = titleLabel
                 var isHighValueToken = true
                 for token in sortedTokens {
                     let cryptoRow = CryptoRow(token: token)
@@ -127,7 +128,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     let container = isHighValueToken ? containerView : lowValueTokensContainer
                     container.addSubview(cryptoRow)
                     cryptoRow.snp.makeConstraints { make in
-                        let topOffset = topView == titleIconView ? 20 : 5
+                        let topOffset = topView == titleLabel ? 15 : 5
                         make.top.equalTo(topView.snp.bottom).offset(topOffset)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
@@ -181,7 +182,7 @@ private let cryptoNumberFormatter: NumberFormatter = {
 
 private let fiatNumberFormatter: NumberFormatter = {
     let fiatNumberFormatter = NumberFormatter()
-    fiatNumberFormatter.minimumFractionDigits = 2
+    fiatNumberFormatter.minimumFractionDigits = 0
     fiatNumberFormatter.maximumFractionDigits = 2
     fiatNumberFormatter.currencyCode = "USD"
     fiatNumberFormatter.currencySymbol = "$"
@@ -189,6 +190,37 @@ private let fiatNumberFormatter: NumberFormatter = {
     fiatNumberFormatter.numberStyle = .currency
     return fiatNumberFormatter
 }()
+
+private let totalFiatNumberFormatter: NumberFormatter = {
+    let totalFiatNumberFormatter = NumberFormatter()
+    totalFiatNumberFormatter.minimumFractionDigits = 0
+    totalFiatNumberFormatter.maximumFractionDigits = 0
+    totalFiatNumberFormatter.currencyCode = "USD"
+    totalFiatNumberFormatter.currencySymbol = "$"
+    totalFiatNumberFormatter.locale = Locale(identifier: "en_US")
+    totalFiatNumberFormatter.numberStyle = .currency
+    return totalFiatNumberFormatter
+}()
+
+//https://stackoverflow.com/questions/18247934/how-to-align-uilabel-text-from-bottom
+class VerticalAlignedLabel: UILabel {
+    
+    override func drawText(in rect: CGRect) {
+        var newRect = rect
+        switch contentMode {
+        case .top:
+            newRect.size.height = sizeThatFits(rect.size).height
+        case .bottom:
+            let height = sizeThatFits(rect.size).height
+            newRect.origin.y += rect.size.height - height
+            newRect.size.height = height
+        default:
+            ()
+        }
+        
+        super.drawText(in: newRect)
+    }
+}
 
 private class CryptoRow: UIView {
     var isHighValue: Bool {
@@ -202,38 +234,46 @@ private class CryptoRow: UIView {
         return iconImageView
     }()
     
-    private let cryptoBalanceLabel: UILabel = {
-        let cryptoBalanceLabel = UILabel()
+    private let tokenNameLabel: UILabel = {
+        let tokenNameLabel = UILabel()
+        tokenNameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        tokenNameLabel.textColor = UIColor(hexString: "#6F6F6F")
+        return tokenNameLabel
+    }()
+    
+    private let cryptoBalanceLabel: VerticalAlignedLabel = {
+        let cryptoBalanceLabel = VerticalAlignedLabel()
         cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
-        cryptoBalanceLabel.textColor = UIColor(hexString: "#333333")
+        cryptoBalanceLabel.textColor = UIColor(hexString: "#272727")
         return cryptoBalanceLabel
     }()
     
-    private let rateLabel: UILabel = {
-        let rateLabel = UILabel()
+    private let rateLabel: VerticalAlignedLabel = {
+        let rateLabel = VerticalAlignedLabel()
         rateLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
-        rateLabel.textColor = UIColor(hexString: "#333333")
+        rateLabel.textColor = UIColor(hexString: "#6F6F6F")
         return rateLabel
     }()
     
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 25, weight: .regular)
-        fiatBalanceLabel.textColor = UIColor(hexString: "#333333")
+        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        fiatBalanceLabel.textColor = UIColor(hexString: "#272727")
         fiatBalanceLabel.textAlignment = .right
         return fiatBalanceLabel
     }()
     
     convenience init(wallet: EthereumWallet) {
-        self.init(balance: wallet.balance, fiatBalance: wallet.fiatBalance, rate: wallet.rate, symbol: wallet.symbol, currency: wallet.currency)
+        //TODO Move WETH into here
+        self.init(balance: wallet.balance, fiatBalance: wallet.fiatBalance, rate: wallet.rate, symbol: wallet.symbol, currency: wallet.currency, name: "Ether")
     }
     
     convenience init(token: Token) {
-        self.init(balance: token.balance, fiatBalance: token.fiatBalance, rate: token.rate, symbol: token.symbol, currency: token.currency)
+        self.init(balance: token.balance, fiatBalance: token.fiatBalance, rate: token.rate, symbol: token.symbol, currency: token.currency, name: token.name)
         self.token = token
     }
     
-    init(balance: Double?, fiatBalance: Double?, rate: Double?, symbol: String?, currency: String?) {
+    init(balance: Double?, fiatBalance: Double?, rate: Double?, symbol: String?, currency: String?, name: String?) {
         super.init(frame: CGRect.zero)
         
         if let symbol = symbol, symbol.count > 0 {
@@ -249,15 +289,34 @@ private class CryptoRow: UIView {
             make.centerY.equalToSuperview()
         }
         
-        fiatBalanceLabel.text = "$0"
-        if let fiatBalance = fiatBalance {
-            fiatBalanceLabel.text = fiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "$0"
+        addSubview(tokenNameLabel)
+        tokenNameLabel.snp.makeConstraints { make in
+            make.height.equalTo(iconImageView).multipliedBy(0.5)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(10)
+//            make.trailing.equalTo(fiatBalanceLabel.snp.leading).offset(-10)
+            make.top.equalTo(iconImageView).offset(-2)
         }
-        addSubview(fiatBalanceLabel)
-        fiatBalanceLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview()
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-17)
+
+        tokenNameLabel.text = name
+
+        var tokenRate = ""
+        if let rate = rate, let rateString = fiatNumberFormatter.string(from: rate as NSNumber) {
+            tokenRate += "\(rateString)"
+        } else {
+            tokenRate += "0"
+        }
+//        if let currency = currency {
+//            tokenRate += " \(currency.uppercased())"
+//        } else {
+//            tokenRate += " USD"
+//        }
+        rateLabel.text = tokenRate
+        rateLabel.textAlignment = .right
+        addSubview(rateLabel)
+        rateLabel.snp.makeConstraints { make in
+            make.height.equalTo(tokenNameLabel)
+            make.trailing.equalToSuperview().offset(-15)
+            make.top.equalTo(tokenNameLabel)
         }
         
         var cryptoBalance = "0"
@@ -268,32 +327,26 @@ private class CryptoRow: UIView {
             cryptoBalance += " \(symbol.uppercased())"
         }
         cryptoBalanceLabel.text = cryptoBalance
+//        cryptoBalanceLabel.contentMode = .bottom
         addSubview(cryptoBalanceLabel)
         cryptoBalanceLabel.snp.makeConstraints { make in
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.height.equalTo(iconImageView).multipliedBy(0.5)
             make.leading.equalTo(iconImageView.snp.trailing).offset(10)
-            make.trailing.equalTo(fiatBalanceLabel.snp.leading).offset(-10)
-            make.top.equalToSuperview()
+            make.bottom.equalTo(iconImageView).offset(2)
         }
         
-        var tokenRate = "×"
-        if let rate = rate, let rateString = cryptoNumberFormatter.string(from: rate as NSNumber) {
-            tokenRate += " \(rateString)"
-        } else {
-            tokenRate += " 0"
+        fiatBalanceLabel.textAlignment = .right
+        fiatBalanceLabel.contentMode = .top
+        fiatBalanceLabel.text = "$0"
+        if let fiatBalance = fiatBalance {
+            fiatBalanceLabel.text = totalFiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "$0"
         }
-        if let currency = currency {
-            tokenRate += " \(currency.uppercased())"
-        } else {
-            tokenRate += " USD"
-        }
-        rateLabel.text = tokenRate
-        addSubview(rateLabel)
-        rateLabel.snp.makeConstraints { make in
+        addSubview(fiatBalanceLabel)
+
+        fiatBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(cryptoBalanceLabel)
-            make.leading.equalTo(cryptoBalanceLabel)
-            make.trailing.equalTo(cryptoBalanceLabel)
-            make.bottom.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-15)
+            make.bottom.equalTo(iconImageView).offset(2)
         }
     }
     
