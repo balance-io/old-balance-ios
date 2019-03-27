@@ -29,18 +29,11 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     private var aggregatedEthereumWallet: EthereumWallet?
     private var refresh: UIRefreshControl?
     
-    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
     
     // MARK - View Lifecycle -
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        activityIndicator.color = .black
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        view.addSubview(activityIndicator)
         
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
@@ -158,8 +151,6 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     
     @objc func loadData() {
         
-        activityIndicator.startAnimating()
-        
         guard CoreDataHelper.ethereumWalletCount() > 0 else {
             ethereumWallets = [EthereumWallet]()
             aggregatedEthereumWallet = nil
@@ -253,7 +244,6 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 self.refresh?.endRefreshing()
             }
         }
-        self.activityIndicator.stopAnimating()
     }
     
     @objc private func walletAdded() {
