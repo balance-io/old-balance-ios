@@ -73,6 +73,10 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Button Actions -
     
     @objc private func addAction() {
+        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        lightImpactFeedbackGenerator.prepare()
+        lightImpactFeedbackGenerator.impactOccurred()
+
         if ethereumWallets.count >= 10 {
             let alert = UIAlertController(title: "Upgrade to Balance Pro", message: "Upgrade to add more than 10 wallets (coming soon)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

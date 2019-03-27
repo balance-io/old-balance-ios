@@ -91,6 +91,10 @@ class WelcomeViewController: UIViewController {
     }
     
     @objc private func addAction() {
+        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        lightImpactFeedbackGenerator.prepare()
+        lightImpactFeedbackGenerator.impactOccurred()
+
         let addEthereumWalletViewController = AddEthereumWalletViewController()
         present(addEthereumWalletViewController, animated: true)
     }
