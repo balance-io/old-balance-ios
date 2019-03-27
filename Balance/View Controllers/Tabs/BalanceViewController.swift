@@ -119,7 +119,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             for ethereumWallet in ethereumWallets {
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = ethereumWallet
-                balanceContentViewController.title = ethereumWallet.name ?? ethereumWallet.address
+                balanceContentViewController.title = ethereumWallet.pagingTabTitle()
                 balanceContentViewController.refreshBlock = {
                     self.loadData()
                     self.refresh = balanceContentViewController.refreshControl
