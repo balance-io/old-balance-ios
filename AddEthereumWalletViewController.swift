@@ -321,7 +321,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addButton.titleEdgeInsets = UIEdgeInsets(top: -2, left: -20, bottom: 0, right: 0)
         addButton.isEnabled = false
         addButton.addTarget(self, action: #selector(addAction), for: .touchUpInside)
-        
+
         if (smallFormat) {
             addButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         }
@@ -380,15 +380,15 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             return
         }
 
-        // Address: length should be 42
-        guard address.count == 42 else {
-            throwValidationError("Wallet address should be 42 characters long")
-            return
-        }
-
         // Address: should begin with 0x
         guard address.hasPrefix("0x") else {
             throwValidationError("Wallet address should begin with 0x")
+            return
+        }
+
+        // Address: length should be 42
+        guard address.count == 42 else {
+            throwValidationError("Wallet address should be 42 characters long")
             return
         }
 
