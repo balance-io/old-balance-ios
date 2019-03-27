@@ -182,7 +182,7 @@ private let cryptoNumberFormatter: NumberFormatter = {
 
 private let fiatNumberFormatter: NumberFormatter = {
     let fiatNumberFormatter = NumberFormatter()
-    fiatNumberFormatter.minimumFractionDigits = 0
+    fiatNumberFormatter.minimumFractionDigits = 2
     fiatNumberFormatter.maximumFractionDigits = 2
     fiatNumberFormatter.currencyCode = "USD"
     fiatNumberFormatter.currencySymbol = "$"
@@ -293,7 +293,6 @@ private class CryptoRow: UIView {
         tokenNameLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
             make.leading.equalTo(iconImageView.snp.trailing).offset(10)
-//            make.trailing.equalTo(fiatBalanceLabel.snp.leading).offset(-10)
             make.top.equalTo(iconImageView).offset(-2)
         }
 
@@ -305,11 +304,7 @@ private class CryptoRow: UIView {
         } else {
             tokenRate += "0"
         }
-//        if let currency = currency {
-//            tokenRate += " \(currency.uppercased())"
-//        } else {
-//            tokenRate += " USD"
-//        }
+        
         rateLabel.text = tokenRate
         rateLabel.textAlignment = .right
         addSubview(rateLabel)
@@ -321,13 +316,32 @@ private class CryptoRow: UIView {
         
         var cryptoBalance = "0"
         if let balance = balance {
-            cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
+            
+            //TODO - Fix this for multi-currency
+            let format = cryptoNumberFormatter
+            
+            if let rate = rate {
+                
+                if rate > 1000 {
+                    format.maximumFractionDigits = 4
+                    format.minimumFractionDigits = 4
+                } else if rate > 100 {
+                    format.maximumFractionDigits = 2
+                    format.minimumFractionDigits = 2
+                } else {
+                    format.maximumFractionDigits = 0
+                    format.minimumFractionDigits = 0
+                }
+                
+                cryptoBalance = format.string(from: balance as NSNumber) ?? "0"
+            }
+            
+            
         }
         if let symbol = symbol {
             cryptoBalance += " \(symbol.uppercased())"
         }
         cryptoBalanceLabel.text = cryptoBalance
-//        cryptoBalanceLabel.contentMode = .bottom
         addSubview(cryptoBalanceLabel)
         cryptoBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
