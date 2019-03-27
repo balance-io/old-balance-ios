@@ -4,14 +4,14 @@ struct EthereumWallet {
     let name: String?
     let address: String
     let includeInTotal: Bool
-    
+
     let symbol = "ETH"
-    
+
     var balance: Double?     // Balance in ETH
     var fiatBalance: Double? // Balance in fiat currency
     var rate: Double?       // Price per unit in fiat currency
     var currency: String?    // Fiat currency used for price and balance
-    
+
     var tokens: [Token]?
     var valuableTokens: [Token]? {
         return tokens?.filter{ $0.fiatBalance ?? 0 >= Token.fiatValueCutoff }
@@ -19,22 +19,30 @@ struct EthereumWallet {
     var nonValuableTokens: [Token]? {
         return tokens?.filter{ $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
     }
-    
+
     var CDPs: [CDP]?
-    
+
     init(name: String?, address: String, includeInTotal: Bool) {
         self.name = name
         self.address = address
         self.includeInTotal = includeInTotal
-        
+
         self.balance = nil
         self.fiatBalance = nil
         self.rate = nil
         self.currency = nil
-        
+
         self.tokens = nil
     }
-    
+
+    func pagingTabTitle() -> String {
+        guard let name = name, name.count > 0 else {
+            return "0x.." + String(self.address[self.address.index(self.address.endIndex, offsetBy: -4)...])
+        }
+
+        return name
+    }
+
     static func aggregated(wallets: [EthereumWallet]) -> EthereumWallet? {
         // Aggregate the balances
         // NOTE: This currently assumes all wallets have the same fiat currency
@@ -55,11 +63,11 @@ struct EthereumWallet {
                 if let balance = wallet.balance {
                     totalBalance += balance
                 }
-                
+
                 if let fiatBalance = wallet.fiatBalance {
                     totalFiatBalance += fiatBalance
                 }
-                
+
                 if let tokens = wallet.tokens {
                     if totalTokens.count == 0 {
                         totalTokens = tokens
@@ -72,7 +80,7 @@ struct EthereumWallet {
                                 tempTotalTokens.append(token)
                             }
                         }
-                        
+
                         // Add back any missing tokens
                         for existingToken in totalTokens {
                             if tempTotalTokens.first(where: { $0.address == existingToken.address }) == nil {
@@ -82,7 +90,7 @@ struct EthereumWallet {
                         totalTokens = tempTotalTokens
                     }
                 }
-                
+
                 if let CDPs = wallet.CDPs {
                     if totalCDPs.count == 0 {
                         totalCDPs = CDPs
