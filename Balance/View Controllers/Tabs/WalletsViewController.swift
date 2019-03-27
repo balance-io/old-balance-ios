@@ -105,6 +105,9 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         loadData()
         if presentedViewController != nil {
             dismiss(animated: true)
+            let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+            heavyImpactFeedbackGenerator.prepare()
+            heavyImpactFeedbackGenerator.impactOccurred()
         }
     }
     
