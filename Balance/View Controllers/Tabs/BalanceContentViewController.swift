@@ -87,11 +87,6 @@ class BalanceContentViewController: UITableViewController {
     }
 
     @objc private func finishedLoadingBalances() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.tableView.refreshControl?.alpha = 0.0
-        }, completion: { _ in
-            self.tableView.refreshControl?.alpha = 1.0
-        })
         tableView.refreshControl?.endRefreshing()
     }
 
