@@ -4,7 +4,13 @@ import SwiftEntryKit
 
 class WalletInfoView: UIView {
     private let wallet: EthereumWallet
-    
+
+    private let closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(named: "xWhite"), for: .normal)
+        return closeButton
+    }()
+
     private let topContainer: UIView = {
         let topContainer = UIView()
         topContainer.backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
@@ -122,12 +128,21 @@ class WalletInfoView: UIView {
             make.width.equalToSuperview()
             make.bottom.equalTo(bottomContainer.snp.top).offset(-30)
         }
+
+        topContainer.addSubview(closeButton)
+        closeButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+        closeButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+        }
         
         nameLabel.text = wallet.name
         topContainer.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.leading.equalToSuperview().offset(20)
+            make.trailing.equalTo(closeButton.snp.leading).offset(-10)
         }
 
         qrCodeImageView.image = QRCode.generate(fromString: wallet.address, size: 300)
