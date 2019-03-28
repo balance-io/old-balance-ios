@@ -10,7 +10,14 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     
     private let addButton: UIButton = {
         let addButton = UIButton()
-        addButton.setBackgroundImage(UIImage(named:"plusButton"), for: .normal)
+        addButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: -10, bottom: 0, right: 0)
+        addButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
+        addButton.contentEdgeInsets = UIEdgeInsets.init(top: 5, left: 15, bottom: 5, right: 15)
+        addButton.backgroundColor = UIColor.init(hexString: "#d1d3d5")
+        addButton.layer.cornerRadius = 5
+        addButton.setTitle("Add", for: UIControl.State.normal)
+        addButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        addButton.setImage(UIImage(named:"plusIcon"), for: .normal)
         return addButton
     }()
 
@@ -73,6 +80,10 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - Button Actions -
     
     @objc private func addAction() {
+        let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        lightImpactFeedbackGenerator.prepare()
+        lightImpactFeedbackGenerator.impactOccurred()
+
         if ethereumWallets.count >= 10 {
             let alert = UIAlertController(title: "Upgrade to Balance Pro", message: "Upgrade to add more than 10 wallets (coming soon)", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -101,6 +112,9 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         loadData()
         if presentedViewController != nil {
             dismiss(animated: true)
+            let heavyImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+            heavyImpactFeedbackGenerator.prepare()
+            heavyImpactFeedbackGenerator.impactOccurred()
         }
     }
     
