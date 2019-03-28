@@ -523,11 +523,16 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             session.addOutput(output)
             output.metadataObjectTypes = output.availableMetadataObjectTypes
 
-            cameraPreviewLayer.session = session
-            cameraPreviewLayer.videoGravity = .resizeAspectFill
-            cameraPreviewView.layer.addSublayer(cameraPreviewLayer)
-            cameraPreviewView.layer.addSublayer(cameraHighlightBoxLayer)
-            session.startRunning()
+            DispatchQueue.utility.async {
+                session.startRunning()
+
+                DispatchQueue.main.async {
+                    self.cameraPreviewLayer.session = session
+                    self.cameraPreviewLayer.videoGravity = .resizeAspectFill
+                    self.cameraPreviewView.layer.addSublayer(self.cameraPreviewLayer)
+                    self.cameraPreviewView.layer.addSublayer(self.cameraHighlightBoxLayer)
+                }
+             }
         } catch {
             print("Failed to create AVCaptureSession: \(error)")
         }
