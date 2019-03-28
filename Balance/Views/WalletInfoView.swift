@@ -142,6 +142,7 @@ class WalletInfoView: UIView {
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
             make.leading.equalToSuperview().offset(20)
+            make.trailing.equalTo(closeButton.snp.leading).offset(-10)
         }
 
         qrCodeImageView.image = QRCode.generate(fromString: wallet.address, size: 300)
