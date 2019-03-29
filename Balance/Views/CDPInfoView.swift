@@ -230,8 +230,8 @@ class CDPInfoView: UIView {
         closeButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         closeButton.snp.makeConstraints { make in
             make.width.height.equalTo(24)
-            make.top.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
+            make.top.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-10)
         }
         
         let id = cdp.id != nil ? "#\(cdp.id!)" : ""
