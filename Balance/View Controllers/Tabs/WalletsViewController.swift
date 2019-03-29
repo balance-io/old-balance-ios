@@ -29,7 +29,6 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         walletsTableView.delegate = self
         
         walletsTableView.register(NamedWalletTableViewCell.self, forCellReuseIdentifier: "namedWalletCell")
-        walletsTableView.register(UnnamedWalletTableViewCell.self, forCellReuseIdentifier: "unnamedWalletCell")
         view.addSubview(walletsTableView)
         
         walletsTableView.snp.makeConstraints { make in
@@ -114,11 +113,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         let wallet = ethereumWallets[indexPath.row]
         var cell: WalletTableViewCell
         
-        if (wallet.name != nil && wallet.name != "") {
-            cell = tableView.dequeueReusableCell(withIdentifier: "namedWalletCell", for: indexPath) as! NamedWalletTableViewCell
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: "unnamedWalletCell", for: indexPath) as! UnnamedWalletTableViewCell
-        }
+        cell = tableView.dequeueReusableCell(withIdentifier: "namedWalletCell", for: indexPath) as! NamedWalletTableViewCell
         
         cell.selectionStyle = .none
         cell.wallet = wallet
