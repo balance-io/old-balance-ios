@@ -145,7 +145,7 @@ class WalletInfoView: UIView {
             make.trailing.equalTo(closeButton.snp.leading).offset(-10)
         }
 
-        qrCodeImageView.image = QRCode.generate(fromString: wallet.address, size: 300)
+        qrCodeImageView.image = QRCode.generate(fromString: "ethereum:\(wallet.address)", size: 300)
         topContainer.addSubview(qrCodeImageView)
         qrCodeImageView.snp.makeConstraints { make in
             make.width.equalToSuperview().offset(-40)
