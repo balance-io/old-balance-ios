@@ -1,11 +1,3 @@
-//
-//  UnnamedWalletTableViewCell.swift
-//  Balance
-//
-//  Created by Jamie Rumbelow on 20/03/2019.
-//  Copyright © 2019 Balance. All rights reserved.
-//
-
 import UIKit
 import SnapKit
 
