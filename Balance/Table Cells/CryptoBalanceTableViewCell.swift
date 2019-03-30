@@ -211,28 +211,28 @@ private class CryptoRow: UIView {
 
     private let tokenNameLabel: UILabel = {
         let tokenNameLabel = UILabel()
-        tokenNameLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        tokenNameLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         tokenNameLabel.textColor = UIColor(hexString: "#6F6F6F")
         return tokenNameLabel
     }()
 
     private let cryptoBalanceLabel: VerticalAlignedLabel = {
         let cryptoBalanceLabel = VerticalAlignedLabel()
-        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        cryptoBalanceLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 16, weight: .regular)
         cryptoBalanceLabel.textColor = UIColor(hexString: "#272727")
         return cryptoBalanceLabel
     }()
 
     private let rateLabel: VerticalAlignedLabel = {
         let rateLabel = VerticalAlignedLabel()
-        rateLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        rateLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         rateLabel.textColor = UIColor(hexString: "#6F6F6F")
         return rateLabel
     }()
 
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        fiatBalanceLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 16, weight: .regular)
         fiatBalanceLabel.textColor = UIColor(hexString: "#272727")
         fiatBalanceLabel.textAlignment = .right
         return fiatBalanceLabel

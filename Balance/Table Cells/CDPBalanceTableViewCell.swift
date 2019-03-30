@@ -133,7 +133,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
     private let liqPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .right
         label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor(hexString: "#6F6F6F")
@@ -143,7 +143,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
     private let inkLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor(hexString: "#333333")
@@ -153,7 +153,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
     private let artLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .right
         label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor(hexString: "#333333")

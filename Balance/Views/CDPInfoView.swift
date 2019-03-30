@@ -128,7 +128,7 @@ class CDPInfoView: UIView {
 
     private let riskLabel: UILabel = {
         let riskLabel = PaddedLabel()
-        riskLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        riskLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         riskLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
         riskLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         riskLabel.layer.cornerRadius = 5
@@ -138,7 +138,7 @@ class CDPInfoView: UIView {
 
     private let liqPriceLabel: UILabel = {
         let liqPriceLabel = PaddedLabel()
-        liqPriceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        liqPriceLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         liqPriceLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
         liqPriceLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         liqPriceLabel.layer.cornerRadius = 5
@@ -148,7 +148,7 @@ class CDPInfoView: UIView {
 
     private let ratioLabel: UILabel = {
         let ratioLabel = PaddedLabel()
-        ratioLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        ratioLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 14, weight: .regular)
         ratioLabel.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
         ratioLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         ratioLabel.layer.cornerRadius = 5

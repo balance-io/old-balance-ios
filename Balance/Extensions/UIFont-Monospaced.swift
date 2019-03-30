@@ -14,14 +14,14 @@ extension UIFont {
         var fontName = "Menlo-Regular"
 
         switch weight {
-            case .bold:
-                fontName = "Menlo-Bold"
-            case .medium:
-                fontName = "Menlo-Bold"
-            case .heavy:
-                fontName = "Menlo-Bold"
-            default:
-                fontName = "Menlo-Regular"
+        case .bold:
+            fontName = "Menlo-Bold"
+        case .medium:
+            fontName = "Menlo-Bold"
+        case .heavy:
+            fontName = "Menlo-Bold"
+        default:
+            fontName = "Menlo-Regular"
         }
 
         let font = UIFont(name: fontName, size: fontSize)
