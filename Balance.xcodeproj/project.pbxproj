@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
+		531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */; };
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
+		531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				53F0C9B322357D4500FF0796 /* DispatchQueue+Async.swift */,
 				53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */,
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
+				531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
+				531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */,
 				F1D844EA2243A881007245E9 /* EIP55.swift in Sources */,
 				538AACF52239ACDA004C3706 /* QRCode.swift in Sources */,
 				53897A1A2244584F009CACC4 /* MenuViewTitleCell.swift in Sources */,

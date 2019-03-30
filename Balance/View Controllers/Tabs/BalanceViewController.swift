@@ -3,6 +3,10 @@ import PagingKit
 import SnapKit
 
 class BalanceViewController: UIViewController, PagingMenuViewControllerDataSource, PagingContentViewControllerDataSource, PagingMenuViewControllerDelegate, PagingContentViewControllerDelegate {
+    struct Notifications {
+        static let startedLoadingBalances = Notification.Name("BalanceViewController.startedLoadingBalances")
+        static let finishedLoadingBalances = Notification.Name("BalanceViewController.finishedLoadingBalances")
+    }
     
     private var menuViewController = PagingMenuViewController()
     private var contentViewController = PagingContentViewController()
@@ -29,18 +33,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     private var aggregatedEthereumWallet: EthereumWallet?
     private var refresh: UIRefreshControl?
     
-    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
-    
     // MARK - View Lifecycle -
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        activityIndicator.color = .black
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.startAnimating()
-        view.addSubview(activityIndicator)
         
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
         
@@ -152,13 +148,15 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             contentViewController.reloadData()
         }
         
+        NotificationCenter.default.post(name: Notifications.finishedLoadingBalances, object: nil)
+        
         // Fix for menu not showing up on first load
         menuViewController.menuView.contentOffset.y = 0
     }
     
     @objc func loadData() {
         
-        activityIndicator.startAnimating()
+        NotificationCenter.default.post(name: Notifications.startedLoadingBalances, object: nil)
         
         guard CoreDataHelper.ethereumWalletCount() > 0 else {
             ethereumWallets = [EthereumWallet]()
@@ -253,7 +251,6 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 self.refresh?.endRefreshing()
             }
         }
-        self.activityIndicator.stopAnimating()
     }
     
     @objc private func walletAdded() {
