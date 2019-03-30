@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = Intercom;
+			productName = Intercom;
 		};
 /* End PBXAggregateTarget section */
 
@@ -276,7 +277,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00159B522404A828125F7C3E418F460C /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Balance.framework; path = "Pods-Balance.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		00159B522404A828125F7C3E418F460C /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		01A000F9943862CA4C66A20C53103BEB /* EKPopUpMessageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKPopUpMessageView.swift; path = Source/MessageViews/EKPopUpMessageView.swift; sourceTree = "<group>"; };
 		0270E9588BC5C177F6675E8AED6EAB45 /* EKRootViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKRootViewController.swift; path = Source/Infra/EKRootViewController.swift; sourceTree = "<group>"; };
 		02CC209F071D060CE6CC2BF680902068 /* EKRatingSymbolsContainerView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKRatingSymbolsContainerView.swift; path = Source/MessageViews/MessagesUtils/EKRatingSymbolsContainerView.swift; sourceTree = "<group>"; };
@@ -293,7 +294,7 @@
 		0E0B655E9C85A75346BCEA641C12F164 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		0E899AE8CA43BFC91EAF68ADDFE0262D /* ConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintItem.swift; path = Source/ConstraintItem.swift; sourceTree = "<group>"; };
 		0F0F35BF373EABE85C5036963E56AEB8 /* BatchedCollection.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BatchedCollection.swift; path = Sources/CryptoSwift/BatchedCollection.swift; sourceTree = "<group>"; };
-		0F9DCA76BADD118B2171DD1CD22562F3 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftEntryKit.framework; path = SwiftEntryKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F9DCA76BADD118B2171DD1CD22562F3 /* SwiftEntryKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftEntryKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		109F007A5942C3A0053B12B1B983F02F /* UIRectCorner+Short.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIRectCorner+Short.swift"; path = "Source/Extensions/UIRectCorner+Short.swift"; sourceTree = "<group>"; };
 		11443B8E2B2AA2E45B978C879F7DEA9C /* Intercom.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Intercom.xcconfig; sourceTree = "<group>"; };
 		11BD1C91AC8B6B4F74B71AC993FEE132 /* CTR.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CTR.swift; path = Sources/CryptoSwift/BlockMode/CTR.swift; sourceTree = "<group>"; };
@@ -305,7 +306,7 @@
 		1A4B9EAA1F3633CD4BD97E2BCA9CAFB4 /* EKAttributes+Precedence.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "EKAttributes+Precedence.swift"; path = "Source/Model/EntryAttributes/EKAttributes+Precedence.swift"; sourceTree = "<group>"; };
 		1AAFA08F16A9437E4E665C22574E9801 /* UIEdgeInsets+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIEdgeInsets+Utils.swift"; path = "Source/Extensions/UIEdgeInsets+Utils.swift"; sourceTree = "<group>"; };
 		1B27F4A8C3F4574A5B5CAECDB5F34979 /* EKXStatusBarMessageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKXStatusBarMessageView.swift; path = Source/MessageViews/Notes/EKXStatusBarMessageView.swift; sourceTree = "<group>"; };
-		1E1639968BBABAF89E1F23D4FDE2325B /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E1639968BBABAF89E1F23D4FDE2325B /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		202DC4186C0B11CAA5918B513535BC89 /* CryptoSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CryptoSwift.xcconfig; sourceTree = "<group>"; };
 		232BFD0ECA3E820B1A9B52EEEA28CAEB /* CryptoSwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "CryptoSwift-Info.plist"; sourceTree = "<group>"; };
 		240B924F5B0CA9A425FA3BB023795D8F /* DigestType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DigestType.swift; path = Sources/CryptoSwift/DigestType.swift; sourceTree = "<group>"; };
@@ -397,7 +398,7 @@
 		80F3D9784B48345B96963C89809A064B /* QuickLayout.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = QuickLayout.modulemap; sourceTree = "<group>"; };
 		81CB5E1FCA0FBE300A1399ABC68A0BFB /* Blowfish+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Blowfish+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/Blowfish+Foundation.swift"; sourceTree = "<group>"; };
 		81EA8C20025EFBB9D9379B73205D2097 /* Digest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Digest.swift; path = Sources/CryptoSwift/Digest.swift; sourceTree = "<group>"; };
-		83A5BB5E73ECF654FEB1CA62DBAD4A5B /* PagingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PagingKit.framework; path = PagingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83A5BB5E73ECF654FEB1CA62DBAD4A5B /* PagingKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PagingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		852494C78F5FF5CC1BD513937AFA73E6 /* ChaCha20+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ChaCha20+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/ChaCha20+Foundation.swift"; sourceTree = "<group>"; };
 		85B80E8AE4AACF0E731EED22B80A56FA /* CBCMAC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CBCMAC.swift; path = Sources/CryptoSwift/CBCMAC.swift; sourceTree = "<group>"; };
 		865D55162733FE34CF7637883827F2F6 /* Pods-Balance-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Balance-umbrella.h"; sourceTree = "<group>"; };
@@ -412,14 +413,14 @@
 		91FFD86C2196212927F1AABA8DC79596 /* Array+NSLayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+NSLayoutConstraint.swift"; path = "PagingKit/Array+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		929D7C462A58DE18309B97ADE33F98EA /* EKRatingMessageView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKRatingMessageView.swift; path = Source/MessageViews/EKRatingMessageView.swift; sourceTree = "<group>"; };
 		949F989CD25B4F3E66366416BAF0FFF5 /* Array+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Extension.swift"; path = "Sources/CryptoSwift/Array+Extension.swift"; sourceTree = "<group>"; };
-		94F34C48786DAC4CA7FEDDEE496C73C4 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CryptoSwift.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94F34C48786DAC4CA7FEDDEE496C73C4 /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95BC9B06FE1DE650825C4C8E4D9EC04B /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Source/ConstraintDescription.swift; sourceTree = "<group>"; };
 		9610DE82DD0381BCAFD8C92311BDFBCD /* PagingKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "PagingKit-Info.plist"; path = "PagingKit/PagingKit-Info.plist"; sourceTree = "<group>"; };
 		992448994836D37F3C729345DE353D38 /* EKTextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKTextField.swift; path = Source/MessageViews/MessagesUtils/EKTextField.swift; sourceTree = "<group>"; };
 		99F8F422DC609EF4A017A183F0476D48 /* EKWrapperView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKWrapperView.swift; path = Source/Infra/EKWrapperView.swift; sourceTree = "<group>"; };
 		9A3519BBC22F9759507D0AC324762493 /* EKAttributes+PositionConstraints.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "EKAttributes+PositionConstraints.swift"; path = "Source/Model/EntryAttributes/EKAttributes+PositionConstraints.swift"; sourceTree = "<group>"; };
 		9BB3FF21D1F2810A27B05FBAF28A1CFA /* Updatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Updatable.swift; path = Sources/CryptoSwift/Updatable.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9EAC2F6BD21C79088E6C480826BD059F /* EKSimpleMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKSimpleMessage.swift; path = Source/Model/EKSimpleMessage.swift; sourceTree = "<group>"; };
 		9FBEE7A7E181B47EB57F95B4C8B7EAF9 /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
 		A0932B1B1A1B103284EBAA33E9A575DC /* QLCompatibility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QLCompatibility.swift; path = QuickLayout/QLCompatibility.swift; sourceTree = "<group>"; };
@@ -444,7 +445,7 @@
 		B0B8BF10DDF5884FF74F1FF89760E611 /* Bit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Bit.swift; path = Sources/CryptoSwift/Bit.swift; sourceTree = "<group>"; };
 		B0DB1566A66B250A97B4A401A6E31D44 /* AES+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "AES+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/AES+Foundation.swift"; sourceTree = "<group>"; };
 		B52808FCD9C1AE30B08F8C6318EDF136 /* Cipher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Cipher.swift; path = Sources/CryptoSwift/Cipher.swift; sourceTree = "<group>"; };
-		B53E6FC61CA7740B432F43CABAB879C2 /* QuickLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = QuickLayout.framework; path = QuickLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53E6FC61CA7740B432F43CABAB879C2 /* QuickLayout.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = QuickLayout.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B298D9C3EEF3C290DEF7815C590F9B /* SwiftEntryKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftEntryKit-dummy.m"; sourceTree = "<group>"; };
 		B72C779211031652BDD79E0DDB6BB078 /* EKButtonView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EKButtonView.swift; path = Source/MessageViews/MessagesUtils/EKButtonView.swift; sourceTree = "<group>"; };
 		B797775AF6FFB517FDB8B4A58B1A1E3E /* String+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Extension.swift"; path = "Sources/CryptoSwift/String+Extension.swift"; sourceTree = "<group>"; };
@@ -658,7 +659,6 @@
 				087B4D0A27E8105D29066CEBFFEC8CD9 /* UIView+Utils.swift */,
 				E3A3EFEB68AB0CBD0293E88D507C1CAE /* Support Files */,
 			);
-			name = SwiftEntryKit;
 			path = SwiftEntryKit;
 			sourceTree = "<group>";
 		};
@@ -676,7 +676,6 @@
 				67343DEDB83EC51436FB56478BFDAE75 /* UnderlineFocusView.swift */,
 				E6C39F9B38CAEDA73ECEA5CF8F596E76 /* Support Files */,
 			);
-			name = PagingKit;
 			path = PagingKit;
 			sourceTree = "<group>";
 		};
@@ -731,7 +730,6 @@
 				03E24E983BEDE3E5B684FE854ED891D6 /* UIViewArray+QuickLayout.swift */,
 				B23026FC07C1BC12818988AD0AEAC631 /* Support Files */,
 			);
-			name = QuickLayout;
 			path = QuickLayout;
 			sourceTree = "<group>";
 		};
@@ -769,7 +767,6 @@
 				8DAA490848AD8E3827A387493CD0EA74 /* Resources */,
 				50C755B4E62A43753A8B94FAB6F5FEA7 /* Support Files */,
 			);
-			name = Intercom;
 			path = Intercom;
 			sourceTree = "<group>";
 		};
@@ -899,7 +896,6 @@
 				F44B7F021D06BFBF2321C214CB8BA14C /* ZeroPadding.swift */,
 				8C7FB37DD60FA2E5B9FC305776FB4BBB /* Support Files */,
 			);
-			name = CryptoSwift;
 			path = CryptoSwift;
 			sourceTree = "<group>";
 		};
@@ -970,7 +966,6 @@
 				381B4C81B28FEEAB6B8A59E0973DCB4E /* UILayoutSupport+Extensions.swift */,
 				57333DE57582E837FE37CE23C31B6193 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -1168,14 +1163,32 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1020;
+				TargetAttributes = {
+					42DEA43CC8306B98314169AEE6434AD6 = {
+						LastSwiftMigration = 1020;
+					};
+					44DD94A124B66884531D7647DFFEB9BD = {
+						LastSwiftMigration = 1020;
+					};
+					5A6207CE7CDF2B3D0D0B75FC5DC9D16C = {
+						LastSwiftMigration = 1020;
+					};
+					D2580A6FC8931D9AF77C82FD100AFB3F = {
+						LastSwiftMigration = 1020;
+					};
+					EB9E6E5C26BAC56798B4C41E41044944 = {
+						LastSwiftMigration = 1020;
+					};
+				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = AF60E59315B4641A3EE4C63BD9677213 /* Products */;
@@ -1533,18 +1546,14 @@
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SnapKit/SnapKit.modulemap";
 				PRODUCT_MODULE_NAME = SnapKit;
 				PRODUCT_NAME = SnapKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1569,11 +1578,7 @@
 				INFOPLIST_FILE = "Target Support Files/Pods-Balance/Pods-Balance-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Balance/Pods-Balance.modulemap";
 				OTHER_LDFLAGS = "";
@@ -1606,18 +1611,14 @@
 				INFOPLIST_FILE = "Target Support Files/SnapKit/SnapKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SnapKit/SnapKit.modulemap";
 				PRODUCT_MODULE_NAME = SnapKit;
 				PRODUCT_NAME = SnapKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1642,18 +1643,14 @@
 				INFOPLIST_FILE = "Target Support Files/CryptoSwift/CryptoSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CryptoSwift/CryptoSwift.modulemap";
 				PRODUCT_MODULE_NAME = CryptoSwift;
 				PRODUCT_NAME = CryptoSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1679,11 +1676,7 @@
 				INFOPLIST_FILE = "Target Support Files/Pods-Balance/Pods-Balance-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MACH_O_TYPE = staticlib;
 				MODULEMAP_FILE = "Target Support Files/Pods-Balance/Pods-Balance.modulemap";
 				OTHER_LDFLAGS = "";
@@ -1717,18 +1710,14 @@
 				INFOPLIST_FILE = "Target Support Files/PagingKit/PagingKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PagingKit/PagingKit.modulemap";
 				PRODUCT_MODULE_NAME = PagingKit;
 				PRODUCT_NAME = PagingKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1752,18 +1741,14 @@
 				INFOPLIST_FILE = "Target Support Files/CryptoSwift/CryptoSwift-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/CryptoSwift/CryptoSwift.modulemap";
 				PRODUCT_MODULE_NAME = CryptoSwift;
 				PRODUCT_NAME = CryptoSwift;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1787,18 +1772,14 @@
 				INFOPLIST_FILE = "Target Support Files/QuickLayout/QuickLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/QuickLayout/QuickLayout.modulemap";
 				PRODUCT_MODULE_NAME = QuickLayout;
 				PRODUCT_NAME = QuickLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1822,18 +1803,14 @@
 				INFOPLIST_FILE = "Target Support Files/SwiftEntryKit/SwiftEntryKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SwiftEntryKit/SwiftEntryKit.modulemap";
 				PRODUCT_MODULE_NAME = SwiftEntryKit;
 				PRODUCT_NAME = SwiftEntryKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1847,10 +1824,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1910,8 +1884,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				SYMROOT = "${SRCROOT}/../build";
 			};
@@ -1934,18 +1907,14 @@
 				INFOPLIST_FILE = "Target Support Files/PagingKit/PagingKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/PagingKit/PagingKit.modulemap";
 				PRODUCT_MODULE_NAME = PagingKit;
 				PRODUCT_NAME = PagingKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2034,18 +2003,14 @@
 				INFOPLIST_FILE = "Target Support Files/QuickLayout/QuickLayout-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/QuickLayout/QuickLayout.modulemap";
 				PRODUCT_MODULE_NAME = QuickLayout;
 				PRODUCT_NAME = QuickLayout;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2060,10 +2025,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2086,18 +2048,14 @@
 				INFOPLIST_FILE = "Target Support Files/SwiftEntryKit/SwiftEntryKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/SwiftEntryKit/SwiftEntryKit.modulemap";
 				PRODUCT_MODULE_NAME = SwiftEntryKit;
 				PRODUCT_NAME = SwiftEntryKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
