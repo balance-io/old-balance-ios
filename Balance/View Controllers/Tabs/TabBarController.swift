@@ -35,6 +35,7 @@ class TabBarController: UITabBarController {
         selectedIndex = 1
         
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +57,13 @@ class TabBarController: UITabBarController {
         if welcomeViewController != nil {
             dismiss(animated: true)
             welcomeViewController = nil
+        }
+    }
+    
+    @objc private func walletRemoved() {
+        if CoreDataHelper.ethereumWalletCount() == 0 {
+            welcomeViewController = WelcomeViewController()
+            present(welcomeViewController!, animated: true, completion: nil)
         }
     }
 }

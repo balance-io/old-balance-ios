@@ -43,6 +43,8 @@ class BalanceContentViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(startedLoadingBalances), name: BalanceViewController.Notifications.startedLoadingBalances, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(finishedLoadingBalances), name: BalanceViewController.Notifications.finishedLoadingBalances, object: nil)
     }
     
     private func setupNavigation() {
@@ -78,6 +80,19 @@ class BalanceContentViewController: UITableViewController {
             expandedIndexPath = nil
             reloadTableCellHeights()
         }
+    }
+    
+    @objc private func startedLoadingBalances() {
+        tableView.refreshControl?.beginRefreshingManually()
+    }
+    
+    @objc private func finishedLoadingBalances() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.tableView.refreshControl?.alpha = 0.0
+        }, completion: { finished in
+            self.tableView.refreshControl?.alpha = 1.0
+        })
+        tableView.refreshControl?.endRefreshing()
     }
         
     // MARK - Table View -
