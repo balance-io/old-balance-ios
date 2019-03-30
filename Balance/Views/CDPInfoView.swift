@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import SwiftEntryKit
 
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
@@ -9,6 +10,12 @@ private let numberFormatter: NumberFormatter = {
 }()
 
 class CDPInfoView: UIView {
+    private let closeButton: UIButton = {
+        let closeButton = UIButton()
+        closeButton.setImage(UIImage(named: "xWhite"), for: .normal)
+        return closeButton
+    }()
+
     private let mkrGreenImageView: UIImageView = {
         let mkrGreenImageView = UIImageView(image: UIImage(named: "mkrGreen"))
         mkrGreenImageView.frame = CGRect(x:0, y: 0, width: 32, height: 32)
@@ -19,6 +26,9 @@ class CDPInfoView: UIView {
         let identifierLabel = UILabel()
         identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         identifierLabel.textColor = .white
+        identifierLabel.adjustsFontSizeToFitWidth = true
+        identifierLabel.numberOfLines = 1
+        identifierLabel.minimumScaleFactor = 0.5
         return identifierLabel
     }()
     
@@ -208,11 +218,20 @@ class CDPInfoView: UIView {
         backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
         clipsToBounds = true
         layer.cornerRadius = 20
-        
+
         addSubview(mkrGreenImageView)
         mkrGreenImageView.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
             make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview().offset(15)
+        }
+
+        addSubview(closeButton)
+        closeButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+        closeButton.snp.makeConstraints { make in
+            make.width.height.equalTo(24)
+            make.top.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-10)
         }
         
         let id = cdp.id != nil ? "#\(cdp.id!)" : ""
@@ -221,6 +240,7 @@ class CDPInfoView: UIView {
         identifierLabel.snp.makeConstraints { make in
             make.leading.equalTo(mkrGreenImageView.snp.trailing).offset(10)
             make.centerY.equalTo(mkrGreenImageView)
+            make.trailing.equalTo(closeButton.snp.leading).offset(-10)
         }
 
         addSubview(collateralTitleLabel)
@@ -430,5 +450,11 @@ class CDPInfoView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("unimplemented")
+    }
+
+    // MARK: - Actions -
+
+    @objc private func tapAction() {
+        SwiftEntryKit.dismiss()
     }
 }
