@@ -265,10 +265,6 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     }
     
     private func walletsChanged() {
-//        menuBackgroundView.isHidden = true
-//        contentViewControllers.removeAll()
-//        menuViewController.reloadData()
-//        contentViewController.reloadData()
         removePagingController()
         loadingSpinner.startAnimating()
         loadData()
