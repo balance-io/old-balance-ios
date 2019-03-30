@@ -154,14 +154,16 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     }
     
     static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool) -> CGFloat {
+        var height: CGFloat = 0
         switch cryptoType {
         case .ethereum:
-            return CGFloat(30 + 14 + 25 + 10 + 50)
+            height = 30 + 14 + 25 + 10 + 50
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
-            let tokensCount = tokens?.count ?? 0
-            return CGFloat(30 + 14 + 25 + 10 + (tokensCount * 45) + 5)
+            let tokensCount = CGFloat(tokens?.count ?? 0)
+            height = 30 + 14 + 25 + 10 + (tokensCount * 45) + 5
         }
+        return height
     }
 }
 
