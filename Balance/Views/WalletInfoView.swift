@@ -163,8 +163,8 @@ class WalletInfoView: UIView {
             make.top.equalTo(qrCodeImageView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
-            make.leading.equalTo(qrCodeImageView.snp.leading)
-            make.trailing.equalTo(qrCodeImageView.snp.trailing)
+            make.leading.equalTo(qrCodeImageView)
+            make.trailing.equalTo(qrCodeImageView)
         }
     }
 
