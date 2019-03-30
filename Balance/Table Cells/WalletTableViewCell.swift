@@ -14,9 +14,10 @@ class WalletTableViewCell: UITableViewCell {
     let addressLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
-        label.textColor = UIColor(hexString: "#828384")
+        label.textColor = .black
         label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .center
+        label.minimumScaleFactor = 0.5
+        label.textAlignment = .left
         return label
     }()
 
