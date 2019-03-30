@@ -36,7 +36,7 @@ class WalletInfoView: UIView {
 
     private let addressLabel: UILabel = {
         let addressLabel = UILabel()
-        addressLabel.font = UIFont.init(name: "Menlo", size: 12.0)
+        addressLabel.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 12.0, weight: .regular)
         addressLabel.textColor = .white
         addressLabel.adjustsFontSizeToFitWidth = true
         addressLabel.minimumScaleFactor = 0.3

@@ -13,7 +13,7 @@ class WalletTableViewCell: UITableViewCell {
 
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        label.font = UIFont.balanceMonospacedDigitSystemFont(ofSize: 13.0, weight: .regular)
         label.textColor = .black
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5

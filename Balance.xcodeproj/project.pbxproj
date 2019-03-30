@@ -34,6 +34,7 @@
 		53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */; };
 		53F0C9C02236D70A00FF0796 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9BF2236D70A00FF0796 /* SettingsTableViewCell.swift */; };
 		53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9C12236E4E600FF0796 /* WelcomeViewController.swift */; };
+		D456D13F224FE88D00954373 /* UIFont-Monospaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = D456D13E224FE88D00954373 /* UIFont-Monospaced.swift */; };
 		DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DC3455062221686D00136F8F /* Balance.xcdatamodeld */; };
 		DC452002222050F80077813C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC452001222050F80077813C /* Assets.xcassets */; };
 		DC4BA4EC2234583900A4E30D /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4BA4EB2234583900A4E30D /* TabBarController.swift */; };
@@ -78,6 +79,7 @@
 		53F0C9BF2236D70A00FF0796 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		53F0C9C12236E4E600FF0796 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		BBDB647AA27FFD2C20301337 /* Pods-Balance.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.debug.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.debug.xcconfig"; sourceTree = "<group>"; };
+		D456D13E224FE88D00954373 /* UIFont-Monospaced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont-Monospaced.swift"; sourceTree = "<group>"; };
 		DC3455072221686D00136F8F /* Balance.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Balance.xcdatamodel; sourceTree = "<group>"; };
 		DC452001222050F80077813C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC4BA4EA223437D800A4E30D /* Balance.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Balance.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -222,6 +224,7 @@
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 				531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */,
 				2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */,
+				D456D13E224FE88D00954373 /* UIFont-Monospaced.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */,
 				DC4BA4EE22345FC900A4E30D /* WalletsViewController.swift in Sources */,
 				DC66983F221CA8F000C383BD /* BalanceContentViewController.swift in Sources */,
+				D456D13F224FE88D00954373 /* UIFont-Monospaced.swift in Sources */,
 				53BABFB222394005009DCF63 /* Token.swift in Sources */,
 				53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */,
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
