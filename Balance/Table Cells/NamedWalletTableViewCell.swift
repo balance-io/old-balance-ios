@@ -6,6 +6,8 @@ class NamedWalletTableViewCell: WalletTableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
         label.text = "Ethereum Wallet"
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textColor = .black
         return label
     }()
@@ -38,7 +40,7 @@ class NamedWalletTableViewCell: WalletTableViewCell {
         addressLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
         }
     }
     

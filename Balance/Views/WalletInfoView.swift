@@ -37,6 +37,9 @@ class WalletInfoView: UIView {
         let addressLabel = UILabel()
         addressLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .regular)
         addressLabel.textColor = .white
+        addressLabel.adjustsFontSizeToFitWidth = true
+        addressLabel.minimumScaleFactor = 0.3
+        addressLabel.numberOfLines = 1
         return addressLabel
     }()
     
@@ -160,6 +163,8 @@ class WalletInfoView: UIView {
             make.top.equalTo(qrCodeImageView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().offset(-20)
+            make.leading.equalTo(qrCodeImageView)
+            make.trailing.equalTo(qrCodeImageView)
         }
     }
 
