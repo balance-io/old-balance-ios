@@ -193,17 +193,6 @@ private let fiatNumberFormatter: NumberFormatter = {
     return fiatNumberFormatter
 }()
 
-private let totalFiatNumberFormatter: NumberFormatter = {
-    let totalFiatNumberFormatter = NumberFormatter()
-    totalFiatNumberFormatter.minimumFractionDigits = 0
-    totalFiatNumberFormatter.maximumFractionDigits = 0
-    totalFiatNumberFormatter.currencyCode = "USD"
-    totalFiatNumberFormatter.currencySymbol = "$"
-    totalFiatNumberFormatter.locale = Locale(identifier: "en_US")
-    totalFiatNumberFormatter.numberStyle = .currency
-    return totalFiatNumberFormatter
-}()
-
 //https://stackoverflow.com/questions/18247934/how-to-align-uilabel-text-from-bottom
 class VerticalAlignedLabel: UILabel {
     
@@ -290,55 +279,54 @@ private class CryptoRow: UIView {
             make.leading.equalToSuperview().offset(15)
             make.centerY.equalToSuperview()
         }
-        
-        addSubview(tokenNameLabel)
-        tokenNameLabel.snp.makeConstraints { make in
-            make.height.equalTo(iconImageView).multipliedBy(0.5)
-            make.leading.equalTo(iconImageView.snp.trailing).offset(10)
-            make.top.equalTo(iconImageView).offset(-2)
-        }
-
-        tokenNameLabel.text = name
 
         var tokenRate = ""
-        if let rate = rate, let rateString = fiatNumberFormatter.string(from: rate as NSNumber) {
-            tokenRate += "\(rateString)"
-        } else {
-            tokenRate += "0"
+        if let rate = rate {
+            if rate == 0 {
+                fiatNumberFormatter.minimumFractionDigits = 0
+                fiatNumberFormatter.maximumFractionDigits = 0
+            } else {
+                fiatNumberFormatter.minimumFractionDigits = 2
+                fiatNumberFormatter.maximumFractionDigits = 2
+            }
+            if let rateString = fiatNumberFormatter.string(from: rate as NSNumber) {
+                tokenRate = "\(rateString)"
+            }
         }
-        
         rateLabel.text = tokenRate
         rateLabel.textAlignment = .right
         addSubview(rateLabel)
         rateLabel.snp.makeConstraints { make in
-            make.height.equalTo(tokenNameLabel)
+            make.height.equalTo(iconImageView).multipliedBy(0.5)
             make.trailing.equalToSuperview().offset(-15)
-            make.top.equalTo(tokenNameLabel)
+            make.top.equalTo(iconImageView).offset(-2)
+        }
+        
+        tokenNameLabel.text = name
+        addSubview(tokenNameLabel)
+        tokenNameLabel.snp.makeConstraints { make in
+            make.height.equalTo(rateLabel)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(10)
+            make.trailing.equalTo(rateLabel.snp.leading).offset(-10)
+            make.top.equalTo(rateLabel)
         }
         
         var cryptoBalance = "0"
         if let balance = balance {
-            
-            //TODO - Fix this for multi-currency
-            let format = cryptoNumberFormatter
-            
+            // TODO - Fix this for multi-currency
             if let rate = rate {
-                
                 if rate > 1000 {
-                    format.maximumFractionDigits = 4
-                    format.minimumFractionDigits = 4
+                    cryptoNumberFormatter.maximumFractionDigits = 4
+                    cryptoNumberFormatter.minimumFractionDigits = 4
                 } else if rate > 100 {
-                    format.maximumFractionDigits = 2
-                    format.minimumFractionDigits = 2
+                    cryptoNumberFormatter.maximumFractionDigits = 2
+                    cryptoNumberFormatter.minimumFractionDigits = 2
                 } else {
-                    format.maximumFractionDigits = 0
-                    format.minimumFractionDigits = 0
+                    cryptoNumberFormatter.maximumFractionDigits = 0
+                    cryptoNumberFormatter.minimumFractionDigits = 0
                 }
-                
-                cryptoBalance = format.string(from: balance as NSNumber) ?? "0"
+                cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
             }
-            
-            
         }
         if let symbol = symbol {
             cryptoBalance += " \(symbol.uppercased())"
@@ -353,9 +341,11 @@ private class CryptoRow: UIView {
         
         fiatBalanceLabel.textAlignment = .right
         fiatBalanceLabel.contentMode = .top
-        fiatBalanceLabel.text = "$0"
+        fiatBalanceLabel.text = ""
         if let fiatBalance = fiatBalance {
-            fiatBalanceLabel.text = totalFiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "$0"
+            fiatNumberFormatter.minimumFractionDigits = 0
+            fiatNumberFormatter.maximumFractionDigits = 0
+            fiatBalanceLabel.text = fiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "—"
         }
         addSubview(fiatBalanceLabel)
 
