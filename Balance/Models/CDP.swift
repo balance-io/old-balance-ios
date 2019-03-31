@@ -2,9 +2,9 @@ import Foundation
 
 // API Reference
 
-//guard let url = URL(string: "https://mkr.tools/api/v1/cdp/14165") else {return}// a CDP
+// guard let url = URL(string: "https://mkr.tools/api/v1/cdp/14165") else {return}// a CDP
 
-//[["block": 7154155,
+// [["block": 7154155,
 //    "tab": 42249.60231457469,
 //    "time": 2019-01-31T14:34:47.000Z, TODO
 //    "id": 14165,
@@ -22,7 +22,6 @@ import Foundation
 //    "act": give,
 //    "liq_price": 77.55783061819776]]
 
-
 struct CDP: Codable {
     let id: Int?
     let ratio: Double?
@@ -35,21 +34,21 @@ struct CDP: Codable {
     let per: String?
     let act: String?
     let liqPrice: Double?
-    
+
     private enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case ratio = "ratio"
-        case lad = "lad"
-        case art = "art"
-        case pip = "pip"
-        case ink = "ink"
-        case pep = "pep"
-        case ire = "ire"
-        case per = "per"
-        case act = "act"
+        case id
+        case ratio
+        case lad
+        case art
+        case pip
+        case ink
+        case pep
+        case ire
+        case per
+        case act
         case liqPrice = "liq_price"
     }
-    
+
     static func sortById(left: CDP, right: CDP) -> Bool {
         if let leftId = left.id, let rightId = right.id {
             return leftId < rightId
@@ -60,7 +59,7 @@ struct CDP: Codable {
 
 // Contract Reference
 
-//https://github.com/bokkypoobah/MakerDAOSaiContractAudit/blob/master/audit/checkComponents/saiTub.sol#L634
+// https://github.com/bokkypoobah/MakerDAOSaiContractAudit/blob/master/audit/checkComponents/saiTub.sol#L634
 
 // contract SaiTub is DSThing, SaiTubEvents {
 //     DSToken  public  sai;  // Stablecoin

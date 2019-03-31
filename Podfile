@@ -11,6 +11,7 @@ target 'Balance' do
   pod 'CryptoSwift'
   pod 'Intercom'
   pod "PagingKit"
+  pod 'SwiftFormat/CLI'
 
   # For PagingKit
   inherit! :search_paths

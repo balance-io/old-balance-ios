@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class NamedWalletTableViewCell: WalletTableViewCell {
     let nameLabel: UILabel = {
@@ -11,15 +11,15 @@ class NamedWalletTableViewCell: WalletTableViewCell {
         label.textColor = .black
         return label
     }()
-    
+
     let walletTypeImageView: UIImageView = {
         let walletTypeImageView = UIImageView()
         walletTypeImageView.clipsToBounds = true
         return walletTypeImageView
     }()
-    
+
     override func renderTableViewCellContentFor(containerView: UIView) {
-        if (wallet != nil) {
+        if wallet != nil {
             nameLabel.text = wallet!.name
         }
 
@@ -28,14 +28,14 @@ class NamedWalletTableViewCell: WalletTableViewCell {
             make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview().offset(15)
         }
-        
+
         containerView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(15)
             make.leading.equalToSuperview().offset(45)
             make.trailing.equalToSuperview().offset(-15)
         }
-        
+
         containerView.addSubview(addressLabel)
         addressLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(10)
@@ -43,7 +43,7 @@ class NamedWalletTableViewCell: WalletTableViewCell {
             make.trailing.equalToSuperview().offset(-15)
         }
     }
-    
+
     override func walletWasSet(walletItem: EthereumWallet) {
         addressLabel.text = walletItem.address
         if walletItem.name == "" {

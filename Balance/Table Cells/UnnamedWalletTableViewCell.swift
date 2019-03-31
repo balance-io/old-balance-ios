@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class UnnamedWalletTableViewCell: WalletTableViewCell {
     override func renderTableViewCellContentFor(containerView: UIView) {

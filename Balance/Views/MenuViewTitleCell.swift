@@ -4,7 +4,6 @@ import PagingKit
 //       of changing the font size when not in focus. I would have LOVED to subclass instead of
 //       copy/pasting the whole class, but the framework author didn't mark it "open" (yay Swift 3+...)
 public class MenuViewTitleCell: PagingMenuViewCell {
-    
     ///  The text color when selected
     public var focusColor = UIColor(hexString: "#2A2A2A")! {
         didSet {
@@ -13,7 +12,7 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             }
         }
     }
-    
+
     /// The normal text color.
     public var normalColor = UIColor(white: 0, alpha: 0.6) {
         didSet {
@@ -22,7 +21,7 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             }
         }
     }
-    
+
     public var focusFont = UIFont.systemFont(ofSize: 17) {
         didSet {
             if isSelected {
@@ -30,7 +29,7 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             }
         }
     }
-    
+
     public var normalFont = UIFont.systemFont(ofSize: 15) {
         didSet {
             if !isSelected {
@@ -38,24 +37,24 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             }
         }
     }
-    
+
     public let titleLabel = { () -> UILabel in
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 17)
         return label
     }()
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     func setup() {
         backgroundColor = .white
         addSubview(titleLabel)
@@ -64,11 +63,11 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             anchorLabel(from: titleLabel, to: self, attribute: .top),
             anchorLabel(from: titleLabel, to: self, attribute: .leading),
             anchorLabel(from: self, to: titleLabel, attribute: .trailing),
-            anchorLabel(from: self, to: titleLabel, attribute: .bottom)
-            ])
+            anchorLabel(from: self, to: titleLabel, attribute: .bottom),
+        ])
     }
-    
-    override public var isSelected: Bool {
+
+    public override var isSelected: Bool {
         didSet {
             if isSelected {
                 titleLabel.textColor = focusColor
@@ -79,8 +78,7 @@ public class MenuViewTitleCell: PagingMenuViewCell {
             }
         }
     }
-    
-    
+
     /// syntax sugar of NSLayoutConstraint for titleLabel (Because this library supports iOS8, it cannnot use NSLayoutAnchor.)
     private func anchorLabel(from fromItem: Any, to toItem: Any, attribute: NSLayoutConstraint.Attribute) -> NSLayoutConstraint {
         return NSLayoutConstraint(
