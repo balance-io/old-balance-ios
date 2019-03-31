@@ -31,7 +31,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         walletsTableView.backgroundColor = UIColor(hexString: "#fbfbfb")
         walletsTableView.separatorStyle = .none
-        walletsTableView.rowHeight = 119
+        walletsTableView.rowHeight = 100
         walletsTableView.dataSource = self
         walletsTableView.delegate = self
         

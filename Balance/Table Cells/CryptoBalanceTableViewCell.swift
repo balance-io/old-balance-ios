@@ -23,7 +23,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 11
+        view.layer.cornerRadius = 5
         view.clipsToBounds = true
         view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
         view.layer.borderWidth = 1
@@ -267,10 +267,11 @@ private class CryptoRow: UIView {
     init(balance: Double?, fiatBalance: Double?, rate: Double?, symbol: String?, currency: String?, name: String?) {
         super.init(frame: CGRect.zero)
         
+        //TODO - Add a random color + token symbol instead of just the ERC20 token image
         if let symbol = symbol, symbol.count > 0 {
-            iconImageView.image = UIImage(named: symbol.lowercased()) ?? UIImage(named: "erc20SquircleGreen")
+            iconImageView.image = UIImage(named: symbol.lowercased()) ?? UIImage(named: "erc20")
         } else {
-            iconImageView.image = UIImage(named: "erc20SquircleGreen")
+            iconImageView.image = UIImage(named: "erc20")
         }
         addSubview(iconImageView)
         iconImageView.snp.makeConstraints { make in

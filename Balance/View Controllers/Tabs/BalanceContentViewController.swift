@@ -158,7 +158,8 @@ class BalanceContentViewController: UITableViewController {
         } else if indexPath.section == Section.erc20.rawValue {
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isExpanded)
         } else {
-            return 180
+            // CDP cell height
+            return 70
         }
     }
     
