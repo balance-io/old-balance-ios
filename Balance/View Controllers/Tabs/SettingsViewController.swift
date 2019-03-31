@@ -201,7 +201,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         mediumButton.snp.makeConstraints { make in
             make.top.equalTo(joinSubtitleLabel.snp.bottom).offset(15)
             make.centerX.equalToSuperview().multipliedBy(0.5)
-            make.width.equalTo(167)
+            make.width.equalToSuperview().multipliedBy(0.45)
             make.height.equalTo(47)
         }
         mediumButton.imageView?.snp.makeConstraints { make in
