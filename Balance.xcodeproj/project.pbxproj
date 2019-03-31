@@ -10,7 +10,6 @@
 		2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */; };
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */; };
-		531AFF652251379000916843 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 531AFF642251379000916843 /* apikeys.plist */; };
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
@@ -54,7 +53,6 @@
 		2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UI.swift"; sourceTree = "<group>"; };
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
 		531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
-		531AFF642251379000916843 /* apikeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apikeys.plist; sourceTree = "<group>"; };
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
@@ -247,7 +245,6 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
-				531AFF642251379000916843 /* apikeys.plist */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
 				DC5B07672225B07800107A8B /* Extensions */,
 				53F0C9B02235796000FF0796 /* API */,
@@ -329,7 +326,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCBF852822380B010002F93F /* Icons.xcassets in Resources */,
-				531AFF652251379000916843 /* apikeys.plist in Resources */,
 				DC4EF031223A3B9600B8EFA4 /* Launch Screen.storyboard in Resources */,
 				DC452002222050F80077813C /* Assets.xcassets in Resources */,
 			);
