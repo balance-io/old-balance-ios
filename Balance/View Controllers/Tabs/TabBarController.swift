@@ -32,6 +32,8 @@ class TabBarController: UITabBarController {
                                                                selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
 
         viewControllers = [walletsNavigationController, balanceNavigationController, settingsNavigationController]
+
+        // Show the Balance tab first
         selectedIndex = 1
 
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)

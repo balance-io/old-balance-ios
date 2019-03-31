@@ -7,30 +7,26 @@ class WalletTableViewCell: UITableViewCell {
             guard let walletItem = wallet else {
                 return
             }
-
             walletWasSet(walletItem: walletItem)
         }
     }
 
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .black
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        label.textColor = UIColor(hexString: "#828384")
         label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
 
     let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(hexString: "#FFFFFF")
+        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
         return view
-    }()
-
-    private let backgroundImageView: UIImageView = {
-        let backgroundImageView = UIImageView()
-        backgroundImageView.image = UIImage(named: "walletCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
-        return backgroundImageView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,18 +37,10 @@ class WalletTableViewCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             // NOTE: Setting priority to less than 1000 on the top and bottom constraints prevents a constraint error when removing the cell
-            make.top.equalToSuperview().offset(10).priority(999)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
-            make.bottom.equalToSuperview().offset(-10).priority(999)
-        }
-
-        containerView.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(5).priority(999)
+            make.leading.equalToSuperview().offset(0)
+            make.trailing.equalToSuperview().offset(0)
+            make.bottom.equalToSuperview().offset(-5).priority(999)
         }
 
         renderTableViewCellContentFor(containerView: containerView)
@@ -74,7 +62,7 @@ class WalletTableViewCell: UITableViewCell {
         fatalError("unimplemented")
     }
 
-    internal func walletWasSet(walletItem: EthereumWallet) {
-        addressLabel.text = walletItem.address
+    internal func walletWasSet(walletItem _: EthereumWallet) {
+        // TODO: Wtf is all this?
     }
 }

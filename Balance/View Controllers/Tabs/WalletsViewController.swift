@@ -9,14 +9,15 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
 
     private let addButton: UIButton = {
         let addButton = UIButton()
-        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        addButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 15)
-        addButton.backgroundColor = UIColor(hexString: "#d1d3d5")
-        addButton.layer.cornerRadius = 5
-        addButton.setTitle("Add", for: UIControl.State.normal)
-        addButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        addButton.setImage(UIImage(named: "plusIcon"), for: .normal)
+        addButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+//        addButton.backgroundColor = UIColor(hexString: "#282C34")
+//        addButton.layer.cornerRadius = 5
+//        addButton.setTitle("Add", for: UIControl.State.normal)
+//        addButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
+        addButton.setImage(UIImage(named: "addButtonImage"), for: .normal)
+//        addButton.image(for: .)
         return addButton
     }()
 
@@ -30,7 +31,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
 
         walletsTableView.backgroundColor = UIColor(hexString: "#fbfbfb")
         walletsTableView.separatorStyle = .none
-        walletsTableView.rowHeight = 119
+        walletsTableView.rowHeight = 100
         walletsTableView.dataSource = self
         walletsTableView.delegate = self
 

@@ -53,16 +53,16 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     private let joinTitleLabel: UILabel = {
         let joinTitleLabel = UILabel()
-        joinTitleLabel.font = UIFont.systemFont(ofSize: 24)
-        joinTitleLabel.textColor = UIColor(hexString: "#191817")
+        joinTitleLabel.font = UIFont.systemFont(ofSize: 20)
+        joinTitleLabel.textColor = UIColor(hexString: "#131415")
         joinTitleLabel.text = "Join the community"
         return joinTitleLabel
     }()
 
     private let joinSubtitleLabel: UILabel = {
         let joinSubtitleLabel = UILabel()
-        joinSubtitleLabel.font = UIFont.systemFont(ofSize: 17)
-        joinSubtitleLabel.textColor = UIColor(hexString: "#191817")
+        joinSubtitleLabel.font = UIFont.systemFont(ofSize: 14)
+        joinSubtitleLabel.textColor = UIColor(hexString: "#828384")
         joinSubtitleLabel.numberOfLines = 2
         joinSubtitleLabel.lineBreakMode = .byWordWrapping
         joinSubtitleLabel.textAlignment = .center
@@ -147,13 +147,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         contentView.addSubview(balanceNameImageView)
         balanceNameImageView.snp.makeConstraints { make in
-            make.top.equalTo(balanceLogoImageView.snp.bottom).offset(20)
+            make.top.equalTo(balanceLogoImageView.snp.bottom).offset(25)
             make.centerX.equalTo(balanceLogoImageView)
         }
 
         contentView.addSubview(wavesImageView)
         wavesImageView.snp.makeConstraints { make in
-            make.top.equalTo(balanceNameImageView.snp.bottom).offset(15)
+            make.top.equalTo(balanceNameImageView.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
         }
 
@@ -184,7 +184,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
         contentView.addSubview(joinTitleLabel)
         joinTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(wavesImageView.snp.bottom).offset(5)
+            make.top.equalTo(wavesImageView.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
         }
 
@@ -193,16 +193,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.top.equalTo(joinTitleLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-            make.height.equalTo(60)
         }
 
         mediumButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
         contentView.addSubview(mediumButton)
         mediumButton.snp.makeConstraints { make in
-            make.top.equalTo(joinSubtitleLabel.snp.bottom).offset(15)
+            make.top.equalTo(joinSubtitleLabel.snp.bottom).offset(25)
             make.centerX.equalToSuperview().multipliedBy(0.5)
             make.width.equalToSuperview().multipliedBy(0.45)
-            make.height.equalTo(47)
+            make.height.equalTo(50)
         }
         mediumButton.imageView?.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(19)
@@ -254,13 +253,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.rowHeight = 44
         tableView.isScrollEnabled = false
         tableView.register(SettingsTableViewCell.self, forCellReuseIdentifier: "settingsCell")
-        contentView.addSubview(tableView)
-        tableView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(tableView.rowHeight * 3) // 4)
-            make.bottom.equalTo(contentView.snp.bottom)
-        }
+//        contentView.addSubview(tableView)
+//        tableView.snp.makeConstraints { make in
+//            make.leading.equalToSuperview()
+//            make.trailing.equalToSuperview()
+//            make.height.equalTo(tableView.rowHeight * 3)//4)
+//            make.bottom.equalTo(contentView.snp.bottom)
+//        }
 
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -298,14 +297,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.sideLabel.text = ""
         let row = indexPath.row + 1
         switch row {
-        //        case 0:
-        //            cell.imageView?.image = UIImage(named: "notificationsIcon")
-        //            cell.textLabel?.text = "Notifications"
+        case 0:
+            cell.imageView?.image = UIImage(named: "notificationsIcon")
+            cell.textLabel?.text = "Notifications"
         case 1:
             cell.imageView?.image = UIImage(named: "proIcon")
             cell.textLabel?.text = "Balance Pro"
         case 2:
-//            cell.isEnabled = true
             cell.imageView?.image = UIImage(named: "currencyIcon")
             cell.textLabel?.text = "Currency"
             cell.sideLabel.text = "USD"

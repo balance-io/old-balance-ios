@@ -21,7 +21,8 @@ class WalletInfoView: UIView {
 
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = UIFont.systemFont(ofSize: 18)
+        nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        nameLabel.text = "Ethereum Wallet"
         nameLabel.textColor = .white
         return nameLabel
     }()
@@ -135,12 +136,18 @@ class WalletInfoView: UIView {
         topContainer.addSubview(closeButton)
         closeButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         closeButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.width.height.equalTo(20)
             make.top.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
 
-        nameLabel.text = wallet.name
+        // TODO: Fix this cheeky hack
+        if (wallet.name?.isEmpty)! {
+            nameLabel.text = "Ethereum Wallet"
+        } else {
+            nameLabel.text = wallet.name
+        }
+
         topContainer.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(20)
