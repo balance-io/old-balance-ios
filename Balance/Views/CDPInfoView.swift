@@ -5,7 +5,7 @@ import UIKit
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
-    numberFormatter.maximumFractionDigits = 0
+    numberFormatter.maximumFractionDigits = 2   
     return numberFormatter
 }()
 
@@ -24,7 +24,7 @@ class CDPInfoView: UIView {
 
     private let identifierLabel: UILabel = {
         let identifierLabel = UILabel()
-        identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         identifierLabel.textColor = .white
         identifierLabel.adjustsFontSizeToFitWidth = true
         identifierLabel.numberOfLines = 1
@@ -35,7 +35,7 @@ class CDPInfoView: UIView {
     private let collateralTitleLabel: UILabel = {
         let collateralTitleLabel = UILabel()
         collateralTitleLabel.text = "COLLATERAL"
-        collateralTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        collateralTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         collateralTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return collateralTitleLabel
     }()
@@ -50,7 +50,7 @@ class CDPInfoView: UIView {
     private let etherTitleLabel: UILabel = {
         let etherTitleLabel = UILabel()
         etherTitleLabel.text = "Ether"
-        etherTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        etherTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         etherTitleLabel.textColor = .white
         return etherTitleLabel
     }()
@@ -64,7 +64,7 @@ class CDPInfoView: UIView {
 
     private let debtTitleLabel: UILabel = {
         let debtTitleLabel = UILabel()
-        debtTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        debtTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         debtTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         debtTitleLabel.text = "DEBT"
         return debtTitleLabel
@@ -80,7 +80,7 @@ class CDPInfoView: UIView {
     private let daiTitleLabel: UILabel = {
         let daiTitleLabel = UILabel()
         daiTitleLabel.text = "Dai"
-        daiTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        daiTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         daiTitleLabel.textColor = .white
         return daiTitleLabel
     }()
@@ -95,7 +95,7 @@ class CDPInfoView: UIView {
     private let positionTitleLabel: UILabel = {
         let positionTitleLabel = UILabel()
         positionTitleLabel.text = "POSITION"
-        positionTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        positionTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         positionTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return positionTitleLabel
     }()
@@ -103,7 +103,7 @@ class CDPInfoView: UIView {
     private let riskTitleLabel: UILabel = {
         let riskTitleLabel = UILabel()
         riskTitleLabel.text = "RISK"
-        riskTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        riskTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         riskTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return riskTitleLabel
     }()
@@ -112,7 +112,7 @@ class CDPInfoView: UIView {
         let priceTitleLabel = UILabel()
         priceTitleLabel.text = "PRICE"
         priceTitleLabel.textAlignment = .center
-        priceTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        priceTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         priceTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return priceTitleLabel
     }()
@@ -121,14 +121,14 @@ class CDPInfoView: UIView {
         let ratioTitleLabel = UILabel()
         ratioTitleLabel.text = "RATIO"
         ratioTitleLabel.textAlignment = .right
-        ratioTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        ratioTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         ratioTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return ratioTitleLabel
     }()
 
     private let riskLabel: UILabel = {
         let riskLabel = PaddedLabel()
-        riskLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
+        riskLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         riskLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
         riskLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         riskLabel.layer.cornerRadius = 5
@@ -138,7 +138,7 @@ class CDPInfoView: UIView {
 
     private let liqPriceLabel: UILabel = {
         let liqPriceLabel = PaddedLabel()
-        liqPriceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
+        liqPriceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         liqPriceLabel.padding = UIEdgeInsets(top: 2, left: 4, bottom: 2, right: 4)
         liqPriceLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         liqPriceLabel.layer.cornerRadius = 5
@@ -148,7 +148,7 @@ class CDPInfoView: UIView {
 
     private let ratioLabel: UILabel = {
         let ratioLabel = PaddedLabel()
-        ratioLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
+        ratioLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         ratioLabel.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
         ratioLabel.textColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         ratioLabel.layer.cornerRadius = 5

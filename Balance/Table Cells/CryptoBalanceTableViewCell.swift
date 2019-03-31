@@ -56,41 +56,26 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
         }
 
-//        containerView.addSubview(titleIconView)
-//        titleIconView.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(14)
-//            make.leading.equalToSuperview().offset(14)
-//        }
-
+        // TODO: remove title altogether
         containerView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(10)
-//            make.centerY.equalTo(titleIconView)
-        }
 
         switch cryptoType {
         case .ethereum:
-//            titleIconView.image = UIImage(named: "ethSquircleDark")
-            titleLabel.text = "Ethereum"
 
             let cryptoRow = CryptoRow(wallet: wallet)
             containerView.addSubview(cryptoRow)
             cryptoRow.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(15)
+                make.centerY.equalToSuperview()
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
-                make.height.equalTo(40)
             }
         case .erc20:
-//            titleIconView.image = UIImage(named: "erc20SquircleGreen")
-            titleLabel.text = "ERC-20 Tokens"
 
             if let tokens = wallet.tokens {
                 let sortedTokens = tokens.sorted { left, right in
@@ -128,7 +113,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     let container = isHighValueToken ? containerView : lowValueTokensContainer
                     container.addSubview(cryptoRow)
                     cryptoRow.snp.makeConstraints { make in
-                        let topOffset = topView == titleLabel ? 15 : 5
+                        let topOffset = topView == titleLabel ? 10 : 5
                         make.top.equalTo(topView.snp.bottom).offset(topOffset)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
@@ -157,11 +142,11 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         var height: CGFloat = 0
         switch cryptoType {
         case .ethereum:
-            height = 30 + 14 + 25 + 10 + 50
+            height = 70
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
             let tokensCount = CGFloat(tokens?.count ?? 0)
-            height = 30 + 14 + 25 + 10 + (tokensCount * 45) + 5
+            height = 25 + (tokensCount * 45)
         }
         return height
     }
@@ -298,7 +283,7 @@ private class CryptoRow: UIView {
         addSubview(rateLabel)
         rateLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalToSuperview().offset(-15)
             make.top.equalTo(iconImageView).offset(-2)
         }
 
@@ -351,7 +336,7 @@ private class CryptoRow: UIView {
 
         fiatBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(cryptoBalanceLabel)
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalToSuperview().offset(-15)
             make.bottom.equalTo(iconImageView).offset(2)
         }
     }
