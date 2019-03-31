@@ -13,10 +13,10 @@ class WalletTableViewCell: UITableViewCell {
 
     let addressLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .black
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        label.textColor = UIColor(hexString: "#828384")
         label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
 
@@ -37,10 +37,10 @@ class WalletTableViewCell: UITableViewCell {
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
             // NOTE: Setting priority to less than 1000 on the top and bottom constraints prevents a constraint error when removing the cell
-            make.top.equalToSuperview().offset(10).priority(999)
+            make.top.equalToSuperview().offset(5).priority(999)
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
-            make.bottom.equalToSuperview().offset(-10).priority(999)
+            make.bottom.equalToSuperview().offset(-5).priority(999)
         }
 
         self.renderTableViewCellContentFor(containerView: containerView)
@@ -63,6 +63,6 @@ class WalletTableViewCell: UITableViewCell {
     }
 
     internal func walletWasSet(walletItem: EthereumWallet) {
-        addressLabel.text = walletItem.address
+        //TODO Wtf is all this?
     }
 }

@@ -193,7 +193,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.top.equalTo(joinTitleLabel.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(24)
             make.trailing.equalToSuperview().offset(-24)
-//            make.height.equalTo(60)
         }
 
         mediumButton.addTarget(self, action: #selector(socialButtonAction(_:)), for: .touchUpInside)
@@ -298,14 +297,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.sideLabel.text = ""
         let row = indexPath.row + 1
         switch row {
-//        case 0:
-//            cell.imageView?.image = UIImage(named: "notificationsIcon")
-//            cell.textLabel?.text = "Notifications"
+        case 0:
+            cell.imageView?.image = UIImage(named: "notificationsIcon")
+            cell.textLabel?.text = "Notifications"
         case 1:
             cell.imageView?.image = UIImage(named: "proIcon")
             cell.textLabel?.text = "Balance Pro"
         case 2:
-//            cell.isEnabled = true
             cell.imageView?.image = UIImage(named: "currencyIcon")
             cell.textLabel?.text = "Currency"
             cell.sideLabel.text = "USD"

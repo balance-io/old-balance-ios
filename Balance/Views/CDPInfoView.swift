@@ -229,7 +229,7 @@ class CDPInfoView: UIView {
         addSubview(closeButton)
         closeButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
         closeButton.snp.makeConstraints { make in
-            make.width.height.equalTo(24)
+            make.width.height.equalTo(20)
             make.top.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-10)
         }
