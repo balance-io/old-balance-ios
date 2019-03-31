@@ -142,6 +142,74 @@ class BalanceContentViewController: UITableViewController {
         }
     }
 
+    public override func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let sectionName: String
+//        switch section {
+//        case 0:
+//            sectionName = NSLocalizedString("Maker Loans", comment: "")
+//        case 1:
+//            sectionName = NSLocalizedString("Ethereum", comment: "")
+//        case 2:
+//            sectionName = NSLocalizedString("ERC20s", comment: "")
+//        default:
+//            sectionName = ""
+//        }
+//        return sectionName
+
+        let view: UIView
+        if let _view: UIView = tableView.headerView(forSection: section) {
+            view = _view
+        } else {
+//            let dxOffset: CGFloat = 16.0
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
+        }
+
+        // create our label
+        let label: UILabel = UILabel(frame: view.frame)
+        label.textColor = .black
+
+        let sectionName: String
+        switch section {
+        case 0:
+            sectionName = NSLocalizedString("Maker Loans", comment: "")
+        case 1:
+            sectionName = NSLocalizedString("Ethereum", comment: "")
+        case 2:
+            sectionName = NSLocalizedString("ERC20s", comment: "")
+        default:
+            sectionName = ""
+        }
+
+        label.text = sectionName
+//        label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize() + 4.0)
+        label.font = UIFont.systemFont(ofSize: 18)
+
+        // create the separator frame
+//        var separatorFrame: CGRect = view.frame
+//        separatorFrame.size = CGSizeMake(separatorFrame.size.width, 1.0)
+//        separatorFrame.offset(dx: 0.0, dy: view.frame.size.height - 1.0)
+
+        // create the separator
+//        let imageView: UIImageView = UIImageView(frame: separatorFrame)
+//        imageView.backgroundColor = UIColor.appEmptyGolfTrainingTextColor()
+//        imageView.alpha = 0.4
+
+        // add subviews
+        view.addSubview(label)
+//        view.addSubview(imageView)
+
+        // setup the view
+        view.backgroundColor = .white
+
+        label.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+
+        return view
+    }
+
     override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let ethereumWallet = ethereumWallet else {
             return 0

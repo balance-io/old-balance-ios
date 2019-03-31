@@ -334,20 +334,20 @@ class CDPInfoView: UIView {
             make.centerY.equalTo(riskTitleLabel)
         }
 
-        var riskColor = UIColor.white
+        var riskColor = UIColor.gray
         var riskRange = "Unknown"
         if let ratio = cdp.ratio {
             if ratio < 150.00 {
                 riskColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.5)
                 riskRange = "Liquidated"
             } else if ratio < 200.00 {
-                riskColor = .red
+                riskColor = UIColor(hexString: "#EA0201")!
                 riskRange = "Higher"
             } else if ratio < 250.00 {
-                riskColor = .orange
+                riskColor = UIColor(hexString: "#F6851B")!
                 riskRange = "Medium"
             } else if ratio > 300.00 {
-                riskColor = .green
+                riskColor = UIColor(hexString: "#1ABC9C")!
                 riskRange = "Lower"
             }
         }

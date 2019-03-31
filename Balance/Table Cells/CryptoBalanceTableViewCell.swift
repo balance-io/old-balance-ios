@@ -71,7 +71,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(10)
 //            make.centerY.equalTo(titleIconView)
         }
 
@@ -276,7 +276,7 @@ private class CryptoRow: UIView {
         iconImageView.snp.makeConstraints { make in
             make.width.equalTo(30)
             make.height.equalTo(30)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(10)
             make.centerY.equalToSuperview()
         }
 
@@ -298,7 +298,7 @@ private class CryptoRow: UIView {
         addSubview(rateLabel)
         rateLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-10)
             make.top.equalTo(iconImageView).offset(-2)
         }
 
@@ -351,7 +351,7 @@ private class CryptoRow: UIView {
 
         fiatBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(cryptoBalanceLabel)
-            make.trailing.equalToSuperview().offset(-15)
+            make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalTo(iconImageView).offset(2)
         }
     }
