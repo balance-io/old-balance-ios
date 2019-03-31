@@ -64,27 +64,23 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     
     private func addPagingController() {
         menuBackgroundView.isHidden = false
-        
-        // Setup menu
-        menuViewController.delegate = self
-        menuViewController.dataSource = self
-        menuViewController.register(type: MenuViewTitleCell.self, forCellWithReuseIdentifier: "MenuViewTitleCell")
-        menuViewController.registerFocusView(view: MenuUnderlineView())
-        addChild(menuViewController)
-        view.addSubview(menuViewController.view)
-        menuViewController.didMove(toParent: self)
-        menuViewController.view.snp.makeConstraints { make in
+        var nextTopPoint = 0
+            // Setup menu
             if shouldShowMenu() {
+            menuViewController.delegate = self
+            menuViewController.dataSource = self
+            menuViewController.register(type: MenuViewTitleCell.self, forCellWithReuseIdentifier: "MenuViewTitleCell")
+            menuViewController.registerFocusView(view: MenuUnderlineView())
+            addChild(menuViewController)
+            view.addSubview(menuViewController.view)
+            menuViewController.didMove(toParent: self)
+            menuViewController.view.snp.makeConstraints { make in
                 make.height.equalTo(44)
                 make.top.equalTo(view.snp.topMargin)
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
-            } else {
-                make.height.equalTo(0)
-                make.top.equalTo(view.snp.topMargin)
-                make.leading.equalToSuperview()
-                make.trailing.equalToSuperview()
             }
+                nextTopPoint = 44
         }
         
         // Setup content
@@ -94,7 +90,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         view.addSubview(contentViewController.view)
         contentViewController.didMove(toParent: self)
         contentViewController.view.snp.makeConstraints { make in
-            make.top.equalTo(menuViewController.view.snp.bottom)
+            make.top.equalTo(nextTopPoint)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
