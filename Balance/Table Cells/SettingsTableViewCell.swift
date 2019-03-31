@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
     var isEnabled: Bool {
@@ -8,31 +8,31 @@ class SettingsTableViewCell: UITableViewCell {
             contentView.alpha = isEnabled ? 1.0 : 0.3
         }
     }
-    
+
     let sideLabel: UILabel = {
         let sideLabel = UILabel()
         sideLabel.font = UIFont.systemFont(ofSize: 17)
         sideLabel.textColor = UIColor(hexString: "#8E8E93")
         return sideLabel
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         isEnabled = true
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+
         selectionStyle = .none
         accessoryType = .disclosureIndicator
         textLabel?.textColor = .black
         textLabel?.font = UIFont.systemFont(ofSize: 17.4)
-        
+
         addSubview(sideLabel)
         sideLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(-40)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("unimplemented")
     }
 }

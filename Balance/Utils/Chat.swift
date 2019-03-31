@@ -11,9 +11,9 @@ import Intercom
 
 struct Chat {
     static let showButton: Bool = {
-        return apiKey != nil
+        apiKey != nil
     }()
-    
+
     private static let apiKey: String? = {
         // Try to read from a plist file
         // Updates to this file are not checked into git, so for release, make sure you have the real key in your local file
@@ -22,11 +22,11 @@ struct Chat {
                 return apiKey
             }
         }
-        
+
         // If no API key is set (plist is missing), return nil and we won't initialize Intercom
         return nil
     }()
-    
+
     private static let appId: String? = {
         // Try to read from a plist file
         // Updates to this file are not checked into git, so for release, make sure you have the real key in your local file
@@ -35,22 +35,22 @@ struct Chat {
                 return appId
             }
         }
-        
+
         // If no app ID is set (plist is missing), return nil and we won't initialize Intercom
         return nil
     }()
-    
+
     static func setup() {
         guard let apiKey = apiKey, let appId = appId else {
             print("Intercom api key or app id are missing, you probably don't have the apikeys.plist file. Skipping Intercom setup.")
             return
         }
-        
+
         Intercom.setApiKey(apiKey, forAppId: appId)
         Intercom.setLauncherVisible(false)
         Intercom.registerUnidentifiedUser()
     }
-    
+
     static func show() {
         Intercom.presentMessenger()
     }

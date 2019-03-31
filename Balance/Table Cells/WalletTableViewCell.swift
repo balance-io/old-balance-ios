@@ -1,5 +1,5 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class WalletTableViewCell: UITableViewCell {
     var wallet: EthereumWallet? {
@@ -43,26 +43,26 @@ class WalletTableViewCell: UITableViewCell {
             make.bottom.equalToSuperview().offset(-5).priority(999)
         }
 
-        self.renderTableViewCellContentFor(containerView: containerView)
+        renderTableViewCellContentFor(containerView: containerView)
 
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
     }
 
-    internal func renderTableViewCellContentFor(containerView: UIView) {
+    internal func renderTableViewCellContentFor(containerView _: UIView) {
         fatalError("unimplemented")
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.selectedBackgroundView?.backgroundColor = selected ? .red : nil
+        selectedBackgroundView?.backgroundColor = selected ? .red : nil
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("unimplemented")
     }
 
-    internal func walletWasSet(walletItem: EthereumWallet) {
-        //TODO Wtf is all this?
+    internal func walletWasSet(walletItem _: EthereumWallet) {
+        // TODO: Wtf is all this?
     }
 }

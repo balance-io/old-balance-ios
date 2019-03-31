@@ -180,8 +180,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         super.viewDidLoad()
 
         let smallFormat = view.bounds.height < 700
-
         view.backgroundColor = .black
+        dismissKeyBoardOnScreenTouch()
 
         //
         // Top Container
@@ -303,7 +303,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         nameTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
-            make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
+            make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview()
         }
 

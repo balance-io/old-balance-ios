@@ -38,13 +38,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         benImageView.image = UIImage(named: "ben")
         return benImageView
     }()
-    
+
     private let wolffanImageView: UIImageView = {
         let wolffanImageView = UIImageView()
         wolffanImageView.image = UIImage(named: "wolffan")
         return wolffanImageView
     }()
-    
+
     private let jamierumbelowImageView: UIImageView = {
         let jamierumbelowImageView = UIImageView()
         jamierumbelowImageView.image = UIImage(named: "jamierumbelow")
@@ -124,7 +124,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.edges.equalToSuperview()
         }
 
-        if (UIScreen.main.bounds.height < 800) {
+        if UIScreen.main.bounds.height < 800 {
             scrollView.alwaysBounceVertical = true
         }
 
@@ -156,26 +156,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.top.equalTo(balanceNameImageView.snp.bottom).offset(25)
             make.centerX.equalToSuperview()
         }
-        
-        //TODO Show people's commitments. Load the data from GitHub and let the faces float by.
+
+        // TODO: Show people's commitments. Load the data from GitHub and let the faces float by.
         contentView.addSubview(richardImageView)
         richardImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(-40)
             make.centerY.equalTo(wavesImageView).offset(10)
         }
-        
+
         contentView.addSubview(benImageView)
         benImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(40)
             make.centerY.equalTo(wavesImageView).offset(-10)
         }
-        
+
         contentView.addSubview(wolffanImageView)
         wolffanImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(110)
             make.centerY.equalTo(wavesImageView).offset(-15)
         }
-        
+
         contentView.addSubview(jamierumbelowImageView)
         jamierumbelowImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(-110)
@@ -200,7 +200,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         mediumButton.snp.makeConstraints { make in
             make.top.equalTo(joinSubtitleLabel.snp.bottom).offset(25)
             make.centerX.equalToSuperview().multipliedBy(0.5)
-            make.width.equalTo(150)
+            make.width.equalToSuperview().multipliedBy(0.45)
             make.height.equalTo(50)
         }
         mediumButton.imageView?.snp.makeConstraints { make in
@@ -287,7 +287,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     // MARK: - Table View -
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return 3
     }
 

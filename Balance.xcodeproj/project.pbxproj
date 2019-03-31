@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */; };
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */; };
+		531AFF672251409A00916843 /* CDPBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AFF662251409A00916843 /* CDPBalanceTableViewCell.swift */; };
+		531AFF692251418200916843 /* apikeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 531AFF682251418200916843 /* apikeys.plist */; };
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
 		53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AAA22381BEB001C1883 /* EthplorerAPI.swift */; };
 		53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */; };
@@ -41,7 +44,6 @@
 		DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983C221CA8F000C383BD /* AppDelegate.swift */; };
 		DC66983F221CA8F000C383BD /* BalanceContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66983E221CA8F000C383BD /* BalanceContentViewController.swift */; };
 		DC66984F221D7E0200C383BD /* CDP.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC66984E221D7E0200C383BD /* CDP.swift */; };
-		DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC669854221ED25E00C383BD /* CDPBalanceTableViewCell.swift */; };
 		DCBF852822380B010002F93F /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBF852722380B010002F93F /* Icons.xcassets */; };
 		F1D844E42242A512007245E9 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E32242A512007245E9 /* WalletTableViewCell.swift */; };
 		F1D844EA2243A881007245E9 /* EIP55.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E92243A881007245E9 /* EIP55.swift */; };
@@ -49,8 +51,11 @@
 
 /* Begin PBXFileReference section */
 		1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UI.swift"; sourceTree = "<group>"; };
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
 		531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
+		531AFF662251409A00916843 /* CDPBalanceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDPBalanceTableViewCell.swift; sourceTree = "<group>"; };
+		531AFF682251418200916843 /* apikeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apikeys.plist; sourceTree = "<group>"; };
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		53721AAA22381BEB001C1883 /* EthplorerAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthplorerAPI.swift; sourceTree = "<group>"; };
 		53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinMarketCapAPI.swift; sourceTree = "<group>"; };
@@ -87,7 +92,6 @@
 		DC66983E221CA8F000C383BD /* BalanceContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceContentViewController.swift; sourceTree = "<group>"; };
 		DC669848221CA8F100C383BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC66984E221D7E0200C383BD /* CDP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDP.swift; sourceTree = "<group>"; };
-		DC669854221ED25E00C383BD /* CDPBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPBalanceTableViewCell.swift; sourceTree = "<group>"; };
 		DCBF852722380B010002F93F /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		F1D844E32242A512007245E9 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		F1D844E92243A881007245E9 /* EIP55.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP55.swift; sourceTree = "<group>"; };
@@ -140,7 +144,7 @@
 			children = (
 				53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */,
 				5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */,
-				DC669854221ED25E00C383BD /* CDPBalanceTableViewCell.swift */,
+				531AFF662251409A00916843 /* CDPBalanceTableViewCell.swift */,
 				DC4BA4EF223460C700A4E30D /* NamedWalletTableViewCell.swift */,
 				53F0C9BF2236D70A00FF0796 /* SettingsTableViewCell.swift */,
 				F1D844E32242A512007245E9 /* WalletTableViewCell.swift */,
@@ -216,6 +220,7 @@
 				53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */,
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 				531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */,
+				2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 		DC66983B221CA8F000C383BD /* Balance */ = {
 			isa = PBXGroup;
 			children = (
+				531AFF682251418200916843 /* apikeys.plist */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
 				DC5B07672225B07800107A8B /* Extensions */,
 				53F0C9B02235796000FF0796 /* API */,
@@ -267,6 +273,7 @@
 			buildConfigurationList = DC66984B221CA8F100C383BD /* Build configuration list for PBXNativeTarget "Balance" */;
 			buildPhases = (
 				1498338121071E6253D9E871 /* [CP] Check Pods Manifest.lock */,
+				2D18EB732250C5D000CD4086 /* Run Swift Format */,
 				DC669835221CA8F000C383BD /* Sources */,
 				DC669836221CA8F000C383BD /* Frameworks */,
 				DC669837221CA8F000C383BD /* Resources */,
@@ -322,6 +329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCBF852822380B010002F93F /* Icons.xcassets in Resources */,
+				531AFF692251418200916843 /* apikeys.plist in Resources */,
 				DC4EF031223A3B9600B8EFA4 /* Launch Screen.storyboard in Resources */,
 				DC452002222050F80077813C /* Assets.xcassets in Resources */,
 			);
@@ -375,6 +383,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		2D18EB732250C5D000CD4086 /* Run Swift Format */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swift Format";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" \"${SRCROOT}/Balance\"\n";
 		};
 		E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -433,7 +459,6 @@
 				538AACF52239ACDA004C3706 /* QRCode.swift in Sources */,
 				53897A1A2244584F009CACC4 /* MenuViewTitleCell.swift in Sources */,
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
-				DC669855221ED25E00C383BD /* CDPBalanceTableViewCell.swift in Sources */,
 				5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */,
 				DC4BA4EE22345FC900A4E30D /* WalletsViewController.swift in Sources */,
 				DC66983F221CA8F000C383BD /* BalanceContentViewController.swift in Sources */,
@@ -442,7 +467,9 @@
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
 				53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */,
 				DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */,
+				2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */,
 				53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */,
+				531AFF672251409A00916843 /* CDPBalanceTableViewCell.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,
 				53F0C9C02236D70A00FF0796 /* SettingsTableViewCell.swift in Sources */,
 				53897A1622445533009CACC4 /* MenuUnderlineView.swift in Sources */,

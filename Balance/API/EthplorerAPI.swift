@@ -1,5 +1,5 @@
-import Foundation
 import CoreData
+import Foundation
 
 struct EthplorerAPI {
     private static let baseURL = URL(string: "https://api.ethplorer.io/")!
@@ -11,26 +11,26 @@ struct EthplorerAPI {
                 return apiKey
             }
         }
-        
+
         // Default free api key
         return "freekey"
     }()
-    
+
     public static let isFreeApiKey: Bool = {
-        return apiKey == "freekey"
+        apiKey == "freekey"
     }()
-    
-    static func loadWalletBalances(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> ()) {
+
+    static func loadWalletBalances(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> Void) {
         DispatchQueue.utility.async {
             var returnWallets = [EthereumWallet]()
             let dispatchGroup = DispatchGroup()
             for ethereumWallet in ethereumWallets {
                 dispatchGroup.enter()
-                loadWalletBalance(ethereumWallet) { wallet, success in
+                loadWalletBalance(ethereumWallet) { wallet, _ in
                     returnWallets.append(wallet)
                     dispatchGroup.leave()
                 }
-                
+
                 // If we're using the free api key, serialize the api calls with a delay in between
                 if isFreeApiKey {
                     dispatchGroup.wait()
@@ -38,7 +38,7 @@ struct EthplorerAPI {
                 }
             }
             dispatchGroup.wait()
-            
+
             // Sort the new array to match the original array
             var sortedReturnWallets = [EthereumWallet]()
             for ethereumWallet in ethereumWallets {
@@ -46,14 +46,14 @@ struct EthplorerAPI {
                     sortedReturnWallets.append(returnWallet)
                 }
             }
-            
+
             DispatchQueue.main.async {
                 completion(sortedReturnWallets)
             }
         }
     }
-    
-    static func loadWalletBalance(_ ethereumWallet: EthereumWallet, completion: @escaping (EthereumWallet, Bool) -> ()) {
+
+    static func loadWalletBalance(_ ethereumWallet: EthereumWallet, completion: @escaping (EthereumWallet, Bool) -> Void) {
         DispatchQueue.utility.async {
             var addressInfoResponse: AddressInfoResponse?
             let urlPath = baseURL.appendingPathComponent("getAddressInfo").appendingPathComponent(ethereumWallet.address)
@@ -65,19 +65,19 @@ struct EthplorerAPI {
                 }
                 return
             }
-            
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+
+            let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else {
                     print(error?.localizedDescription ?? "Response Error")
                     return
                 }
-                
+
                 do {
                     addressInfoResponse = try JSONDecoder().decode(AddressInfoResponse.self, from: data)
                 } catch {
                     print("Error getting address info for \(ethereumWallet.address): ", error)
                 }
-                
+
                 // Convert to Balance model
                 var returnWallet = ethereumWallet
                 if let addressInfoResponse = addressInfoResponse, let ETH = addressInfoResponse.ETH {
@@ -90,24 +90,24 @@ struct EthplorerAPI {
                             if let decimalsString = info?.decimals {
                                 decimalsInt = UInt(decimalsString)
                             }
-                            
+
                             var cryptoBalance: Double?
                             if let balance = tokenInfoWrapper.balance, let decimalsInt = decimalsInt {
                                 cryptoBalance = balance / pow(10.0, Double(decimalsInt))
                             }
-                            
+
                             var fiatBalance: Double?
                             if let cryptoBalance = cryptoBalance, let rate = info?.price?.rate {
                                 fiatBalance = cryptoBalance * rate
                             }
-                            
+
                             let token = Token(balance: cryptoBalance, fiatBalance: fiatBalance, rate: info?.price?.rate, currency: info?.price?.currency, address: info?.address, name: info?.name, symbol: info?.symbol, decimals: decimalsInt)
                             tokens.append(token)
                         }
                         returnWallet.tokens = tokens
                     }
                 }
-                
+
                 DispatchQueue.main.async {
                     completion(returnWallet, true)
                 }
@@ -115,13 +115,13 @@ struct EthplorerAPI {
             task.resume()
         }
     }
-    
-    static func loadGetAddressInfo(_ ethereumWallets: [NSManagedObject], completion: @escaping ([AddressInfoResponse]) -> ()) {
+
+    static func loadGetAddressInfo(_ ethereumWallets: [NSManagedObject], completion: @escaping ([AddressInfoResponse]) -> Void) {
         DispatchQueue.utility.async {
             let addresses = ethereumWallets.compactMap { maker in
                 maker.value(forKey: "address") as? String
             }
-            
+
             var addressInfoResponses = [AddressInfoResponse]()
             let dispatchGroup = DispatchGroup()
             for address in addresses {
@@ -134,14 +134,14 @@ struct EthplorerAPI {
                 }
             }
             dispatchGroup.wait()
-            
+
             DispatchQueue.main.async {
                 completion(addressInfoResponses)
             }
         }
     }
-    
-    static func loadGetAddressInfo(address: String, completion: @escaping (AddressInfoResponse?) -> ()) {
+
+    static func loadGetAddressInfo(address: String, completion: @escaping (AddressInfoResponse?) -> Void) {
         DispatchQueue.utility.async {
             var addressInfoResponse: AddressInfoResponse?
             let urlPath = baseURL.appendingPathComponent("getAddressInfo").appendingPathComponent(address)
@@ -153,19 +153,19 @@ struct EthplorerAPI {
                 }
                 return
             }
-            
-            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+
+            let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data, error == nil else {
                     print(error?.localizedDescription ?? "Response Error")
                     return
                 }
-                
+
                 do {
                     addressInfoResponse = try JSONDecoder().decode(AddressInfoResponse.self, from: data)
                 } catch {
                     print("Error getting address info for \(address): ", error)
                 }
-                
+
                 DispatchQueue.main.async {
                     completion(addressInfoResponse)
                 }
@@ -173,32 +173,32 @@ struct EthplorerAPI {
             task.resume()
         }
     }
-    
+
     struct AddressInfoResponse: Decodable {
         let address: String?
         let ETH: ETHResponse?
         let countTxs: UInt64?
         let tokens: [TokenInfoWrapperResponse]?
     }
-    
+
     struct ETHResponse: Codable {
         let balance: Double?
-        
+
         private enum CodingKeys: String, CodingKey {
-            case balance = "balance"
+            case balance
         }
     }
-    
+
     struct TokenInfoWrapperResponse: Codable {
         let tokenInfo: TokenInfoResponse?
         let balance: Double?
-        
+
         private enum CodingKeys: String, CodingKey {
-            case tokenInfo = "tokenInfo"
-            case balance   = "balance"
+            case tokenInfo
+            case balance
         }
     }
-    
+
     struct TokenInfoResponse: Codable {
         let address: String?
         let name: String?
@@ -211,21 +211,21 @@ struct EthplorerAPI {
         let holdersCount: UInt64?
         let ethTransfersCount: UInt64?
         let price: PriceResponse?
-        
+
         private enum CodingKeys: String, CodingKey {
-            case address           = "address"
-            case name              = "name"
-            case decimals          = "decimals"
-            case symbol            = "symbol"
-            case totalSupply       = "totalSupply"
-            case owner             = "owner"
-            case lastUpdated       = "lastUpdated"
-            case issuancesCount    = "issuancesCount"
-            case holdersCount      = "holdersCount"
-            case ethTransfersCount = "ethTransfersCount"
-            case price             = "price"
+            case address
+            case name
+            case decimals
+            case symbol
+            case totalSupply
+            case owner
+            case lastUpdated
+            case issuancesCount
+            case holdersCount
+            case ethTransfersCount
+            case price
         }
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             address = try? container.decode(String.self, forKey: .address)
@@ -238,7 +238,7 @@ struct EthplorerAPI {
             issuancesCount = try? container.decode(UInt64.self, forKey: .issuancesCount)
             holdersCount = try? container.decode(UInt64.self, forKey: .holdersCount)
             ethTransfersCount = try? container.decode(UInt64.self, forKey: .ethTransfersCount)
-            
+
             // Handle possible boolean value in price field
             do {
                 _ = try container.decode(Bool.self, forKey: .price)
@@ -248,7 +248,7 @@ struct EthplorerAPI {
             }
         }
     }
-    
+
     struct PriceResponse: Codable {
         let rate: Double?
         let diff: Double?
@@ -259,17 +259,17 @@ struct EthplorerAPI {
         let volume24h: Double?
         let diff30d: Double?
         let currency: String?
-        
+
         private enum CodingKeys: String, CodingKey {
-            case rate            = "rate"
-            case diff            = "diff"
-            case diff7d          = "diff7d"
-            case ts              = "ts"
-            case marketCapUsd    = "marketCapUsd"
-            case availableSupply = "availableSupply"
-            case volume24h       = "volume24h"
-            case diff30d         = "diff30d"
-            case currency        = "currency"
+            case rate
+            case diff
+            case diff7d
+            case ts
+            case marketCapUsd
+            case availableSupply
+            case volume24h
+            case diff30d
+            case currency
         }
     }
 }

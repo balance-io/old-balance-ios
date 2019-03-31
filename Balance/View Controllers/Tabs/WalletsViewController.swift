@@ -1,57 +1,56 @@
-import UIKit
 import CoreData
-import SwiftEntryKit
 import SnapKit
+import SwiftEntryKit
+import UIKit
 
 class WalletsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
     private var managedEthereumWallets = [NSManagedObject]()
     private var ethereumWallets = [EthereumWallet]()
-    
+
     private let addButton: UIButton = {
         let addButton = UIButton()
-        addButton.imageEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
-        addButton.titleEdgeInsets = UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0)
-        addButton.contentEdgeInsets = UIEdgeInsets.init(top: 0, left: 10, bottom: 0, right: 10)
-//        addButton.backgroundColor = UIColor.init(hexString: "#282C34")
+        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        addButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+//        addButton.backgroundColor = UIColor(hexString: "#282C34")
 //        addButton.layer.cornerRadius = 5
 //        addButton.setTitle("Add", for: UIControl.State.normal)
 //        addButton.setTitleColor(UIColor.black, for: UIControl.State.normal)
-        addButton.setImage(UIImage(named:"addButtonImage"), for: .normal)
+        addButton.setImage(UIImage(named: "addButtonImage"), for: .normal)
 //        addButton.image(for: .)
         return addButton
     }()
 
     private let walletsTableView = UITableView()
-    
+
     // MARK: - View Controller Lifecycle -
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
-        
+
         walletsTableView.backgroundColor = UIColor(hexString: "#fbfbfb")
         walletsTableView.separatorStyle = .none
         walletsTableView.rowHeight = 100
         walletsTableView.dataSource = self
         walletsTableView.delegate = self
-        
+
         walletsTableView.register(NamedWalletTableViewCell.self, forCellReuseIdentifier: "namedWalletCell")
         view.addSubview(walletsTableView)
-        
+
         walletsTableView.snp.makeConstraints { make in
             make.top.equalTo(view)
             make.leading.equalTo(view.safeAreaLayoutGuide)
             make.trailing.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view)
         }
-        
+
         setupNavigation()
         loadData()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
     }
-    
+
     private func setupNavigation() {
         navigationItem.title = ""
         navigationItem.titleView = addButton
@@ -62,23 +61,23 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
             make.width.equalTo(72)
             make.width.equalTo(72)
         }
-        
+
         if Chat.showButton {
             let chatButton = UIButton()
             chatButton.setImage(UIImage(named: "chatButton"), for: .normal)
             chatButton.addTarget(self, action: #selector(chatAction), for: .touchUpInside)
             navigationItem.rightBarButtonItem = UIBarButtonItem(customView: chatButton)
         }
-        
+
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.barTintColor = .white
             navigationBar.isTranslucent = false
             navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         }
     }
-    
+
     // MARK: - Button Actions -
-    
+
     @objc private func addAction() {
         let lightImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
         lightImpactFeedbackGenerator.prepare()
@@ -86,7 +85,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
 
         if ethereumWallets.count >= 10 {
             let alert = UIAlertController(title: "Upgrade to Balance Pro", message: "Upgrade to add more than 10 wallets (coming soon)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
                 self.dismiss(animated: true, completion: nil)
             }))
             present(alert, animated: true, completion: nil)
@@ -95,19 +94,19 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
             present(addEthereumWalletViewController, animated: true)
         }
     }
-    
+
     @objc private func chatAction() {
         Chat.show()
     }
-    
+
     // MARK: - Data Loading -
-    
+
     private func loadData() {
         managedEthereumWallets = CoreDataHelper.loadAllManagedEthereumWallets()
         ethereumWallets = CoreDataHelper.loadAllEthereumWallets(managedWallets: managedEthereumWallets)
         walletsTableView.reloadData()
     }
-    
+
     @objc private func walletAdded() {
         loadData()
         if presentedViewController != nil {
@@ -117,37 +116,37 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
             heavyImpactFeedbackGenerator.impactOccurred()
         }
     }
-    
+
     // MARK: - Table View -
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return ethereumWallets.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let wallet = ethereumWallets[indexPath.row]
         var cell: WalletTableViewCell
-        
+
         cell = tableView.dequeueReusableCell(withIdentifier: "namedWalletCell", for: indexPath) as! NamedWalletTableViewCell
-        
+
         cell.selectionStyle = .none
         cell.wallet = wallet
-        
+
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
         var attributes = EKAttributes()
         attributes = .centerFloat
         attributes.name = "Wallet Info"
         attributes.hapticFeedbackType = .success
         attributes.popBehavior = .animated(animation: .translation)
-        attributes.entryBackground = .color(color: .clear)//.color(color: .black)
+        attributes.entryBackground = .color(color: .clear) // .color(color: .black)
         attributes.border = .none
         attributes.statusBar = .hidden
-        attributes.screenBackground = .color(color: UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.8))
+        attributes.screenBackground = .color(color: UIColor(red: 0.00, green: 0.00, blue: 0.00, alpha: 0.8))
         attributes.positionConstraints.rotation.isEnabled = false
         attributes.shadow = .active(with: .init(color: .black, opacity: 0.5, radius: 2))
         attributes.statusBar = .ignored
@@ -158,11 +157,11 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         let widthConstraint = EKAttributes.PositionConstraints.Edge.ratio(value: 0.95)
         let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
         attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
-        
+
         let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row])
         SwiftEntryKit.display(entry: walletInfoView, using: attributes)
     }
-    
+
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             if CoreDataHelper.delete(managedObject: managedEthereumWallets[indexPath.row]) {
