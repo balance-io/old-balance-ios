@@ -16,26 +16,22 @@ class CDPBalanceTableViewCell: UITableViewCell {
             }
             
             if let id = cdp.id {
-                identityLabel.text = "Ether #\(id)"
+                let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+                let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+                
+                let partOne = NSMutableAttributedString(string: "Ether", attributes: cryptoAmountAttributes)
+                let partTwo = NSMutableAttributedString(string: "#\(id)", attributes: cryptoSymbolAttributes)
+                
+                let combination = NSMutableAttributedString()
+                
+                combination.append(partOne)
+                combination.append(partTwo)
+                
+                identityLabel.attributedText = combination
             }
-            
-//            if let ratio = cdp.ratio {
-//                if ratio < 150.00 {
-//                    ratioLabel.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
-//                } else if ratio < 200.00 {
-//                    ratioLabel.backgroundColor = .red
-//                } else if ratio < 250.00 {
-//                    ratioLabel.backgroundColor = .orange
-//                } else if ratio > 300.00 {
-//                    ratioLabel.backgroundColor = .green
-//                }
-//                ratioLabel.text = " \(String(format:"%.0f", ratio))%"
-//            }
-            
-            
+
            //TODO look into more elegant way of doing this
             //http://danielemargutti.com/2016/12/04/attributed-string-in-swift-the-right-way/
-
             
             if let ink = cdp.ink {
                 let collateral = ink
@@ -69,12 +65,38 @@ class CDPBalanceTableViewCell: UITableViewCell {
                 combination.append(partOne)
                 combination.append(partTwo)
                 
-//                artLabel.text = "\(artFormatted!) DAI"
                 artLabel.attributedText = combination
             }
             
             if let liqPrice = cdp.liqPrice, let pip = cdp.pip {
-                liqPriceLabel.text = "$\(String(format:"%.0f", pip)) · $\(String(format:"%.0f", liqPrice))"
+            
+                var priceColor = UIColor(hexString: "#6F6F6F")
+                
+                if let ratio = cdp.ratio {
+                    if ratio > 150.00 {
+                        priceColor = UIColor(hexString: "#EA0201")
+                    } else if ratio > 200.00 {
+                        priceColor = UIColor(hexString: "#F6851B")
+                    } else if ratio > 250.00 {
+                        priceColor = UIColor(hexString: "#1ABC9C")
+                    }
+                }
+                
+                let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+                let cryptoSymbolAttributes = [
+                    NSAttributedString.Key.foregroundColor: priceColor,
+                    NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium)
+                ]
+                
+                let partOne = NSMutableAttributedString(string: "$\(String(format:"%.0f", pip)) · ", attributes: cryptoAmountAttributes)
+                let partTwo = NSMutableAttributedString(string: "$\(String(format:"%.0f", liqPrice))", attributes: cryptoSymbolAttributes)
+                
+                let combination = NSMutableAttributedString()
+                
+                combination.append(partOne)
+                combination.append(partTwo)
+                
+                liqPriceLabel.attributedText = combination
             }
         }
     }

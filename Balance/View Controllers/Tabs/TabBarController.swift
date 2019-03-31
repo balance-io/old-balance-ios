@@ -32,7 +32,7 @@ class TabBarController: UITabBarController {
                                                                selectedImage: UIImage(named: "settingsTabBarItemImageSelected"))
 
         viewControllers = [walletsNavigationController, balanceNavigationController, settingsNavigationController]
-        selectedIndex = 1
+        selectedIndex = 0
         
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)

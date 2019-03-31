@@ -7,7 +7,6 @@ class WalletTableViewCell: UITableViewCell {
             guard let walletItem = wallet else {
                 return
             }
-
             walletWasSet(walletItem: walletItem)
         }
     }
@@ -23,14 +22,11 @@ class WalletTableViewCell: UITableViewCell {
 
     let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = UIColor(hexString: "#FFFFFF")
+        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 5
         return view
-    }()
-
-    private let backgroundImageView: UIImageView = {
-        let backgroundImageView = UIImageView()
-        backgroundImageView.image = UIImage(named: "walletCellBackground")?.stretchableImage(withLeftCapWidth: 20, topCapHeight: 20)
-        return backgroundImageView
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -42,17 +38,9 @@ class WalletTableViewCell: UITableViewCell {
         containerView.snp.makeConstraints { make in
             // NOTE: Setting priority to less than 1000 on the top and bottom constraints prevents a constraint error when removing the cell
             make.top.equalToSuperview().offset(10).priority(999)
-            make.leading.equalToSuperview().offset(10)
-            make.trailing.equalToSuperview().offset(-10)
+            make.leading.equalToSuperview().offset(0)
+            make.trailing.equalToSuperview().offset(0)
             make.bottom.equalToSuperview().offset(-10).priority(999)
-        }
-
-        containerView.addSubview(backgroundImageView)
-        backgroundImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
         }
 
         self.renderTableViewCellContentFor(containerView: containerView)
