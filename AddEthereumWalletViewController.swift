@@ -151,6 +151,28 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         return pasteButton
     }()
 
+    private let openSettingsPermissionsLabel: UILabel = {
+        let openSettingsPermissionsLabel = UILabel()
+        openSettingsPermissionsLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        openSettingsPermissionsLabel.textColor = .white
+        openSettingsPermissionsLabel.numberOfLines = 0
+        openSettingsPermissionsLabel.textAlignment = .center
+        openSettingsPermissionsLabel.text = "Balance does not have permission to use the camera. Please change your privacy settings."
+        return openSettingsPermissionsLabel
+    }()
+
+    private let settingsButton: UIButton = {
+        let settingsButton = UIButton()
+        settingsButton.backgroundColor = UIColor(hexString: "#0E76FD")
+        settingsButton.layer.cornerRadius = 12
+        settingsButton.contentEdgeInsets = UIEdgeInsets(top: 10, left: 20, bottom: 10, right:20)
+        settingsButton.titleLabel?.textAlignment = .center
+        settingsButton.setTitle("Open Settings", for: .normal)
+        settingsButton.setTitleColor(.white, for: .normal)
+        settingsButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        return settingsButton
+    }()
+
     private let includeInTotalTitleLabel: UILabel = {
         let includeInTotalTitleLabel = newTitleLabel()
         includeInTotalTitleLabel.text = "Include in total balance"
@@ -173,6 +195,37 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return addButton
     }()
+
+    func requestCameraPermission() {
+        AVCaptureDevice.requestAccess(for: .video, completionHandler: {accessGranted in
+            if accessGranted == true {
+                self.setupCameraPreviewView()
+            } else {
+                DispatchQueue.main.async {
+                    self.setupCameraPermissionNotice()
+                }
+            }
+        })
+    }
+
+    func setupCameraPermissionNotice() {
+        middleContainerView.addSubview(openSettingsPermissionsLabel)
+        openSettingsPermissionsLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-20)
+        }
+
+        middleContainerView.addSubview(settingsButton)
+        settingsButton.snp.makeConstraints { make in
+            make.centerX.equalTo(openSettingsPermissionsLabel)
+            make.top.equalTo(openSettingsPermissionsLabel.snp.bottom).offset(14)
+        }
+
+        settingsButton.addTarget(self, action: #selector(settingsAction), for: .touchUpInside)
+    }
+
 
     // MARK - View Lifecycle -
 
@@ -346,19 +399,12 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.bottom.equalToSuperview()
         }
 
-        middleContainerView.addSubview(scanQRCodeImageView)
-        scanQRCodeImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
+        let cameraAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        switch cameraAuthorizationStatus {
+            case .notDetermined: requestCameraPermission()
+            case .authorized: setupCameraPreviewView()
+            case .restricted, .denied: setupCameraPermissionNotice()
         }
-
-        middleContainerView.addSubview(scanQRCodeLabel)
-        scanQRCodeLabel.snp.makeConstraints { make in
-            make.top.equalTo(scanQRCodeImageView.snp.bottom).offset(14)
-            make.centerX.equalTo(scanQRCodeImageView)
-        }
-
-        setupCameraPreviewView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -453,6 +499,11 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         dismiss(animated: true)
     }
 
+    @objc private func settingsAction() {
+        let settingsAppURL = URL(string: UIApplication.openSettingsURLString)!
+        UIApplication.shared.open(settingsAppURL, options: [:], completionHandler: nil)
+    }
+
     @objc private func pasteAction() {
         if let string = UIPasteboard.general.string {
             addressTextField.text = string
@@ -514,6 +565,18 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
         do {
             let session = AVCaptureSession()
+
+            middleContainerView.addSubview(scanQRCodeImageView)
+            scanQRCodeImageView.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.centerY.equalToSuperview()
+            }
+
+            middleContainerView.addSubview(scanQRCodeLabel)
+            scanQRCodeLabel.snp.makeConstraints { make in
+                make.top.equalTo(scanQRCodeImageView.snp.bottom).offset(14)
+                make.centerX.equalTo(scanQRCodeImageView)
+            }
 
             let input = try AVCaptureDeviceInput(device: device)
             session.addInput(input)
