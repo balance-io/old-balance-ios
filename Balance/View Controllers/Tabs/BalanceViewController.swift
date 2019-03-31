@@ -64,10 +64,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
     private func addPagingController() {
         menuBackgroundView.isHidden = false
-      
+
         var nextTopPoint = 0
-            // Setup menu
-            if shouldShowMenu() {
+        // Setup menu
+        if shouldShowMenu() {
             menuViewController.delegate = self
             menuViewController.dataSource = self
             menuViewController.register(type: MenuViewTitleCell.self, forCellWithReuseIdentifier: "MenuViewTitleCell")
@@ -81,7 +81,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
             }
-                nextTopPoint = 44
+            nextTopPoint = 44
         }
 
         // Setup content
