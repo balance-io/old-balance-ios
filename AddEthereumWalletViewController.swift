@@ -180,8 +180,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         super.viewDidLoad()
 
         let smallFormat = view.bounds.height < 700
-
         view.backgroundColor = .black
+        dismissKeyBoardOnScreenTouch()
 
         //
         // Top Container

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */; };
 		4C1493B060A37CA442554EDE /* Pods_Balance.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */; };
 		531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */; };
 		5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		1BB6EC2F3EC3B87A6DDC28D1 /* Pods_Balance.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Balance.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+UI.swift"; sourceTree = "<group>"; };
 		40607B177AFD9494F39BE62A /* Pods-Balance.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Balance.release.xcconfig"; path = "Target Support Files/Pods-Balance/Pods-Balance.release.xcconfig"; sourceTree = "<group>"; };
 		531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIRefreshControl+ManualRefresh.swift"; sourceTree = "<group>"; };
 		5355309D22383EA800BD119C /* CryptoBalanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoBalanceTableViewCell.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */,
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 				531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */,
+				2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
 				53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */,
 				DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */,
+				2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */,
 				53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */,
 				DC66983D221CA8F000C383BD /* AppDelegate.swift in Sources */,
 				53F0C9C02236D70A00FF0796 /* SettingsTableViewCell.swift in Sources */,
