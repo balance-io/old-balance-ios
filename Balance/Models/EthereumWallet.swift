@@ -7,17 +7,18 @@ struct EthereumWallet {
 
     let symbol = "ETH"
 
-    var balance: Double?     // Balance in ETH
+    var balance: Double? // Balance in ETH
     var fiatBalance: Double? // Balance in fiat currency
-    var rate: Double?       // Price per unit in fiat currency
-    var currency: String?    // Fiat currency used for price and balance
+    var rate: Double? // Price per unit in fiat currency
+    var currency: String? // Fiat currency used for price and balance
 
     var tokens: [Token]?
     var valuableTokens: [Token]? {
-        return tokens?.filter{ $0.fiatBalance ?? 0 >= Token.fiatValueCutoff }
+        return tokens?.filter { $0.fiatBalance ?? 0 >= Token.fiatValueCutoff }
     }
+
     var nonValuableTokens: [Token]? {
-        return tokens?.filter{ $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
+        return tokens?.filter { $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
     }
 
     var CDPs: [CDP]?
@@ -27,17 +28,17 @@ struct EthereumWallet {
         self.address = address
         self.includeInTotal = includeInTotal
 
-        self.balance = nil
-        self.fiatBalance = nil
-        self.rate = nil
-        self.currency = nil
+        balance = nil
+        fiatBalance = nil
+        rate = nil
+        currency = nil
 
-        self.tokens = nil
+        tokens = nil
     }
 
     func pagingTabTitle() -> String {
-        guard let name = name, name.count > 0 else {
-            return "0x.." + String(self.address[self.address.index(self.address.endIndex, offsetBy: -4)...])
+        guard let name = name, !name.isEmpty else {
+            return "0x.." + String(address[self.address.index(self.address.endIndex, offsetBy: -4)...])
         }
 
         return name
@@ -69,7 +70,7 @@ struct EthereumWallet {
                 }
 
                 if let tokens = wallet.tokens {
-                    if totalTokens.count == 0 {
+                    if totalTokens.isEmpty {
                         totalTokens = tokens
                     } else {
                         var tempTotalTokens = [Token]()
@@ -92,7 +93,7 @@ struct EthereumWallet {
                 }
 
                 if let CDPs = wallet.CDPs {
-                    if totalCDPs.count == 0 {
+                    if totalCDPs.isEmpty {
                         totalCDPs = CDPs
                     } else {
                         for cdp in CDPs {

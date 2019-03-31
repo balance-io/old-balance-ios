@@ -7,7 +7,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         static let startedLoadingBalances = Notification.Name("BalanceViewController.startedLoadingBalances")
         static let finishedLoadingBalances = Notification.Name("BalanceViewController.finishedLoadingBalances")
     }
-    
+
     private var menuViewController = PagingMenuViewController()
     private var contentViewController = PagingContentViewController()
 
@@ -16,7 +16,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         menuBackgroundView.backgroundColor = .white
         return menuBackgroundView
     }()
-    
+
     private let loadingSpinner: UIActivityIndicatorView = {
         let loadingSpinner = UIActivityIndicatorView(style: .whiteLarge)
         loadingSpinner.color = .gray
@@ -24,22 +24,22 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         loadingSpinner.startAnimating()
         return loadingSpinner
     }()
-    
+
     private var isLoading = false
     private var lastLoadTimestamp = 0.0
-    
+
     private var contentViewControllers = [BalanceContentViewController]()
     private var ethereumWallets = [EthereumWallet]()
     private var aggregatedEthereumWallet: EthereumWallet?
     private var refresh: UIRefreshControl?
-    
-    // MARK - View Lifecycle -
-    
+
+    // MARK: - View Lifecycle -
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = UIColor(hexString: "#fbfbfb")
-        
+
         menuBackgroundView.isHidden = true
         view.addSubview(menuBackgroundView)
         menuBackgroundView.snp.makeConstraints { make in
@@ -48,22 +48,23 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
         }
-        
+
         // Setup first load spinner
         view.addSubview(loadingSpinner)
         loadingSpinner.snp.makeConstraints { make in
             make.top.equalTo(menuBackgroundView.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
         }
-        
+
         loadData()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
     }
-    
+
     private func addPagingController() {
         menuBackgroundView.isHidden = false
+      
         var nextTopPoint = 0
             // Setup menu
             if shouldShowMenu() {
@@ -82,7 +83,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             }
                 nextTopPoint = 44
         }
-        
+
         // Setup content
         contentViewController.delegate = self
         contentViewController.dataSource = self
@@ -96,7 +97,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             make.bottom.equalToSuperview()
         }
     }
-    
+
     private func removePagingController() {
         menuBackgroundView.isHidden = true
         menuViewController.view.removeFromSuperview()
@@ -105,13 +106,13 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         contentViewController.removeFromParent()
         contentViewControllers.removeAll()
     }
-    
-    // MARK - Data Loading -
-    
+
+    // MARK: - Data Loading -
+
     private func updateContentControllers() {
-        if contentViewControllers.count == 0 {
+        if contentViewControllers.isEmpty {
             addPagingController()
-            
+
             if let aggregatedEthereumWallet = aggregatedEthereumWallet {
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
@@ -122,7 +123,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 }
                 contentViewControllers.append(balanceContentViewController)
             }
-            
+
             for ethereumWallet in ethereumWallets {
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = ethereumWallet
@@ -144,23 +145,22 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 contentViewControllers[index + offset].title = ethereumWallet.name ?? ethereumWallet.address
             }
         }
-        
+
         menuViewController.reloadData()
         contentViewController.reloadData()
         for contentViewController in contentViewControllers {
             contentViewController.reloadData()
         }
-        
+
         NotificationCenter.default.post(name: Notifications.finishedLoadingBalances, object: nil)
-        
+
         // Fix for menu not showing up on first load
         menuViewController.menuView.contentOffset.y = 0
     }
-    
+
     @objc func loadData() {
-        
         NotificationCenter.default.post(name: Notifications.startedLoadingBalances, object: nil)
-        
+
         guard CoreDataHelper.ethereumWalletCount() > 0 else {
             ethereumWallets = [EthereumWallet]()
             aggregatedEthereumWallet = nil
@@ -168,15 +168,15 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             updateContentControllers()
             return
         }
-        
+
         if isLoading {
             // Wait a bit and try again
             NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(loadData), object: nil)
             perform(#selector(loadData), with: nil, afterDelay: 0.5)
             return
         }
-        
-        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0 //TODO This is super slow and we have to find a better way.
+
+        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0 // TODO: This is super slow and we have to find a better way.
         let secondsSinceLastLoad = NSDate().timeIntervalSince1970 - lastLoadTimestamp
         if secondsSinceLastLoad < delay {
             // Wait a few seconds and try again
@@ -184,14 +184,14 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             perform(#selector(loadData), with: nil, afterDelay: delay - secondsSinceLastLoad)
             return
         }
-        
+
         isLoading = true
         DispatchQueue.utility.async {
             var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
             var newAggregatedEthereumWallet: EthereumWallet?
-            
+
             // Extra check in case of race condition
-            guard newEthereumWallets.count > 0 else {
+            guard !newEthereumWallets.isEmpty else {
                 self.ethereumWallets = [EthereumWallet]()
                 self.aggregatedEthereumWallet = nil
                 self.contentViewControllers = [BalanceContentViewController]()
@@ -201,16 +201,16 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 }
                 return
             }
-            
+
             let dispatchGroup = DispatchGroup()
-            
+
             // Load balances first
             dispatchGroup.enter()
             EthplorerAPI.loadWalletBalances(newEthereumWallets) { wallets in
                 newEthereumWallets = wallets
                 dispatchGroup.leave()
             }
-            
+
             // Load CDPs
             dispatchGroup.enter()
             var newEthereumWalletsCDPs = [EthereumWallet]()
@@ -218,31 +218,31 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 newEthereumWalletsCDPs = wallets
                 dispatchGroup.leave()
             }
-            
+
             // Wait for results
             dispatchGroup.wait()
-            
+
             // Copy the CDPs into the main wallet array
             // NOTE: This is a little clunky but it allows us to load both APIs at once
             for index in 0 ..< newEthereumWallets.count {
                 newEthereumWallets[index].CDPs = newEthereumWalletsCDPs[index].CDPs
             }
-            
+
             // Load ethereum price
             dispatchGroup.enter()
-            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, success in
+            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, _ in
                 newEthereumWallets = wallets
                 dispatchGroup.leave()
             }
-            
+
             // Wait for results
             dispatchGroup.wait()
-            
+
             // Aggregate the balances
             if newEthereumWallets.count > 1 {
                 newAggregatedEthereumWallet = EthereumWallet.aggregated(wallets: newEthereumWallets)
             }
-            
+
             // Store the results and reload the table
             DispatchQueue.main.async {
                 self.ethereumWallets = newEthereumWallets
@@ -255,29 +255,29 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             }
         }
     }
-    
+
     @objc private func walletAdded() {
         walletsChanged()
     }
-    
+
     @objc private func walletRemoved() {
         walletsChanged()
     }
-    
+
     private func walletsChanged() {
         removePagingController()
         loadingSpinner.startAnimating()
         loadData()
     }
-    
+
     // MARK: - PagingKit -
-    
+
     func menuViewController(viewController: PagingMenuViewController, cellForItemAt index: Int) -> PagingMenuViewCell {
-        let cell = viewController.dequeueReusableCell(withReuseIdentifier: "MenuViewTitleCell", for: index)  as! MenuViewTitleCell
+        let cell = viewController.dequeueReusableCell(withReuseIdentifier: "MenuViewTitleCell", for: index) as! MenuViewTitleCell
         cell.titleLabel.text = contentViewControllers[index].title
         return cell
     }
-    
+
     private static let sizingCell = MenuViewTitleCell()
     func menuViewController(viewController: PagingMenuViewController, widthForItemAt index: Int) -> CGFloat {
         BalanceViewController.sizingCell.titleLabel.text = contentViewControllers[index].title
@@ -286,32 +286,32 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         let size = BalanceViewController.sizingCell.systemLayoutSizeFitting(referenceSize)
         return size.width
     }
-    
+
     var insets: UIEdgeInsets {
         return view.safeAreaInsets
     }
-    
+
     func shouldShowMenu() -> Bool {
         return contentViewControllers.count > 1
     }
-    
-    func numberOfItemsForMenuViewController(viewController: PagingMenuViewController) -> Int {
+
+    func numberOfItemsForMenuViewController(viewController _: PagingMenuViewController) -> Int {
         return contentViewControllers.count
     }
-    
-    func numberOfItemsForContentViewController(viewController: PagingContentViewController) -> Int {
+
+    func numberOfItemsForContentViewController(viewController _: PagingContentViewController) -> Int {
         return contentViewControllers.count
     }
-    
-    func contentViewController(viewController: PagingContentViewController, viewControllerAt index: Int) -> UIViewController {
+
+    func contentViewController(viewController _: PagingContentViewController, viewControllerAt index: Int) -> UIViewController {
         return contentViewControllers[index]
     }
-    
-    func menuViewController(viewController: PagingMenuViewController, didSelect page: Int, previousPage: Int) {
+
+    func menuViewController(viewController _: PagingMenuViewController, didSelect page: Int, previousPage _: Int) {
         contentViewController.scroll(to: page, animated: true)
     }
-    
-    func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Int, percent: CGFloat) {
+
+    func contentViewController(viewController _: PagingContentViewController, didManualScrollOn index: Int, percent: CGFloat) {
         menuViewController.scroll(index: index, percent: percent, animated: false)
     }
 }

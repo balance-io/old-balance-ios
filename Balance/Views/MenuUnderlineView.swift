@@ -1,12 +1,12 @@
-import UIKit
 import SnapKit
+import UIKit
 
 class MenuUnderlineView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         clipsToBounds = true
-        
+
         let lineView = UIView()
         lineView.backgroundColor = UIColor(hexString: "#007AFF")
         lineView.layer.cornerRadius = 4
@@ -18,8 +18,8 @@ class MenuUnderlineView: UIView {
             make.trailing.equalToSuperview()
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("unimplemented")
     }
 }

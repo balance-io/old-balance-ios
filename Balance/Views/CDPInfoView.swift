@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import SwiftEntryKit
+import UIKit
 
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
@@ -18,10 +18,10 @@ class CDPInfoView: UIView {
 
     private let mkrGreenImageView: UIImageView = {
         let mkrGreenImageView = UIImageView(image: UIImage(named: "mkrGreen"))
-        mkrGreenImageView.frame = CGRect(x:0, y: 0, width: 32, height: 32)
+        mkrGreenImageView.frame = CGRect(x: 0, y: 0, width: 32, height: 32)
         return mkrGreenImageView
     }()
-    
+
     private let identifierLabel: UILabel = {
         let identifierLabel = UILabel()
         identifierLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -31,22 +31,22 @@ class CDPInfoView: UIView {
         identifierLabel.minimumScaleFactor = 0.5
         return identifierLabel
     }()
-    
+
     private let collateralTitleLabel: UILabel = {
         let collateralTitleLabel = UILabel()
         collateralTitleLabel.text = "COLLATERAL"
         collateralTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        collateralTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        collateralTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return collateralTitleLabel
     }()
-    
+
     private let ethCircleImageView: UIImageView = {
         let ethCircleImage = UIImage(named: "ethWhiteCircle")
         let ethCircleImageView = UIImageView(image: ethCircleImage)
-        ethCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
+        ethCircleImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         return ethCircleImageView
     }()
-    
+
     private let etherTitleLabel: UILabel = {
         let etherTitleLabel = UILabel()
         etherTitleLabel.text = "Ether"
@@ -54,29 +54,29 @@ class CDPInfoView: UIView {
         etherTitleLabel.textColor = .white
         return etherTitleLabel
     }()
-    
+
     private let collateralBreakdownLabel: UILabel = {
         let collateralBreakdownLabel = UILabel()
         collateralBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         collateralBreakdownLabel.textColor = .white
         return collateralBreakdownLabel
     }()
-    
+
     private let debtTitleLabel: UILabel = {
         let debtTitleLabel = UILabel()
         debtTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        debtTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        debtTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         debtTitleLabel.text = "DEBT"
         return debtTitleLabel
     }()
-    
+
     private let daiCircleImageView: UIImageView = {
         let daiCircleImage = UIImage(named: "daiCircle")
         let daiCircleImageView = UIImageView(image: daiCircleImage)
-        daiCircleImageView.frame = CGRect(x:0, y: 0, width: 20, height: 20)
+        daiCircleImageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         return daiCircleImageView
     }()
-    
+
     private let daiTitleLabel: UILabel = {
         let daiTitleLabel = UILabel()
         daiTitleLabel.text = "Dai"
@@ -84,48 +84,48 @@ class CDPInfoView: UIView {
         daiTitleLabel.textColor = .white
         return daiTitleLabel
     }()
-    
+
     private let debtBreakdownLabel: UILabel = {
         let debtBreakdownLabel = UILabel()
         debtBreakdownLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         debtBreakdownLabel.textColor = .white
         return debtBreakdownLabel
     }()
-    
+
     private let positionTitleLabel: UILabel = {
         let positionTitleLabel = UILabel()
         positionTitleLabel.text = "POSITION"
         positionTitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        positionTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        positionTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return positionTitleLabel
     }()
-    
+
     private let riskTitleLabel: UILabel = {
         let riskTitleLabel = UILabel()
         riskTitleLabel.text = "RISK"
         riskTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        riskTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        riskTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return riskTitleLabel
     }()
-    
+
     private let priceTitleLabel: UILabel = {
         let priceTitleLabel = UILabel()
         priceTitleLabel.text = "PRICE"
         priceTitleLabel.textAlignment = .center
         priceTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        priceTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        priceTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return priceTitleLabel
     }()
-    
+
     private let ratioTitleLabel: UILabel = {
         let ratioTitleLabel = UILabel()
         ratioTitleLabel.text = "RATIO"
         ratioTitleLabel.textAlignment = .right
         ratioTitleLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        ratioTitleLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        ratioTitleLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return ratioTitleLabel
     }()
-    
+
     private let riskLabel: UILabel = {
         let riskLabel = PaddedLabel()
         riskLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
@@ -135,7 +135,7 @@ class CDPInfoView: UIView {
         riskLabel.clipsToBounds = true
         return riskLabel
     }()
-    
+
     private let liqPriceLabel: UILabel = {
         let liqPriceLabel = PaddedLabel()
         liqPriceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
@@ -145,7 +145,7 @@ class CDPInfoView: UIView {
         liqPriceLabel.clipsToBounds = true
         return liqPriceLabel
     }()
-    
+
     private let ratioLabel: UILabel = {
         let ratioLabel = PaddedLabel()
         ratioLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
@@ -155,67 +155,67 @@ class CDPInfoView: UIView {
         ratioLabel.clipsToBounds = true
         return ratioLabel
     }()
-    
+
     private let riskBarImageView: UIImageView = {
         let riskBarImage = UIImage(named: "riskbar")
         let riskBarImageView = UIImageView(image: riskBarImage)
-        riskBarImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
+        riskBarImageView.frame = CGRect(x: 0, y: 0, width: 345, height: 23)
         return riskBarImageView
     }()
-    
+
     private let riskDotImageView: UIImageView = {
         let riskDotImage = UIImage(named: "riskDot")
         let riskDotImageView = UIImageView(image: riskDotImage)
-        riskDotImageView.frame = CGRect(x:0, y: 0, width: 345, height: 23)
+        riskDotImageView.frame = CGRect(x: 0, y: 0, width: 345, height: 23)
         return riskDotImageView
     }()
-    
+
     private let rektLabel: UILabel = {
         let rektLabel = UILabel()
         rektLabel.text = "150%"
         rektLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        rektLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        rektLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return rektLabel
     }()
-    
+
     private let dangerLabel: UILabel = {
         let dangerLabel = UILabel()
         dangerLabel.text = "250%"
         dangerLabel.textAlignment = .center
         dangerLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        dangerLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        dangerLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return dangerLabel
     }()
-    
+
     private let saferLabel: UILabel = {
         let saferLabel = UILabel()
         saferLabel.text = "350%"
         saferLabel.textAlignment = .right
         saferLabel.font = UIFont.systemFont(ofSize: 13, weight: .medium)
-        saferLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.6)
+        saferLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.6)
         return saferLabel
     }()
-    
+
     private let plainEnglishContainerView: UIView = {
         let plainEnglishContainerView = UIView()
-        // TODO Find a way to get the UILabel to stretch dynamically.
+        // TODO: Find a way to get the UILabel to stretch dynamically.
         return plainEnglishContainerView
     }()
-    
+
     private let plainEnglishExplanationLabel: UILabel = {
         let plainEnglishExplanationLabel = UILabel()
         plainEnglishExplanationLabel.textAlignment = .center
         plainEnglishExplanationLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        plainEnglishExplanationLabel.textColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
+        plainEnglishExplanationLabel.textColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.5)
         plainEnglishExplanationLabel.lineBreakMode = .byWordWrapping
         plainEnglishExplanationLabel.numberOfLines = 0
         return plainEnglishExplanationLabel
     }()
-    
+
     init(cdp: CDP) {
         super.init(frame: CGRect.zero)
-        
-        backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
+
+        backgroundColor = UIColor(red: 0.11, green: 0.13, blue: 0.16, alpha: 1.0)
         clipsToBounds = true
         layer.cornerRadius = 20
 
@@ -233,7 +233,7 @@ class CDPInfoView: UIView {
             make.top.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-10)
         }
-        
+
         let id = cdp.id != nil ? "#\(cdp.id!)" : ""
         identifierLabel.text = "Maker CDP \(id)"
         addSubview(identifierLabel)
@@ -297,7 +297,7 @@ class CDPInfoView: UIView {
         }
 
         if let ire = cdp.ire {
-            let ireString = numberFormatter.string(from: NSNumber(value:ire))
+            let ireString = numberFormatter.string(from: NSNumber(value: ire))
             if let ireString = ireString {
                 debtBreakdownLabel.text = "\(ireString) DAI * 1.00 USD"
             } else {
@@ -338,7 +338,7 @@ class CDPInfoView: UIView {
         var riskRange = "Unknown"
         if let ratio = cdp.ratio {
             if ratio < 150.00 {
-                riskColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
+                riskColor = UIColor(red: 1.00, green: 1.00, blue: 1.00, alpha: 0.5)
                 riskRange = "Liquidated"
             } else if ratio < 200.00 {
                 riskColor = .red
@@ -360,7 +360,7 @@ class CDPInfoView: UIView {
         }
 
         if let liqPrice = cdp.liqPrice, let pip = cdp.pip {
-            liqPriceLabel.text = "$\(String(format:"%.0f", pip)) / \(String(format:"%.0f", liqPrice))"
+            liqPriceLabel.text = "$\(String(format: "%.0f", pip)) / \(String(format: "%.0f", liqPrice))"
         }
         liqPriceLabel.backgroundColor = riskColor
         addSubview(liqPriceLabel)
@@ -370,7 +370,7 @@ class CDPInfoView: UIView {
         }
 
         if let ratio = cdp.ratio {
-            ratioLabel.text = " \(String(format:"%.0f", ratio))%"
+            ratioLabel.text = " \(String(format: "%.0f", ratio))%"
         }
         ratioLabel.backgroundColor = riskColor
         addSubview(ratioLabel)
@@ -393,7 +393,7 @@ class CDPInfoView: UIView {
 
         let width = riskBarImageView.frame.size.width
         print(width)
-        let widthPercent:Double = Double(width / 100.00)
+        let widthPercent: Double = Double(width / 100.00)
         print(widthPercent)
         if let ratio = cdp.ratio {
             if ratio <= 150.00 {
@@ -432,10 +432,10 @@ class CDPInfoView: UIView {
             make.top.equalTo(rektLabel.snp.bottom).offset(15)
             make.bottom.equalToSuperview().offset(-15)
         }
-        
+
         var textForPlainEnglishExplanationLabel = ""
         if let liqPrice = cdp.liqPrice {
-            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format:"%.0f", liqPrice)) your CDP will hit the ratio of 150% and be liquidated."
+            textForPlainEnglishExplanationLabel = "If Ether drops to $\(String(format: "%.0f", liqPrice)) your CDP will hit the ratio of 150% and be liquidated."
         }
         plainEnglishExplanationLabel.text = textForPlainEnglishExplanationLabel
         plainEnglishExplanationLabel.sizeToFit()
@@ -447,8 +447,8 @@ class CDPInfoView: UIView {
             make.bottom.equalToSuperview().offset(-15)
         }
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init?(coder _: NSCoder) {
         fatalError("unimplemented")
     }
 

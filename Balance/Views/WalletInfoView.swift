@@ -1,6 +1,6 @@
-import UIKit
 import SnapKit
 import SwiftEntryKit
+import UIKit
 
 class WalletInfoView: UIView {
     private let wallet: EthereumWallet
@@ -13,12 +13,12 @@ class WalletInfoView: UIView {
 
     private let topContainer: UIView = {
         let topContainer = UIView()
-        topContainer.backgroundColor = UIColor(red:0.11, green:0.13, blue:0.16, alpha:1.0)
+        topContainer.backgroundColor = UIColor(red: 0.11, green: 0.13, blue: 0.16, alpha: 1.0)
         topContainer.clipsToBounds = true
         topContainer.layer.cornerRadius = 20
         return topContainer
     }()
-    
+
     private let nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.systemFont(ofSize: 18)
@@ -42,14 +42,14 @@ class WalletInfoView: UIView {
         addressLabel.numberOfLines = 1
         return addressLabel
     }()
-    
+
     private let bottomContainer: UIVisualEffectView = {
         let bottomContainer = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
         bottomContainer.clipsToBounds = true
         bottomContainer.layer.cornerRadius = 20
         return bottomContainer
     }()
-    
+
     private let shareButton: UIButton = {
         let shareButton = UIButton()
         shareButton.contentHorizontalAlignment = .left
@@ -58,13 +58,13 @@ class WalletInfoView: UIView {
         shareButton.setImage(UIImage(named: "shareButtonIcon"), for: .normal)
         return shareButton
     }()
-    
+
     private let buttonSeparatorLine: UIView = {
         let buttonSeparatorLine = UIView()
         buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         return buttonSeparatorLine
     }()
-    
+
     private let copyButton: UIButton = {
         let copyButton = UIButton()
         copyButton.contentHorizontalAlignment = .left
@@ -80,7 +80,7 @@ class WalletInfoView: UIView {
         super.init(frame: CGRect.zero)
 
         backgroundColor = .clear
-        
+
         addSubview(bottomContainer)
         bottomContainer.snp.makeConstraints { make in
             make.height.equalTo(114)
@@ -88,7 +88,7 @@ class WalletInfoView: UIView {
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
         }
-        
+
         shareButton.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
         bottomContainer.contentView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
@@ -101,7 +101,7 @@ class WalletInfoView: UIView {
             make.trailing.equalToSuperview().offset(-21)
             make.centerY.equalToSuperview()
         }
-        
+
         bottomContainer.contentView.addSubview(buttonSeparatorLine)
         buttonSeparatorLine.snp.makeConstraints { make in
             make.height.equalTo(0.5)
@@ -109,7 +109,7 @@ class WalletInfoView: UIView {
             make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
-        
+
         copyButton.addTarget(self, action: #selector(copyAction), for: .touchUpInside)
         bottomContainer.contentView.addSubview(copyButton)
         copyButton.snp.makeConstraints { make in
@@ -139,7 +139,7 @@ class WalletInfoView: UIView {
             make.top.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
-        
+
         nameLabel.text = wallet.name
         topContainer.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
@@ -168,23 +168,23 @@ class WalletInfoView: UIView {
         }
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("unimplemented")
     }
-    
+
     // MARK: - Actions -
-    
+
     @objc private func tapAction() {
         SwiftEntryKit.dismiss()
     }
-    
+
     @objc private func shareAction() {
         let activityViewController = UIActivityViewController(activityItems: [wallet.address], applicationActivities: nil)
         let rootViewController = AppDelegate.shared.window.rootViewController
         rootViewController?.present(activityViewController, animated: true, completion: nil)
         SwiftEntryKit.dismiss()
     }
-    
+
     @objc private func copyAction() {
         UIPasteboard.general.string = wallet.address
         SwiftEntryKit.dismiss()

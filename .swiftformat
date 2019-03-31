@@ -1,0 +1,4 @@
+#options
+--exclude Tests/XCTestManifests.swift
+--symlinks ignore
+--exclude Pods

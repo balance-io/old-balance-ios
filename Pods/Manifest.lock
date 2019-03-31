@@ -6,6 +6,7 @@ PODS:
   - SnapKit (4.0.1)
   - SwiftEntryKit (0.8.8):
     - QuickLayout (= 2.1.1)
+  - SwiftFormat/CLI (0.39.2)
 
 DEPENDENCIES:
   - CryptoSwift
@@ -13,6 +14,7 @@ DEPENDENCIES:
   - PagingKit
   - SnapKit (~> 4.0.0)
   - SwiftEntryKit (= 0.8.8)
+  - SwiftFormat/CLI
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -22,6 +24,7 @@ SPEC REPOS:
     - QuickLayout
     - SnapKit
     - SwiftEntryKit
+    - SwiftFormat
 
 SPEC CHECKSUMS:
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
@@ -30,7 +33,8 @@ SPEC CHECKSUMS:
   QuickLayout: 9af2b7fd89a6552828f51a5aba28d1bcdb8b340c
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   SwiftEntryKit: c50f25a14772713ded1591c852d1c1dc74c95b9e
+  SwiftFormat: b5e9397ee6f061762006421913c913d7268c2c50
 
-PODFILE CHECKSUM: 2c051df6864c9616c976d29fee7d33f3b04cd022
+PODFILE CHECKSUM: 449895ab505ae69d2acb3bb0f95bfdb6dd87cf9a
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.6.0
