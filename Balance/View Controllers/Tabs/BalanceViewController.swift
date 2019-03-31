@@ -74,10 +74,17 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         view.addSubview(menuViewController.view)
         menuViewController.didMove(toParent: self)
         menuViewController.view.snp.makeConstraints { make in
-            make.height.equalTo(44)
-            make.top.equalTo(view.snp.topMargin)
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
+            if shouldShowMenu() {
+                make.height.equalTo(44)
+                make.top.equalTo(view.snp.topMargin)
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+            } else {
+                make.height.equalTo(0)
+                make.top.equalTo(view.snp.topMargin)
+                make.leading.equalToSuperview()
+                make.trailing.equalToSuperview()
+            }
         }
         
         // Setup content
@@ -286,6 +293,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     
     var insets: UIEdgeInsets {
         return view.safeAreaInsets
+    }
+    
+    func shouldShowMenu() -> Bool {
+        return contentViewControllers.count > 1
     }
     
     func numberOfItemsForMenuViewController(viewController: PagingMenuViewController) -> Int {
