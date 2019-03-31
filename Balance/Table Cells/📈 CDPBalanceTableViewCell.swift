@@ -4,7 +4,7 @@ import SnapKit
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = NumberFormatter.Style.decimal
-    numberFormatter.maximumFractionDigits = 0
+    numberFormatter.maximumFractionDigits = 2
     return numberFormatter
 }()
 
@@ -19,28 +19,58 @@ class CDPBalanceTableViewCell: UITableViewCell {
                 identityLabel.text = "Ether #\(id)"
             }
             
-            if let ratio = cdp.ratio {
-                if ratio < 150.00 {
-                    ratioLabel.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
-                } else if ratio < 200.00 {
-                    ratioLabel.backgroundColor = .red
-                } else if ratio < 250.00 {
-                    ratioLabel.backgroundColor = .orange
-                } else if ratio > 300.00 {
-                    ratioLabel.backgroundColor = .green
-                }
-                ratioLabel.text = " \(String(format:"%.0f", ratio))%"
-            }
+//            if let ratio = cdp.ratio {
+//                if ratio < 150.00 {
+//                    ratioLabel.backgroundColor = UIColor(red:1.00, green:1.00, blue:1.00, alpha:0.5)
+//                } else if ratio < 200.00 {
+//                    ratioLabel.backgroundColor = .red
+//                } else if ratio < 250.00 {
+//                    ratioLabel.backgroundColor = .orange
+//                } else if ratio > 300.00 {
+//                    ratioLabel.backgroundColor = .green
+//                }
+//                ratioLabel.text = " \(String(format:"%.0f", ratio))%"
+//            }
+            
+            
+           //TODO look into more elegant way of doing this
+            //http://danielemargutti.com/2016/12/04/attributed-string-in-swift-the-right-way/
+
             
             if let ink = cdp.ink {
                 let collateral = ink
                 let collateralFormatted = numberFormatter.string(from: NSNumber(value:collateral))
-                inkLabel.text = "\(String(collateralFormatted!)) ETH"
+                
+                let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+                let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+    
+                let partOne = NSMutableAttributedString(string: "\(String(collateralFormatted!))", attributes: cryptoAmountAttributes)
+                let partTwo = NSMutableAttributedString(string: " ETH", attributes: cryptoSymbolAttributes)
+    
+                let combination = NSMutableAttributedString()
+    
+                combination.append(partOne)
+                combination.append(partTwo)
+                
+                inkLabel.attributedText = combination
             }
 
             if let art = cdp.art {
                 let artFormatted = numberFormatter.string(from: NSNumber(value:art))
-                artLabel.text = "\(artFormatted!) DAI"
+                
+                let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+                let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+                
+                let partOne = NSMutableAttributedString(string: "\(artFormatted!)", attributes: cryptoAmountAttributes)
+                let partTwo = NSMutableAttributedString(string: " DAI", attributes: cryptoSymbolAttributes)
+                
+                let combination = NSMutableAttributedString()
+                
+                combination.append(partOne)
+                combination.append(partTwo)
+                
+//                artLabel.text = "\(artFormatted!) DAI"
+                artLabel.attributedText = combination
             }
             
             if let liqPrice = cdp.liqPrice, let pip = cdp.pip {
@@ -60,6 +90,12 @@ class CDPBalanceTableViewCell: UITableViewCell {
         return view
     }()
     
+    private let ethCircleImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "eth"))
+        imageView.frame = CGRect(x:0, y: 0, width: 30, height: 30)
+        return imageView
+    }()
+    
     private let identityLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
@@ -67,26 +103,11 @@ class CDPBalanceTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let ethCircleImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "eth"))
-        imageView.frame = CGRect(x:0, y: 0, width: 30, height: 30)
-        return imageView
-    }()
-    
-    private let ratioLabel: UILabel = {
-        let label = PaddedLabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .medium)
-        label.textAlignment = .center
-        label.padding = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 4)
-        label.textColor = UIColor(hexString: "#6F6F6F")
-        label.clipsToBounds = true
-        return label
-    }()
-    
-    private let artLabel: UILabel = {
+    private let liqPriceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .right
+        label.adjustsFontSizeToFitWidth = true
         label.textColor = UIColor(hexString: "#6F6F6F")
         label.clipsToBounds = true
         return label
@@ -96,20 +117,22 @@ class CDPBalanceTableViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .left
-        label.textColor = UIColor(hexString: "#6F6F6F")
+        label.adjustsFontSizeToFitWidth = true
+        label.textColor = UIColor(hexString: "#333333")
         label.clipsToBounds = true
         return label
     }()
     
-    private let liqPriceLabel: UILabel = {
+    private let artLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .right
-        label.textColor = UIColor(hexString: "#6F6F6F")
+        label.adjustsFontSizeToFitWidth = true
+        label.textColor = UIColor(hexString: "#333333")
         label.clipsToBounds = true
         return label
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
