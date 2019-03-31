@@ -26,6 +26,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     }()
 
     private var isLoading = false
+    private var isFirstLoad = true
     private var lastLoadTimestamp = 0.0
 
     private var contentViewControllers = [BalanceContentViewController]()
@@ -68,6 +69,8 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         var nextTopPoint = 0
         // Setup menu
         if shouldShowMenu() {
+            let menuHeight = 44
+            menuViewController = PagingMenuViewController()
             menuViewController.delegate = self
             menuViewController.dataSource = self
             menuViewController.register(type: MenuViewTitleCell.self, forCellWithReuseIdentifier: "MenuViewTitleCell")
@@ -76,15 +79,16 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             view.addSubview(menuViewController.view)
             menuViewController.didMove(toParent: self)
             menuViewController.view.snp.makeConstraints { make in
-                make.height.equalTo(44)
+                make.height.equalTo(menuHeight)
                 make.top.equalTo(view.snp.topMargin)
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
             }
-            nextTopPoint = 44
+            nextTopPoint = menuHeight
         }
 
         // Setup content
+        contentViewController = PagingContentViewController()
         contentViewController.delegate = self
         contentViewController.dataSource = self
         addChild(contentViewController)
@@ -109,10 +113,12 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
     // MARK: - Data Loading -
 
-    private func updateContentControllers() {
-        if contentViewControllers.isEmpty {
-            addPagingController()
+    private func updateContentControllers(countChanged: Bool) {
+        if countChanged {
+            removePagingController()
+        }
 
+        if contentViewControllers.isEmpty {
             if let aggregatedEthereumWallet = aggregatedEthereumWallet {
                 let balanceContentViewController = BalanceContentViewController()
                 balanceContentViewController.ethereumWallet = aggregatedEthereumWallet
@@ -134,6 +140,8 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 }
                 contentViewControllers.append(balanceContentViewController)
             }
+
+            addPagingController()
         } else {
             var offset = 0
             if let aggregatedEthereumWallet = aggregatedEthereumWallet {
@@ -165,7 +173,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             ethereumWallets = [EthereumWallet]()
             aggregatedEthereumWallet = nil
             contentViewControllers = [BalanceContentViewController]()
-            updateContentControllers()
+            updateContentControllers(countChanged: false)
             return
         }
 
@@ -187,8 +195,14 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
         isLoading = true
         DispatchQueue.utility.async {
-            var newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+            // On first load, only load the first (eventually primary) wallet, then load again
+            var newEthereumWallets = [EthereumWallet]()
             var newAggregatedEthereumWallet: EthereumWallet?
+            if self.isFirstLoad, let primaryWallet = CoreDataHelper.loadPrimaryEthereumWallet() {
+                newEthereumWallets = [primaryWallet]
+            } else {
+                newEthereumWallets = CoreDataHelper.loadAllEthereumWallets()
+            }
 
             // Extra check in case of race condition
             guard !newEthereumWallets.isEmpty else {
@@ -197,7 +211,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 self.contentViewControllers = [BalanceContentViewController]()
                 self.isLoading = false
                 DispatchQueue.main.async {
-                    self.updateContentControllers()
+                    self.updateContentControllers(countChanged: false)
                 }
                 return
             }
@@ -245,13 +259,24 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
             // Store the results and reload the table
             DispatchQueue.main.async {
+                let countChanged = newEthereumWallets.count != self.ethereumWallets.count
                 self.ethereumWallets = newEthereumWallets
                 self.aggregatedEthereumWallet = newAggregatedEthereumWallet
                 self.lastLoadTimestamp = Date().timeIntervalSince1970
                 self.isLoading = false
                 self.loadingSpinner.stopAnimating()
-                self.updateContentControllers()
+                self.updateContentControllers(countChanged: countChanged)
                 self.refresh?.endRefreshing()
+
+                // Now that we've loaded the first wallet, load the rest if there are more than one
+                if self.isFirstLoad {
+                    self.isFirstLoad = false
+
+                    if CoreDataHelper.ethereumWalletCount() > 1 {
+                        // Perform after delay to allow the loading spinner to animate away first
+                        self.perform(#selector(self.loadData), with: nil, afterDelay: 0.5)
+                    }
+                }
             }
         }
     }

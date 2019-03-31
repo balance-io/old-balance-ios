@@ -303,7 +303,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         nameTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(10)
-            make.trailing.equalTo(pasteButton.snp.leading).offset(-10)
+            make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview()
         }
 

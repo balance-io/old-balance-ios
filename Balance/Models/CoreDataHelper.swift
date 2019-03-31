@@ -7,6 +7,10 @@ struct CoreDataHelper {
         static let ethereumWalletRemoved = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletRemoved")
     }
 
+    static func loadPrimaryEthereumWallet() -> EthereumWallet? {
+        return loadAllEthereumWallets().first
+    }
+
     static func loadAllEthereumWallets(managedWallets: [NSManagedObject]? = nil) -> [EthereumWallet] {
         let managedEthereumWallets = managedWallets ?? loadAllManagedEthereumWallets()
         var ethereumWallets = [EthereumWallet]()
