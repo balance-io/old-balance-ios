@@ -80,11 +80,22 @@ class WalletInfoView: UIView {
 
         super.init(frame: CGRect.zero)
 
+        let screenSize: CGRect = UIScreen.main.bounds
+
+        var kButtonContainerHeight = 171
+        var kButtonContainerSpacing = -30
+
+        // special case SE (check in pixels)
+        if screenSize.width == 320 {
+            kButtonContainerHeight = 151
+            kButtonContainerSpacing = -15
+        }
+
         backgroundColor = .clear
 
         addSubview(bottomContainer)
         bottomContainer.snp.makeConstraints { make in
-            make.height.equalTo(171)
+            make.height.equalTo(kButtonContainerHeight)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -151,7 +162,7 @@ class WalletInfoView: UIView {
         topContainer.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
-            make.bottom.equalTo(bottomContainer.snp.top).offset(-30)
+            make.bottom.equalTo(bottomContainer.snp.top).offset(kButtonContainerSpacing)
         }
 
         topContainer.addSubview(closeButton)
