@@ -19,6 +19,7 @@ private func createButton(withTitle title: String, andImageName imageName: Strin
 
 class WalletInfoView: UIView {
     private let wallet: EthereumWallet
+    private var updateWalletName: ((String) -> Void)?
 
     private let closeButton: UIButton = {
         let closeButton = UIButton()
@@ -68,18 +69,22 @@ class WalletInfoView: UIView {
 
     private let shareButton: UIButton = createButton(withTitle: "Share", andImageName: "shareButtonIcon")
     private let copyButton: UIButton = createButton(withTitle: "Copy", andImageName: "copyButtonIcon")
+    private let editWalletNameButton: UIButton = createButton(withTitle: "Edit Wallet Name", andImageName: "copyButtonIcon")
 
     private let buttonSeparatorLine1: UIView = newSeparatorLine()
+    private let buttonSeparatorLine2: UIView = newSeparatorLine()
 
-    init(wallet: EthereumWallet) {
+    init(wallet: EthereumWallet, updateHandler handler: @escaping (String) -> Void) {
         self.wallet = wallet
+        updateWalletName = handler
+
         super.init(frame: CGRect.zero)
 
         backgroundColor = .clear
 
         addSubview(bottomContainer)
         bottomContainer.snp.makeConstraints { make in
-            make.height.equalTo(114)
+            make.height.equalTo(171)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -91,7 +96,7 @@ class WalletInfoView: UIView {
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.33)
         }
         shareButton.imageView?.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-21)
@@ -103,7 +108,7 @@ class WalletInfoView: UIView {
             make.height.equalTo(0.5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.top.equalTo(shareButton.snp.bottom)
         }
 
         copyButton.addTarget(self, action: #selector(copyAction), for: .touchUpInside)
@@ -111,10 +116,31 @@ class WalletInfoView: UIView {
         copyButton.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.top.equalTo(buttonSeparatorLine1.snp.bottom)
+            make.height.equalToSuperview().multipliedBy(0.33)
         }
         copyButton.imageView?.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-18)
+            make.centerY.equalToSuperview()
+        }
+
+        bottomContainer.contentView.addSubview(buttonSeparatorLine2)
+        buttonSeparatorLine2.snp.makeConstraints { make in
+            make.height.equalTo(0.5)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(copyButton.snp.bottom)
+        }
+
+        editWalletNameButton.addTarget(self, action: #selector(editWalletNameAction), for: .touchUpInside)
+        bottomContainer.contentView.addSubview(editWalletNameButton)
+        editWalletNameButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(buttonSeparatorLine2.snp.bottom)
+            make.height.equalToSuperview().multipliedBy(0.33)
+        }
+        editWalletNameButton.imageView?.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-18)
             make.centerY.equalToSuperview()
         }
@@ -189,6 +215,33 @@ class WalletInfoView: UIView {
 
     @objc private func copyAction() {
         UIPasteboard.general.string = wallet.address
+        SwiftEntryKit.dismiss()
+    }
+
+    @objc private func editWalletNameAction() {
+        let alertController = UIAlertController(title: "Edit Wallet Name", message: nil, preferredStyle: .alert)
+        alertController.addTextField { textField in
+            if (self.wallet.name?.isEmpty)! {
+                textField.text = "Ethereum Wallet"
+            } else {
+                textField.text = self.wallet.name
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned alertController] _ in
+            let answer = alertController.textFields![0]
+            if let handler = self.updateWalletName {
+                handler(answer.text!)
+            }
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+
+        let rootViewController = AppDelegate.shared.window.rootViewController
+        rootViewController?.present(alertController, animated: true, completion: nil)
+
         SwiftEntryKit.dismiss()
     }
 }

@@ -136,6 +136,11 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let managedObject = managedEthereumWallets[indexPath.row]
+        func updateWalletName(newName: String) {
+            CoreDataHelper.update(managedObject: managedObject, withName: newName)
+        }
+
         tableView.deselectRow(at: indexPath, animated: true)
 
         var attributes = EKAttributes()
@@ -158,7 +163,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
         attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
 
-        let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row])
+        let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row], updateHandler: updateWalletName)
         SwiftEntryKit.display(entry: walletInfoView, using: attributes)
     }
 
