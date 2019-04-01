@@ -23,6 +23,7 @@
 		538AACF72239C5B4004C3706 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF62239C5B4004C3706 /* WalletInfoView.swift */; };
 		538AACF9223A3083004C3706 /* PaddedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538AACF8223A3083004C3706 /* PaddedLabel.swift */; };
 		53BABFB222394005009DCF63 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BABFB122394005009DCF63 /* Token.swift */; };
+		53EBE9EF22528640008D822B /* ApiKeys.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EBE9EE22528640008D822B /* ApiKeys.generated.swift */; };
 		53EE40D0223D8DF9002340E4 /* ExpandableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */; };
 		53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */; };
 		53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */; };
@@ -65,6 +66,7 @@
 		538AACF62239C5B4004C3706 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		538AACF8223A3083004C3706 /* PaddedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddedLabel.swift; sourceTree = "<group>"; };
 		53BABFB122394005009DCF63 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		53EBE9EE22528640008D822B /* ApiKeys.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiKeys.generated.swift; sourceTree = "<group>"; };
 		53EE40CF223D8DF9002340E4 /* ExpandableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableViewCell.swift; sourceTree = "<group>"; };
 		53F0C9AC2235751F00FF0796 /* UILabel-FontSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-FontSize.swift"; sourceTree = "<group>"; };
 		53F0C9AE223578BD00FF0796 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			children = (
 				DC7E6F3022516983000AF7EC /* Balance.entitlements */,
 				DC66983C221CA8F000C383BD /* AppDelegate.swift */,
+				53EBE9EE22528640008D822B /* ApiKeys.generated.swift */,
 				DC5B07672225B07800107A8B /* Extensions */,
 				53F0C9B02235796000FF0796 /* API */,
 				53F0C9A8223571B900FF0796 /* Models */,
@@ -272,6 +275,7 @@
 			buildConfigurationList = DC66984B221CA8F100C383BD /* Build configuration list for PBXNativeTarget "Balance" */;
 			buildPhases = (
 				1498338121071E6253D9E871 /* [CP] Check Pods Manifest.lock */,
+				53F452502252624400CCA8A3 /* Generate ApiKeys Struct */,
 				2D18EB732250C5D000CD4086 /* Run Swift Format */,
 				DC669835221CA8F000C383BD /* Sources */,
 				DC669836221CA8F000C383BD /* Frameworks */,
@@ -405,6 +409,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftFormat/CommandLineTool/swiftformat\" --swiftversion 4.2 \"${SRCROOT}/Balance\"\n";
 		};
+		53F452502252624400CCA8A3 /* Generate ApiKeys Struct */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate ApiKeys Struct";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#check if env-vars.sh exists\nif [ -f ./Balance/apikeys.sh ]; then\nsource ./Balance/apikeys.sh\nelse\nsource ./Balance/default_apikeys.sh\nfi\n#no `else` case needed if the CI works as expected\n./Pods/Sourcery/bin/sourcery --templates ./Balance --sources . --output ./Balance --args ethplorerApiKey=$ETHPLORER_API_KEY,intercomAppId=$INTERCOM_APP_ID,intercomApiKey=$INTERCOM_API_KEY\n";
+		};
 		E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -455,6 +477,7 @@
 				53897A11224413CB009CACC4 /* Chat.swift in Sources */,
 				53F0C9C22236E4E600FF0796 /* WelcomeViewController.swift in Sources */,
 				DC3455082221686D00136F8F /* Balance.xcdatamodeld in Sources */,
+				53EBE9EF22528640008D822B /* ApiKeys.generated.swift in Sources */,
 				53F0C9B22235798100FF0796 /* MakerToolsAPI.swift in Sources */,
 				53F0C9AD2235751F00FF0796 /* UILabel-FontSize.swift in Sources */,
 				531AFF63224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift in Sources */,

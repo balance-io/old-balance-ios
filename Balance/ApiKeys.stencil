@@ -1,0 +1,5 @@
+struct ApiKeys {
+    static let ethplorerApiKey: String = "{{ argument.ethplorerApiKey }}"
+    static let intercomAppId: String? = "{{ argument.intercomAppId }}"
+    static let intercomApiKey: String? = "{{ argument.intercomApiKey }}"
+}

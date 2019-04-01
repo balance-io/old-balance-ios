@@ -12,6 +12,7 @@ target 'Balance' do
   pod 'Intercom'
   pod "PagingKit"
   pod 'SwiftFormat/CLI'
+  pod 'Sourcery'
 
   # For PagingKit
   inherit! :search_paths
