@@ -1,8 +1,10 @@
 import CoreData
+import Intercom
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     // Convenience accessor
     static let shared = UIApplication.shared.delegate as! AppDelegate
 
@@ -14,10 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(AppDelegate.shared)
 
         Chat.setup()
-
         window.rootViewController = TabBarController()
         window.makeKeyAndVisible()
         return true
+    }
+
+    func application(_: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Intercom.setDeviceToken(deviceToken)
     }
 
     func applicationWillResignActive(_: UIApplication) {
@@ -35,8 +40,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.balanceViewController.loadData()
     }
 
-    func applicationDidBecomeActive(_: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
+        application.registerForRemoteNotifications()
     }
 
     func applicationWillTerminate(_: UIApplication) {

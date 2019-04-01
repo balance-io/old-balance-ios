@@ -56,41 +56,26 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
         }
 
-//        containerView.addSubview(titleIconView)
-//        titleIconView.snp.makeConstraints { make in
-//            make.top.equalToSuperview().offset(14)
-//            make.leading.equalToSuperview().offset(14)
-//        }
-
+        // TODO: remove title altogether
         containerView.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(15)
-//            make.centerY.equalTo(titleIconView)
-        }
 
         switch cryptoType {
         case .ethereum:
-//            titleIconView.image = UIImage(named: "ethSquircleDark")
-            titleLabel.text = "Ethereum"
 
             let cryptoRow = CryptoRow(wallet: wallet)
             containerView.addSubview(cryptoRow)
             cryptoRow.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(15)
+                make.centerY.equalToSuperview()
                 make.leading.equalToSuperview()
                 make.trailing.equalToSuperview()
-                make.height.equalTo(40)
             }
         case .erc20:
-//            titleIconView.image = UIImage(named: "erc20SquircleGreen")
-            titleLabel.text = "ERC-20 Tokens"
 
             if let tokens = wallet.tokens {
                 let sortedTokens = tokens.sorted { left, right in
@@ -128,7 +113,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     let container = isHighValueToken ? containerView : lowValueTokensContainer
                     container.addSubview(cryptoRow)
                     cryptoRow.snp.makeConstraints { make in
-                        let topOffset = topView == titleLabel ? 15 : 5
+                        let topOffset = topView == titleLabel ? 10 : 5
                         make.top.equalTo(topView.snp.bottom).offset(topOffset)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
@@ -157,11 +142,11 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         var height: CGFloat = 0
         switch cryptoType {
         case .ethereum:
-            height = 30 + 14 + 25 + 10 + 50
+            height = 70
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
             let tokensCount = CGFloat(tokens?.count ?? 0)
-            height = 30 + 14 + 25 + 10 + (tokensCount * 45) + 5
+            height = 25 + (tokensCount * 45)
         }
         return height
     }
@@ -233,7 +218,7 @@ private class CryptoRow: UIView {
 
     private let cryptoBalanceLabel: VerticalAlignedLabel = {
         let cryptoBalanceLabel = VerticalAlignedLabel()
-        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         cryptoBalanceLabel.textColor = UIColor(hexString: "#272727")
         return cryptoBalanceLabel
     }()
@@ -247,7 +232,7 @@ private class CryptoRow: UIView {
 
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         fiatBalanceLabel.textColor = UIColor(hexString: "#272727")
         fiatBalanceLabel.textAlignment = .right
         return fiatBalanceLabel
@@ -276,7 +261,7 @@ private class CryptoRow: UIView {
         iconImageView.snp.makeConstraints { make in
             make.width.equalTo(30)
             make.height.equalTo(30)
-            make.leading.equalToSuperview().offset(15)
+            make.leading.equalToSuperview().offset(10)
             make.centerY.equalToSuperview()
         }
 
@@ -322,16 +307,34 @@ private class CryptoRow: UIView {
                     cryptoNumberFormatter.maximumFractionDigits = 2
                     cryptoNumberFormatter.minimumFractionDigits = 2
                 } else {
-                    cryptoNumberFormatter.maximumFractionDigits = 0
-                    cryptoNumberFormatter.minimumFractionDigits = 0
+                    cryptoNumberFormatter.maximumFractionDigits = 2
+                    cryptoNumberFormatter.minimumFractionDigits = 2
                 }
                 cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
             }
         }
+
+//        let collateral = ink
+//        let collateralFormatted = numberFormatter.string(from: NSNumber(value: collateral))
+
+        let combination = NSMutableAttributedString()
+
+        let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+        let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+
+        let partOne = NSMutableAttributedString(string: "\(String(cryptoBalance))", attributes: cryptoAmountAttributes)
+        combination.append(partOne)
+
         if let symbol = symbol {
-            cryptoBalance += " \(symbol.uppercased())"
+            let partTwo = NSMutableAttributedString(string: " \(symbol)", attributes: cryptoSymbolAttributes)
+            combination.append(partTwo)
         }
-        cryptoBalanceLabel.text = cryptoBalance
+
+//        inkLabel.attributedText = combination
+
+//        cryptoBalanceLabel.text = cryptoBalance
+        cryptoBalanceLabel.attributedText = combination
+
         addSubview(cryptoBalanceLabel)
         cryptoBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
@@ -343,8 +346,17 @@ private class CryptoRow: UIView {
         fiatBalanceLabel.contentMode = .top
         fiatBalanceLabel.text = ""
         if let fiatBalance = fiatBalance {
-            fiatNumberFormatter.minimumFractionDigits = 0
-            fiatNumberFormatter.maximumFractionDigits = 0
+            if fiatBalance > 100 {
+                fiatNumberFormatter.minimumFractionDigits = 0
+                fiatNumberFormatter.maximumFractionDigits = 0
+            } else if fiatBalance < 100 {
+                fiatNumberFormatter.minimumFractionDigits = 0
+                fiatNumberFormatter.maximumFractionDigits = 0
+            } else if fiatBalance < 1 {
+                fiatNumberFormatter.minimumFractionDigits = 2
+                fiatNumberFormatter.maximumFractionDigits = 2
+            }
+
             fiatBalanceLabel.text = fiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "—"
         }
         addSubview(fiatBalanceLabel)

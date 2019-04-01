@@ -20,7 +20,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
                 let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
 
                 let partOne = NSMutableAttributedString(string: "Ether", attributes: cryptoAmountAttributes)
-                let partTwo = NSMutableAttributedString(string: "#\(id)", attributes: cryptoSymbolAttributes)
+                let partTwo = NSMutableAttributedString(string: " #\(id)", attributes: cryptoSymbolAttributes)
 
                 let combination = NSMutableAttributedString()
 
@@ -69,21 +69,28 @@ class CDPBalanceTableViewCell: UITableViewCell {
             }
 
             if let liqPrice = cdp.liqPrice, let pip = cdp.pip {
-                var priceColor = UIColor(hexString: "#6F6F6F")!
-
+                var riskColor = UIColor(hexString: "#6F6F6F")!
+                // TODO: - For liquidated CDPs, replace numbers with liquidate status?
+                var riskRange = "Unknown"
                 if let ratio = cdp.ratio {
-                    if ratio > 150.00 {
-                        priceColor = UIColor(hexString: "#EA0201")!
-                    } else if ratio > 200.00 {
-                        priceColor = UIColor(hexString: "#F6851B")!
-                    } else if ratio > 250.00 {
-                        priceColor = UIColor(hexString: "#1ABC9C")!
+                    if ratio < 150.00 {
+                        riskColor = UIColor(hexString: "#6F6F6F")!
+                        riskRange = "Liquidated"
+                    } else if ratio < 200.00 {
+                        riskColor = UIColor(hexString: "#EA0201")!
+                        riskRange = "Higher"
+                    } else if ratio < 250.00 {
+                        riskColor = UIColor(hexString: "#F6851B")!
+                        riskRange = "Medium"
+                    } else if ratio > 300.00 {
+                        riskColor = UIColor(hexString: "#1ABC9C")!
+                        riskRange = "Lower"
                     }
                 }
 
                 let cryptoAmountAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
                 let cryptoSymbolAttributes: [NSAttributedString.Key: Any] = [
-                    NSAttributedString.Key.foregroundColor: priceColor,
+                    NSAttributedString.Key.foregroundColor: riskColor,
                     NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .medium),
                 ]
 

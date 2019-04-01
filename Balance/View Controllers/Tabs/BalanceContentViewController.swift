@@ -142,6 +142,66 @@ class BalanceContentViewController: UITableViewController {
         }
     }
 
+    public override func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
+        return 40.0
+    }
+
+    public override func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view: UIView
+        if let _view: UIView = tableView.headerView(forSection: section) {
+            view = _view
+        } else {
+//            let dxOffset: CGFloat = 16.0
+            view = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 60))
+        }
+
+        let icon: UIImageView = UIImageView()
+
+        // create our label
+        let label: UILabel = UILabel(frame: view.frame)
+        label.textColor = UIColor(hexString: "#131415")
+
+        let sectionName: String
+        switch section {
+        case 0:
+            sectionName = NSLocalizedString("Maker Loans", comment: "")
+            icon.image = UIImage(named: "makerSection")
+        case 1:
+            sectionName = NSLocalizedString("Ethereum", comment: "")
+            icon.image = UIImage(named: "ethereumSection")
+        case 2:
+            sectionName = NSLocalizedString("Tokens", comment: "")
+            icon.image = UIImage(named: "erc20Section")
+        default:
+            sectionName = ""
+        }
+
+        label.text = sectionName
+//        label.font = UIFont.systemFontOfSize(UIFont.smallSystemFontSize() + 4.0)
+
+        view.addSubview(icon)
+
+        icon.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(10)
+            make.centerY.equalToSuperview()
+        }
+
+        label.font = UIFont.systemFont(ofSize: 18)
+        view.addSubview(label)
+//        view.addSubview(imageView)
+
+        // setup the view
+        view.backgroundColor = UIColor(hexString: "#fbfbfb")
+
+        label.snp.makeConstraints { make in
+            make.leading.equalTo(icon.snp.trailing).offset(10)
+//            make.trailing.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+
+        return view
+    }
+
     override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let ethereumWallet = ethereumWallet else {
             return 0

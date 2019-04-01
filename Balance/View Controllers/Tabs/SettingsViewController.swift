@@ -11,14 +11,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
 
     private let balanceLogoImageView: UIImageView = {
         let balanceLogoImageView = UIImageView()
-        balanceLogoImageView.image = UIImage(named: "balanceLogo")
+        balanceLogoImageView.image = UIImage(named: "balanceLogoMedium")
         return balanceLogoImageView
-    }()
-
-    private let balanceNameImageView: UIImageView = {
-        let balanceNameImageView = UIImageView()
-        balanceNameImageView.image = UIImage(named: "balanceName")
-        return balanceNameImageView
     }()
 
     private let wavesImageView: UIImageView = {
@@ -49,6 +43,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         let jamierumbelowImageView = UIImageView()
         jamierumbelowImageView.image = UIImage(named: "jamierumbelow")
         return jamierumbelowImageView
+    }()
+
+    private let borwahsImageView: UIImageView = {
+        let borwahsImageView = UIImageView()
+        borwahsImageView.image = UIImage(named: "borwahs")
+        return borwahsImageView
     }()
 
     private let joinTitleLabel: UILabel = {
@@ -145,15 +145,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             make.centerX.equalToSuperview()
         }
 
-        contentView.addSubview(balanceNameImageView)
-        balanceNameImageView.snp.makeConstraints { make in
-            make.top.equalTo(balanceLogoImageView.snp.bottom).offset(25)
-            make.centerX.equalTo(balanceLogoImageView)
-        }
-
         contentView.addSubview(wavesImageView)
         wavesImageView.snp.makeConstraints { make in
-            make.top.equalTo(balanceNameImageView.snp.bottom).offset(25)
+            make.top.equalTo(balanceLogoImageView.snp.bottom).offset(45)
             make.centerX.equalToSuperview()
         }
 
@@ -167,7 +161,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         contentView.addSubview(benImageView)
         benImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(40)
-            make.centerY.equalTo(wavesImageView).offset(-10)
+            make.centerY.equalTo(wavesImageView).offset(5)
         }
 
         contentView.addSubview(wolffanImageView)
@@ -180,6 +174,12 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         jamierumbelowImageView.snp.makeConstraints { make in
             make.centerX.equalTo(wavesImageView).offset(-110)
             make.centerY.equalTo(wavesImageView).offset(-5)
+        }
+
+        contentView.addSubview(borwahsImageView)
+        borwahsImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(wavesImageView).offset(-20)
+            make.centerY.equalTo(wavesImageView).offset(-40)
         }
 
         contentView.addSubview(joinTitleLabel)
