@@ -114,6 +114,20 @@ struct CoreDataHelper {
         }
     }
 
+    @discardableResult static func update(managedObject: NSManagedObject, withName name: String) -> Bool {
+        let managedContext = AppDelegate.shared.persistentContainer.viewContext
+
+        do {
+            managedObject.setValue(name, forKey: "name")
+
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not update wallet. \(error), \(error.userInfo)")
+            return false
+        }
+    }
+
     static func delete(managedObject: NSManagedObject) -> Bool {
         let managedContext = AppDelegate.shared.persistentContainer.viewContext
         managedContext.delete(managedObject)
