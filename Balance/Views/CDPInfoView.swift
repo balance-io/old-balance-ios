@@ -5,7 +5,7 @@ import UIKit
 private let numberFormatter: NumberFormatter = {
     let numberFormatter = NumberFormatter()
     numberFormatter.numberStyle = .decimal
-    numberFormatter.maximumFractionDigits = 2   
+    numberFormatter.maximumFractionDigits = 2
     return numberFormatter
 }()
 

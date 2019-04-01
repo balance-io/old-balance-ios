@@ -218,7 +218,7 @@ private class CryptoRow: UIView {
 
     private let cryptoBalanceLabel: VerticalAlignedLabel = {
         let cryptoBalanceLabel = VerticalAlignedLabel()
-        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        cryptoBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         cryptoBalanceLabel.textColor = UIColor(hexString: "#272727")
         return cryptoBalanceLabel
     }()
@@ -232,7 +232,7 @@ private class CryptoRow: UIView {
 
     private let fiatBalanceLabel: UILabel = {
         let fiatBalanceLabel = UILabel()
-        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        fiatBalanceLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         fiatBalanceLabel.textColor = UIColor(hexString: "#272727")
         fiatBalanceLabel.textAlignment = .right
         return fiatBalanceLabel
@@ -307,16 +307,34 @@ private class CryptoRow: UIView {
                     cryptoNumberFormatter.maximumFractionDigits = 2
                     cryptoNumberFormatter.minimumFractionDigits = 2
                 } else {
-                    cryptoNumberFormatter.maximumFractionDigits = 0
-                    cryptoNumberFormatter.minimumFractionDigits = 0
+                    cryptoNumberFormatter.maximumFractionDigits = 2
+                    cryptoNumberFormatter.minimumFractionDigits = 2
                 }
                 cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
             }
         }
+
+//        let collateral = ink
+//        let collateralFormatted = numberFormatter.string(from: NSNumber(value: collateral))
+
+        let combination = NSMutableAttributedString()
+
+        let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
+        let cryptoSymbolAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .light)]
+
+        let partOne = NSMutableAttributedString(string: "\(String(cryptoBalance))", attributes: cryptoAmountAttributes)
+        combination.append(partOne)
+
         if let symbol = symbol {
-            cryptoBalance += " \(symbol.uppercased())"
+            let partTwo = NSMutableAttributedString(string: " \(symbol)", attributes: cryptoSymbolAttributes)
+            combination.append(partTwo)
         }
-        cryptoBalanceLabel.text = cryptoBalance
+
+//        inkLabel.attributedText = combination
+
+//        cryptoBalanceLabel.text = cryptoBalance
+        cryptoBalanceLabel.attributedText = combination
+
         addSubview(cryptoBalanceLabel)
         cryptoBalanceLabel.snp.makeConstraints { make in
             make.height.equalTo(iconImageView).multipliedBy(0.5)
@@ -328,8 +346,17 @@ private class CryptoRow: UIView {
         fiatBalanceLabel.contentMode = .top
         fiatBalanceLabel.text = ""
         if let fiatBalance = fiatBalance {
-            fiatNumberFormatter.minimumFractionDigits = 0
-            fiatNumberFormatter.maximumFractionDigits = 0
+            if fiatBalance > 100 {
+                fiatNumberFormatter.minimumFractionDigits = 0
+                fiatNumberFormatter.maximumFractionDigits = 0
+            } else if fiatBalance < 100 {
+                fiatNumberFormatter.minimumFractionDigits = 0
+                fiatNumberFormatter.maximumFractionDigits = 0
+            } else if fiatBalance < 1 {
+                fiatNumberFormatter.minimumFractionDigits = 2
+                fiatNumberFormatter.maximumFractionDigits = 2
+            }
+
             fiatBalanceLabel.text = fiatNumberFormatter.string(from: fiatBalance as NSNumber) ?? "—"
         }
         addSubview(fiatBalanceLabel)
