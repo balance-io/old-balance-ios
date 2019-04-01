@@ -2,6 +2,21 @@ import SnapKit
 import SwiftEntryKit
 import UIKit
 
+private func newSeparatorLine() -> UIView {
+    let buttonSeparatorLine = UIView()
+    buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+    return buttonSeparatorLine
+}
+
+private func createButton(withTitle title: String, andImageName imageName: String) -> UIButton {
+    let newButton = UIButton()
+    newButton.contentHorizontalAlignment = .left
+    newButton.setTitle(title, for: .normal)
+    newButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
+    newButton.setImage(UIImage(named: imageName), for: .normal)
+    return newButton
+}
+
 class WalletInfoView: UIView {
     private let wallet: EthereumWallet
 
@@ -51,30 +66,10 @@ class WalletInfoView: UIView {
         return bottomContainer
     }()
 
-    private let shareButton: UIButton = {
-        let shareButton = UIButton()
-        shareButton.contentHorizontalAlignment = .left
-        shareButton.setTitle("Share", for: .normal)
-        shareButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
-        shareButton.setImage(UIImage(named: "shareButtonIcon"), for: .normal)
-        return shareButton
-    }()
+    private let shareButton: UIButton = createButton(withTitle: "Share", andImageName: "shareButtonIcon")
+    private let copyButton: UIButton = createButton(withTitle: "Copy", andImageName: "copyButtonIcon")
 
-    private let buttonSeparatorLine: UIView = {
-        let buttonSeparatorLine = UIView()
-        buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        return buttonSeparatorLine
-    }()
-
-    private let copyButton: UIButton = {
-        let copyButton = UIButton()
-        copyButton.contentHorizontalAlignment = .left
-        copyButton.setTitle("Copy", for: .normal)
-        copyButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
-        copyButton.setImage(UIImage(named: "copyButtonIcon"), for: .normal)
-        copyButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
-        return copyButton
-    }()
+    private let buttonSeparatorLine1: UIView = newSeparatorLine()
 
     init(wallet: EthereumWallet) {
         self.wallet = wallet
@@ -103,8 +98,8 @@ class WalletInfoView: UIView {
             make.centerY.equalToSuperview()
         }
 
-        bottomContainer.contentView.addSubview(buttonSeparatorLine)
-        buttonSeparatorLine.snp.makeConstraints { make in
+        bottomContainer.contentView.addSubview(buttonSeparatorLine1)
+        buttonSeparatorLine1.snp.makeConstraints { make in
             make.height.equalTo(0.5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
