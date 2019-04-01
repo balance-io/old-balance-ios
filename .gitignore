@@ -1,5 +1,7 @@
 # Prevent accidentally checking in API keys
 apikeys.plist
+apikeys.sh
+*.generated.swift
 
 # VIM swap files
 *.swp
