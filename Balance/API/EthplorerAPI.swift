@@ -4,6 +4,7 @@ import Foundation
 struct EthplorerAPI {
     private static let baseURL = URL(string: "https://api.ethplorer.io/")!
     private static let defaultApiKey = "freekey"
+
     private static let apiKey: String = {
         ApiKeys.ethplorerApiKey == "1" ? defaultApiKey : ApiKeys.ethplorerApiKey
     }()
