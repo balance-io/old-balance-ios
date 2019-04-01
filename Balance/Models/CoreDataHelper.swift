@@ -4,6 +4,7 @@ import Foundation
 struct CoreDataHelper {
     struct Notifications {
         static let ethereumWalletAdded = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletAdded")
+        static let ethereumWalletChanged = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletChanged")
         static let ethereumWalletRemoved = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletRemoved")
     }
 

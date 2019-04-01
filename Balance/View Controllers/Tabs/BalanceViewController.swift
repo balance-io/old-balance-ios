@@ -60,6 +60,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
         loadData()
 
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(walletChanged), name: CoreDataHelper.Notifications.ethereumWalletChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
     }
 
@@ -282,6 +283,10 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
     }
 
     @objc private func walletAdded() {
+        walletsChanged()
+    }
+
+    @objc private func walletChanged() {
         walletsChanged()
     }
 
