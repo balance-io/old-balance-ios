@@ -265,7 +265,7 @@ private class CryptoRow: UIView {
             make.centerY.equalToSuperview()
         }
 
-        var tokenRate = ""
+        var tokenRate = "No Price"
         if let rate = rate {
             if rate == 0 {
                 fiatNumberFormatter.minimumFractionDigits = 0
@@ -278,6 +278,7 @@ private class CryptoRow: UIView {
                 tokenRate = "\(rateString)"
             }
         }
+
         rateLabel.text = tokenRate
         rateLabel.textAlignment = .right
         addSubview(rateLabel)
@@ -287,7 +288,21 @@ private class CryptoRow: UIView {
             make.top.equalTo(iconImageView).offset(-2)
         }
 
-        tokenNameLabel.text = name
+        var tokenName = "No Name"
+
+        if let name = name {
+            if name.count > 25 {
+                tokenName = name.prefix(25) + " ..."
+            } else {
+                tokenName = name
+            }
+
+            if name == "" {
+                tokenName = "No Name"
+            }
+        }
+
+        tokenNameLabel.text = tokenName
         addSubview(tokenNameLabel)
         tokenNameLabel.snp.makeConstraints { make in
             make.height.equalTo(rateLabel)
@@ -296,26 +311,27 @@ private class CryptoRow: UIView {
             make.top.equalTo(rateLabel)
         }
 
-        var cryptoBalance = "0"
-        if let balance = balance {
-            // TODO: - Fix this for multi-currency
-            if let rate = rate {
-                if rate > 1000 {
-                    cryptoNumberFormatter.maximumFractionDigits = 4
-                    cryptoNumberFormatter.minimumFractionDigits = 4
-                } else if rate > 100 {
-                    cryptoNumberFormatter.maximumFractionDigits = 2
-                    cryptoNumberFormatter.minimumFractionDigits = 2
-                } else {
-                    cryptoNumberFormatter.maximumFractionDigits = 2
-                    cryptoNumberFormatter.minimumFractionDigits = 2
-                }
-                cryptoBalance = cryptoNumberFormatter.string(from: balance as NSNumber) ?? "0"
+        var cryptoBalance = "-"
+
+        // TODO: - Fix this for multi-currency
+        if let rate = rate {
+            if rate > 1000 {
+                cryptoNumberFormatter.maximumFractionDigits = 4
+                cryptoNumberFormatter.minimumFractionDigits = 4
+            } else if rate > 100 {
+                cryptoNumberFormatter.maximumFractionDigits = 2
+                cryptoNumberFormatter.minimumFractionDigits = 2
+            } else {
+                cryptoNumberFormatter.maximumFractionDigits = 2
+                cryptoNumberFormatter.minimumFractionDigits = 2
             }
         }
 
-//        let collateral = ink
-//        let collateralFormatted = numberFormatter.string(from: NSNumber(value: collateral))
+        if let balance = balance {
+            if let cryptoBalanceString = cryptoNumberFormatter.string(from: balance as NSNumber) {
+                cryptoBalance = "\(cryptoBalanceString)"
+            }
+        }
 
         let combination = NSMutableAttributedString()
 
@@ -330,9 +346,6 @@ private class CryptoRow: UIView {
             combination.append(partTwo)
         }
 
-//        inkLabel.attributedText = combination
-
-//        cryptoBalanceLabel.text = cryptoBalance
         cryptoBalanceLabel.attributedText = combination
 
         addSubview(cryptoBalanceLabel)
@@ -344,7 +357,7 @@ private class CryptoRow: UIView {
 
         fiatBalanceLabel.textAlignment = .right
         fiatBalanceLabel.contentMode = .top
-        fiatBalanceLabel.text = ""
+        fiatBalanceLabel.text = "$0"
         if let fiatBalance = fiatBalance {
             if fiatBalance > 100 {
                 fiatNumberFormatter.minimumFractionDigits = 0

@@ -304,7 +304,7 @@ class CDPInfoView: UIView {
                 print("Failed to format artString: \(String(describing: artString))")
             }
         }
-        
+
         addSubview(debtBreakdownLabel)
         debtBreakdownLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-10)
