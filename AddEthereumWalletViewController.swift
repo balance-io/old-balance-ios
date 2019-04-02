@@ -526,6 +526,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             return
         }
 
+        view.endEditing(true)
+
         let ethereumWallet = EthereumWallet(name: nameTextField.text, address: address, includeInTotal: includeInTotalSwitch.isOn)
 
         CoreDataHelper.save(ethereumWallet: ethereumWallet)
