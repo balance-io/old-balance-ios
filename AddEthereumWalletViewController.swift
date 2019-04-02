@@ -229,6 +229,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     // MARK - View Lifecycle -
 
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view != addButton
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -521,6 +525,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         guard let address = addressTextField.text else {
             return
         }
+
+        view.endEditing(true)
 
         let ethereumWallet = EthereumWallet(name: nameTextField.text, address: address, includeInTotal: includeInTotalSwitch.isOn)
 
