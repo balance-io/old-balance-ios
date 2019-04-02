@@ -15,6 +15,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
             if isExpanded != newValue {
                 UIView.animate(withDuration: 0.2) {
                     self.setupLowValueTokensContainer(show: newValue)
+                    self.flipExpandCollapseCaret(expanded: newValue)
                 }
             }
         }
@@ -29,6 +30,8 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         view.layer.borderWidth = 1
         return view
     }()
+
+    private let expandCaretView = UIImageView()
 
     private let titleIconView: UIImageView = {
         let titleIconView = UIImageView()
@@ -60,6 +63,15 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-5)
+        }
+
+        if isExpandable {
+            expandCaretView.image = isExpanded ? UIImage(named: "collapse") : UIImage(named: "expand")
+            contentView.addSubview(expandCaretView)
+            expandCaretView.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.top.equalTo(containerView.snp.bottom).offset(-10)
+            }
         }
 
         // TODO: remove title altogether
@@ -136,6 +148,10 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     private func setupLowValueTokensContainer(show: Bool) {
         lowValueTokensContainer.alpha = show ? 1.0 : 0.0
         lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
+    }
+
+    private func flipExpandCollapseCaret(expanded: Bool) {
+        expandCaretView.image = UIImage(named: expanded ? "collapse" : "expand")
     }
 
     static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool) -> CGFloat {
