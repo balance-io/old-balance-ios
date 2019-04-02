@@ -229,6 +229,10 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     // MARK - View Lifecycle -
 
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.view != addButton
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
