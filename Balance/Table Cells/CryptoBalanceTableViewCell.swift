@@ -54,7 +54,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         super.init(style: .default, reuseIdentifier: reuseIdentifier, isExpanded: isExpanded, indexPath: indexPath)
 
-        isExpandable = (cryptoType == .erc20)
+        isExpandable = (cryptoType == .erc20) && !wallet.isAlwaysExpanded()
 
         selectionStyle = .none
         contentView.backgroundColor = UIColor(hexString: "#fbfbfb")
@@ -149,7 +149,9 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     }
 
                     // Insert the expand / collapse row at the end of the list
-                    expandCollapseRow = appendExpandCollapseRow(to: containerView)
+                    if highValueMap[true] != nil, !highValueMap[true]!.isEmpty {
+                        expandCollapseRow = appendExpandCollapseRow(to: containerView)
+                    }
                 }
             }
         }

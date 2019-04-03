@@ -44,6 +44,10 @@ struct EthereumWallet {
         return name
     }
 
+    func isAlwaysExpanded() -> Bool {
+        return valuableTokens?.isEmpty == true
+    }
+
     static func aggregated(wallets: [EthereumWallet]) -> EthereumWallet? {
         // Aggregate the balances
         // NOTE: This currently assumes all wallets have the same fiat currency
