@@ -69,7 +69,7 @@ class WalletInfoView: UIView {
 
     private let shareButton: UIButton = createButton(withTitle: "Share", andImageName: "shareButtonIcon")
     private let copyButton: UIButton = createButton(withTitle: "Copy", andImageName: "copyButtonIcon")
-    private let editWalletNameButton: UIButton = createButton(withTitle: "Edit Wallet Name", andImageName: "copyButtonIcon")
+    private let editWalletNameButton: UIButton = createButton(withTitle: "Edit Wallet Name", andImageName: "editWalletIcon")
 
     private let buttonSeparatorLine1: UIView = newSeparatorLine()
     private let buttonSeparatorLine2: UIView = newSeparatorLine()
