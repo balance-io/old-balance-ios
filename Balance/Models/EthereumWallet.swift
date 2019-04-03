@@ -1,6 +1,10 @@
 import Foundation
 
 struct EthereumWallet {
+    struct Notifications {
+        static let userOwnsBal = Notification.Name(rawValue: "EthereumWallet.userOwnsBal")
+    }
+
     let name: String?
     let address: String
     let includeInTotal: Bool
@@ -94,6 +98,15 @@ struct EthereumWallet {
                         }
                         totalTokens = tempTotalTokens
                     }
+                }
+
+                // Check for any BAL tokens; if we have some, let the rest of the app know.
+                let balBalance: Double = totalTokens
+                    .filter({ $0.symbol == "BAL" })
+                    .reduce(0) { $0 + ($1.balance ?? 0) }
+
+                if balBalance > 0 {
+                    NotificationCenter.default.post(name: EthereumWallet.Notifications.userOwnsBal, object: nil, userInfo: ["total": balBalance])
                 }
 
                 if let CDPs = wallet.CDPs {
