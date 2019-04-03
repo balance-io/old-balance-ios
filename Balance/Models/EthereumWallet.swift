@@ -14,11 +14,11 @@ struct EthereumWallet {
 
     var tokens: [Token]?
     var valuableTokens: [Token]? {
-        return tokens?.filter { $0.fiatBalance ?? 0 >= Token.fiatValueCutoff }
+        return tokens?.filter { ($0.fiatBalance ?? 0) >= Token.fiatValueCutoff }
     }
 
     var nonValuableTokens: [Token]? {
-        return tokens?.filter { $0.fiatBalance ?? 0 < Token.fiatValueCutoff }
+        return tokens?.filter { ($0.fiatBalance ?? 0) < Token.fiatValueCutoff }
     }
 
     var CDPs: [CDP]?

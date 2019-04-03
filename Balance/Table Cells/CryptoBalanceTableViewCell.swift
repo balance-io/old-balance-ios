@@ -11,28 +11,13 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     let cryptoType: CryptoType
 
     private var expandCollapseRow: ExpandCollapseRow?
-    private var expandCollapseRowLowValueConstraint: Constraint?
-    private var expandCollapseRowHighValueConstraint: Constraint?
 
     override var isExpanded: Bool {
         willSet {
             if isExpanded != newValue {
                 UIView.animate(withDuration: 0.2) {
-                    self.setupLowValueTokensContainer(show: newValue)
-
-                    if let expandCollapseRow = self.expandCollapseRow {
-                        expandCollapseRow.isExpanded = newValue
-
-                        if newValue {
-                            self.expandCollapseRowLowValueConstraint?.activate()
-                            self.expandCollapseRowHighValueConstraint?.deactivate()
-                        } else {
-                            self.expandCollapseRowHighValueConstraint?.activate()
-                            self.expandCollapseRowLowValueConstraint?.deactivate()
-                        }
-
-                        expandCollapseRow.layoutIfNeeded()
-                    }
+                    self.toggleVisibilityOfLowValueTokensContainer(show: newValue)
+                    self.expandCollapseRow?.isExpanded = newValue
                 }
             }
         }
@@ -66,10 +51,6 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     init(withIdentifier reuseIdentifier: String, wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool, indexPath: IndexPath) {
         self.wallet = wallet
         self.cryptoType = cryptoType
-
-        expandCollapseRow = nil
-        expandCollapseRowHighValueConstraint = nil
-        expandCollapseRowLowValueConstraint = nil
 
         super.init(style: .default, reuseIdentifier: reuseIdentifier, isExpanded: isExpanded, indexPath: indexPath)
 
@@ -138,7 +119,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                         make.top.equalTo(topView.snp.bottom).offset(5)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
-                        make.height.equalTo(40)
+                        make.height.equalTo(CryptoRow.rowHeight)
                     }
                     topView = tokenRow
                 }
@@ -147,8 +128,8 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                 // and render them all into the low value tokens container.
                 if highValueMap[false] != nil {
                     // Initialise the low value tokens container
-                    setupLowValueTokensContainer(show: isExpanded)
                     containerView.addSubview(lowValueTokensContainer)
+                    toggleVisibilityOfLowValueTokensContainer(show: isExpanded)
                     lowValueTokensContainer.snp.makeConstraints { make in
                         make.top.equalTo(highValueTokensContainer.snp.bottom).offset(5)
                         make.leading.equalToSuperview()
@@ -162,7 +143,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                             make.top.equalTo(topView.snp.bottom).offset(5)
                             make.leading.equalToSuperview()
                             make.trailing.equalToSuperview()
-                            make.height.equalTo(40)
+                            make.height.equalTo(CryptoRow.rowHeight)
                         }
                         topView = tokenRow
                     }
@@ -182,36 +163,46 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         return CryptoBalanceTableViewCell.calculatedHeight(wallet: wallet, cryptoType: cryptoType, isExpanded: isExpanded)
     }
 
-    private func setupLowValueTokensContainer(show: Bool) {
-        lowValueTokensContainer.alpha = show ? 1.0 : 0.0
-        lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
-    }
-
-    private func appendExpandCollapseRow(to container: UIView) -> ExpandCollapseRow {
-        let expandCollapseRow = ExpandCollapseRow(isExpanded: isExpanded)
-        container.addSubview(expandCollapseRow)
-        expandCollapseRow.snp.makeConstraints { make in
-            expandCollapseRowHighValueConstraint = make.top.equalTo(highValueTokensContainer.snp.bottom).offset(5).constraint
-            expandCollapseRowLowValueConstraint = make.top.equalTo(lowValueTokensContainer.snp.bottom).offset(5).constraint
-
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(40)
-        }
-        return expandCollapseRow
-    }
-
     static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool) -> CGFloat {
         var height: CGFloat = 0
+
         switch cryptoType {
         case .ethereum:
             height = 70
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
-            let tokensCount = CGFloat(tokens?.count ?? 0)
-            height = 65 + (tokensCount * 45)
+            let tokensCount = Int(tokens?.count ?? 0)
+            height = CGFloat(20 + CryptoRow.rowHeight + calculateHeightForRows(tokensCount)) // 25 for label, 35 for expand row, then 40 + 5 for every token displayed
         }
+
         return height
+    }
+
+    static func calculateHeightForRows(_ tokenCount: Int) -> Int {
+        return Int(tokenCount * (CryptoRow.rowHeight + 5))
+    }
+
+    private func toggleVisibilityOfLowValueTokensContainer(show: Bool) {
+        lowValueTokensContainer.alpha = show ? 1.0 : 0.0
+        lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
+    }
+
+    private func appendExpandCollapseRow(to container: UIView) -> ExpandCollapseRow {
+        var walletTotal: Double?
+        if let lowValueTokens = wallet.nonValuableTokens {
+            walletTotal = Double(lowValueTokens.reduce(0) { $0 + ($1.fiatBalance ?? 0) })
+        }
+
+        let expandCollapseRow = ExpandCollapseRow(isExpanded: isExpanded, walletTotal: walletTotal)
+        container.addSubview(expandCollapseRow)
+        expandCollapseRow.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-5)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        }
+
+        return expandCollapseRow
     }
 }
 
@@ -269,18 +260,23 @@ private class ExpandCollapseRow: UIView {
         return label
     }()
 
-    var isExpanded: Bool {
-        willSet {
-            if isExpanded != newValue {
-                chevronImageView.image = UIImage(named: newValue ? "chevronCircleUp" : "chevronCircleDown")
-            }
+    private let walletTotalLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.textColor = UIColor(hexString: "#272727")
+        label.textAlignment = .right
+        return label
+    }()
+
+    var isExpanded: Bool = false {
+        didSet {
+            chevronImageView.image = UIImage(named: isExpanded ? "chevronCircleUp" : "chevronCircleDown")
         }
     }
 
-    init(isExpanded: Bool) {
+    init(isExpanded: Bool, walletTotal: Double?) {
+        super.init(frame: .zero)
         self.isExpanded = isExpanded
-
-        super.init(frame: CGRect.zero)
 
         // Chevron Circle Image
         chevronImageView.image = UIImage(named: isExpanded ? "chevronCircleUp" : "chevronCircleDown")
@@ -296,9 +292,20 @@ private class ExpandCollapseRow: UIView {
         expandCollapseLabel.text = "Other Balances"
         addSubview(expandCollapseLabel)
         expandCollapseLabel.snp.makeConstraints { make in
-            make.height.equalTo(30)
             make.leading.equalTo(chevronImageView.snp.trailing).offset(15)
-            make.bottom.equalTo(chevronImageView).offset(5)
+            make.bottom.equalTo(chevronImageView.snp.bottom)
+        }
+
+        // Total amount label
+        if let walletTotal = walletTotal {
+            fiatNumberFormatter.maximumFractionDigits = 0
+            walletTotalLabel.text = "~" + (fiatNumberFormatter.string(from: walletTotal as NSNumber) ?? "")
+            addSubview(walletTotalLabel)
+            walletTotalLabel.snp.makeConstraints { make in
+                make.top.equalTo(expandCollapseLabel.snp.top)
+                make.trailing.equalToSuperview().offset(-15)
+                make.bottom.equalTo(chevronImageView.snp.bottom)
+            }
         }
     }
 
@@ -308,6 +315,8 @@ private class ExpandCollapseRow: UIView {
 }
 
 private class CryptoRow: UIView {
+    static let rowHeight = 40
+
     var isHighValue: Bool {
         return token?.fiatBalance ?? 0 >= Token.fiatValueCutoff
     }
