@@ -10,6 +10,8 @@ class BalanceContentViewController: UITableViewController {
         case erc20 = 2
     }
 
+    var sections: [Section] = []
+
     var ethereumWallet: EthereumWallet?
     var erc20TableCell: CryptoBalanceTableViewCell?
     var refreshBlock: RefreshBlock?
@@ -104,13 +106,24 @@ class BalanceContentViewController: UITableViewController {
     }
 
     override func numberOfSections(in _: UITableView) -> Int {
-        return 3
+        var count = 2
+
+        let showCDPSection = ethereumWallet?.CDPs?.isEmpty != true
+        count = showCDPSection ? count + 1 : count
+
+        // determine number of sections and placement
+        if count == 3 {
+            sections.append(Section.cdp)
+        }
+
+        sections.append(Section.ethereum)
+        sections.append(Section.erc20)
+
+        return count
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sectionEnum = Section(rawValue: section) else {
-            return 0
-        }
+        let sectionEnum: Section = sections[section]
 
         switch sectionEnum {
         case .ethereum:
@@ -128,9 +141,11 @@ class BalanceContentViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
-        if indexPath.section == Section.ethereum.rawValue {
+        let sectionEnum: Section = sections[indexPath.section]
+        
+        if sectionEnum == Section.ethereum {
             return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
-        } else if indexPath.section == Section.erc20.rawValue {
+        } else if sectionEnum == Section.erc20 {
             // Cache this cell to prevent stuttering when scrolling
             return erc20TableCell!
         } else {
@@ -162,14 +177,16 @@ class BalanceContentViewController: UITableViewController {
         label.textColor = UIColor(hexString: "#131415")
 
         let sectionName: String
-        switch section {
-        case 0:
+        let sectionEnum: Section = sections[section]
+
+        switch sectionEnum {
+        case .cdp:
             sectionName = NSLocalizedString("Maker Loans", comment: "")
             icon.image = UIImage(named: "makerSection")
-        case 1:
+        case .ethereum:
             sectionName = NSLocalizedString("Ethereum", comment: "")
             icon.image = UIImage(named: "ethereumSection")
-        case 2:
+        case .erc20:
             sectionName = NSLocalizedString("Tokens", comment: "")
             icon.image = UIImage(named: "erc20Section")
         default:
