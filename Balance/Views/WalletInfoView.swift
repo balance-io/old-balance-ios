@@ -101,6 +101,7 @@ class WalletInfoView: UIView {
             make.bottom.equalToSuperview()
         }
 
+        shareButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 0)
         shareButton.addTarget(self, action: #selector(shareAction), for: .touchUpInside)
         bottomContainer.contentView.addSubview(shareButton)
         shareButton.snp.makeConstraints { make in
