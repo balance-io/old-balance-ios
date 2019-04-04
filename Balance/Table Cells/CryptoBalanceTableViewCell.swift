@@ -10,11 +10,14 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     let wallet: EthereumWallet
     let cryptoType: CryptoType
 
+    private var expandCollapseRow: ExpandCollapseRow?
+
     override var isExpanded: Bool {
         willSet {
             if isExpanded != newValue {
                 UIView.animate(withDuration: 0.2) {
-                    self.setupLowValueTokensContainer(show: newValue)
+                    self.toggleVisibilityOfLowValueTokensContainer(show: newValue)
+                    self.expandCollapseRow?.isExpanded = newValue
                 }
             }
         }
@@ -43,13 +46,15 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     }()
 
     private let lowValueTokensContainer = UIView()
+    private let highValueTokensContainer = UIView()
 
     init(withIdentifier reuseIdentifier: String, wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool, indexPath: IndexPath) {
         self.wallet = wallet
         self.cryptoType = cryptoType
+
         super.init(style: .default, reuseIdentifier: reuseIdentifier, isExpanded: isExpanded, indexPath: indexPath)
 
-        isExpandable = (cryptoType == .erc20)
+        isExpandable = (cryptoType == .erc20) && !wallet.isAlwaysExpanded()
 
         selectionStyle = .none
         contentView.backgroundColor = UIColor(hexString: "#fbfbfb")
@@ -95,31 +100,58 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     return leftSymbol < rightSymbol
                 }
 
+                let cryptoRows = sortedTokens.map { CryptoRow(token: $0) }
+                let highValueMap = Dictionary(grouping: cryptoRows, by: { $0.isHighValue })
                 var topView: UIView = titleLabel
-                var isHighValueToken = true
-                for token in sortedTokens {
-                    let cryptoRow = CryptoRow(token: token)
-                    if isHighValueToken, !cryptoRow.isHighValue {
-                        isHighValueToken = false
-                        setupLowValueTokensContainer(show: isExpanded)
-                        addSubview(lowValueTokensContainer)
-                        lowValueTokensContainer.snp.makeConstraints { make in
-                            make.top.equalTo(topView.snp.bottom)
-                            make.leading.equalToSuperview()
-                            make.trailing.equalToSuperview()
-                        }
-                    }
 
-                    let container = isHighValueToken ? containerView : lowValueTokensContainer
-                    container.addSubview(cryptoRow)
-                    cryptoRow.snp.makeConstraints { make in
-                        let topOffset = topView == titleLabel ? 10 : 5
-                        make.top.equalTo(topView.snp.bottom).offset(topOffset)
+                // Wrap the high value tokens
+                containerView.addSubview(highValueTokensContainer)
+                highValueTokensContainer.snp.makeConstraints { make in
+                    make.top.equalTo(titleLabel.snp.bottom).offset(5)
+                    make.trailing.equalToSuperview()
+                    make.leading.equalToSuperview()
+                }
+
+                // High value tokens go first
+                for tokenRow in highValueMap[true] ?? [] {
+                    highValueTokensContainer.addSubview(tokenRow)
+                    tokenRow.snp.makeConstraints { make in
+                        make.top.equalTo(topView.snp.bottom).offset(5)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
-                        make.height.equalTo(40)
+                        make.height.equalTo(CryptoRow.rowHeight)
                     }
-                    topView = cryptoRow
+                    topView = tokenRow
+                }
+
+                // Do we have any lower-value tokens? If so, then append the expander row
+                // and render them all into the low value tokens container.
+                if highValueMap[false] != nil {
+                    // Initialise the low value tokens container
+                    containerView.addSubview(lowValueTokensContainer)
+                    toggleVisibilityOfLowValueTokensContainer(show: isExpanded)
+                    lowValueTokensContainer.snp.makeConstraints { make in
+                        make.top.equalTo(highValueTokensContainer.snp.bottom).offset(5)
+                        make.leading.equalToSuperview()
+                        make.trailing.equalToSuperview()
+                    }
+
+                    // Loop through each low-value token and append to the low value container
+                    for tokenRow in highValueMap[false] ?? [] {
+                        lowValueTokensContainer.addSubview(tokenRow)
+                        tokenRow.snp.makeConstraints { make in
+                            make.top.equalTo(topView.snp.bottom).offset(5)
+                            make.leading.equalToSuperview()
+                            make.trailing.equalToSuperview()
+                            make.height.equalTo(CryptoRow.rowHeight)
+                        }
+                        topView = tokenRow
+                    }
+
+                    // Insert the expand / collapse row at the end of the list
+                    if highValueMap[true] != nil, !highValueMap[true]!.isEmpty {
+                        expandCollapseRow = appendExpandCollapseRow(to: containerView)
+                    }
                 }
             }
         }
@@ -133,22 +165,46 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         return CryptoBalanceTableViewCell.calculatedHeight(wallet: wallet, cryptoType: cryptoType, isExpanded: isExpanded)
     }
 
-    private func setupLowValueTokensContainer(show: Bool) {
-        lowValueTokensContainer.alpha = show ? 1.0 : 0.0
-        lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
-    }
-
     static func calculatedHeight(wallet: EthereumWallet, cryptoType: CryptoType, isExpanded: Bool) -> CGFloat {
         var height: CGFloat = 0
+
         switch cryptoType {
         case .ethereum:
             height = 70
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
-            let tokensCount = CGFloat(tokens?.count ?? 0)
-            height = 25 + (tokensCount * 45)
+            let tokensCount = Int(tokens?.count ?? 0)
+            height = CGFloat(20 + CryptoRow.rowHeight + calculateHeightForRows(tokensCount)) // 25 for label, 35 for expand row, then 40 + 5 for every token displayed
         }
+
         return height
+    }
+
+    static func calculateHeightForRows(_ tokenCount: Int) -> Int {
+        return Int(tokenCount * (CryptoRow.rowHeight + 5))
+    }
+
+    private func toggleVisibilityOfLowValueTokensContainer(show: Bool) {
+        lowValueTokensContainer.alpha = show ? 1.0 : 0.0
+        lowValueTokensContainer.transform = show ? CGAffineTransform.identity : CGAffineTransform.identity.scaledBy(x: 0.95, y: 0.95)
+    }
+
+    private func appendExpandCollapseRow(to container: UIView) -> ExpandCollapseRow {
+        var walletTotal: Double?
+        if let lowValueTokens = wallet.nonValuableTokens {
+            walletTotal = Double(lowValueTokens.reduce(0) { $0 + ($1.fiatBalance ?? 0) })
+        }
+
+        let expandCollapseRow = ExpandCollapseRow(isExpanded: isExpanded, walletTotal: walletTotal)
+        container.addSubview(expandCollapseRow)
+        expandCollapseRow.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(-5)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(40)
+        }
+
+        return expandCollapseRow
     }
 }
 
@@ -197,7 +253,72 @@ class VerticalAlignedLabel: UILabel {
     }
 }
 
+private class ExpandCollapseRow: UIView {
+    private let chevronImageView = UIImageView()
+    private let expandCollapseLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textColor = UIColor(hexString: "#272727")
+        return label
+    }()
+
+    private let walletTotalLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
+        label.textColor = UIColor(hexString: "#272727")
+        label.textAlignment = .right
+        return label
+    }()
+
+    var isExpanded: Bool = false {
+        didSet {
+            chevronImageView.image = UIImage(named: isExpanded ? "chevronCircleUp" : "chevronCircleDown")
+        }
+    }
+
+    init(isExpanded: Bool, walletTotal: Double?) {
+        super.init(frame: .zero)
+        self.isExpanded = isExpanded
+
+        // Chevron Circle Image
+        chevronImageView.image = UIImage(named: isExpanded ? "chevronCircleUp" : "chevronCircleDown")
+        addSubview(chevronImageView)
+        chevronImageView.snp.makeConstraints { make in
+            make.width.equalTo(20)
+            make.height.equalTo(20)
+            make.leading.equalToSuperview().offset(15)
+            make.centerY.equalToSuperview()
+        }
+
+        // Expand / collapse label
+        expandCollapseLabel.text = "Other Balances"
+        addSubview(expandCollapseLabel)
+        expandCollapseLabel.snp.makeConstraints { make in
+            make.leading.equalTo(chevronImageView.snp.trailing).offset(15)
+            make.bottom.equalTo(chevronImageView.snp.bottom)
+        }
+
+        // Total amount label
+        if let walletTotal = walletTotal {
+            fiatNumberFormatter.maximumFractionDigits = 0
+            walletTotalLabel.text = "~" + (fiatNumberFormatter.string(from: walletTotal as NSNumber) ?? "")
+            addSubview(walletTotalLabel)
+            walletTotalLabel.snp.makeConstraints { make in
+                make.top.equalTo(expandCollapseLabel.snp.top)
+                make.trailing.equalToSuperview().offset(-15)
+                make.bottom.equalTo(chevronImageView.snp.bottom)
+            }
+        }
+    }
+
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 private class CryptoRow: UIView {
+    static let rowHeight = 40
+
     var isHighValue: Bool {
         return token?.fiatBalance ?? 0 >= Token.fiatValueCutoff
     }

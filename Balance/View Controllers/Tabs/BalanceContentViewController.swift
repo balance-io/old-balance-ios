@@ -94,7 +94,7 @@ class BalanceContentViewController: UITableViewController {
 
     private func preloadErc20Cell() {
         let indexPath = IndexPath(row: 0, section: Section.erc20.rawValue)
-        let isExpanded = (indexPath == expandedIndexPath)
+        let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
         erc20TableCell = CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
     }
 
@@ -127,7 +127,7 @@ class BalanceContentViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let isExpanded = (indexPath == expandedIndexPath)
+        let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
         if indexPath.section == Section.ethereum.rawValue {
             return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
         } else if indexPath.section == Section.erc20.rawValue {
@@ -208,10 +208,12 @@ class BalanceContentViewController: UITableViewController {
         }
 
         let isExpanded = (indexPath == expandedIndexPath)
+
         if indexPath.section == Section.ethereum.rawValue {
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .ethereum, isExpanded: isExpanded)
         } else if indexPath.section == Section.erc20.rawValue {
-            return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isExpanded)
+            let isErc20Expanded = ethereumWallet.isAlwaysExpanded() ? false : isExpanded
+            return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isErc20Expanded)
         } else {
             // CDP cell height
             return 70

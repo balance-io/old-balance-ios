@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Chat.setup()
         window.rootViewController = TabBarController()
         window.makeKeyAndVisible()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(userOwnsBal), name: EthereumWallet.Notifications.userOwnsBal, object: nil)
+
         return true
     }
 
@@ -93,6 +96,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
+        }
+    }
+
+    // MARK: - User Owns $BAL
+
+    @objc func userOwnsBal(_ notification: Notification) {
+        if let balance = notification.userInfo?["total"] {
+            print("User owns some $BAL!", balance)
         }
     }
 }
