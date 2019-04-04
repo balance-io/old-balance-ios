@@ -4,6 +4,7 @@ import Foundation
 struct CoreDataHelper {
     struct Notifications {
         static let ethereumWalletAdded = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletAdded")
+        static let ethereumWalletChanged = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletChanged")
         static let ethereumWalletRemoved = Notification.Name(rawValue: "CoreDataHelper.ethereumWalletRemoved")
     }
 
@@ -110,6 +111,20 @@ struct CoreDataHelper {
             return true
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
+            return false
+        }
+    }
+
+    @discardableResult static func update(managedObject: NSManagedObject, withName name: String) -> Bool {
+        let managedContext = AppDelegate.shared.persistentContainer.viewContext
+
+        do {
+            managedObject.setValue(name, forKey: "name")
+
+            try managedContext.save()
+            return true
+        } catch let error as NSError {
+            print("Could not update wallet. \(error), \(error.userInfo)")
             return false
         }
     }

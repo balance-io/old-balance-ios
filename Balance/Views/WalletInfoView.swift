@@ -2,8 +2,24 @@ import SnapKit
 import SwiftEntryKit
 import UIKit
 
+private func newSeparatorLine() -> UIView {
+    let buttonSeparatorLine = UIView()
+    buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+    return buttonSeparatorLine
+}
+
+private func createButton(withTitle title: String, andImageName imageName: String) -> UIButton {
+    let newButton = UIButton()
+    newButton.contentHorizontalAlignment = .left
+    newButton.setTitle(title, for: .normal)
+    newButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
+    newButton.setImage(UIImage(named: imageName), for: .normal)
+    return newButton
+}
+
 class WalletInfoView: UIView {
     private let wallet: EthereumWallet
+    private var updateWalletName: ((String) -> Void)?
 
     private let closeButton: UIButton = {
         let closeButton = UIButton()
@@ -51,40 +67,35 @@ class WalletInfoView: UIView {
         return bottomContainer
     }()
 
-    private let shareButton: UIButton = {
-        let shareButton = UIButton()
-        shareButton.contentHorizontalAlignment = .left
-        shareButton.setTitle("Share", for: .normal)
-        shareButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
-        shareButton.setImage(UIImage(named: "shareButtonIcon"), for: .normal)
-        return shareButton
-    }()
+    private let shareButton: UIButton = createButton(withTitle: "Share", andImageName: "shareButtonIcon")
+    private let copyButton: UIButton = createButton(withTitle: "Copy", andImageName: "copyButtonIcon")
+    private let editWalletNameButton: UIButton = createButton(withTitle: "Edit Wallet Name", andImageName: "editWalletIcon")
 
-    private let buttonSeparatorLine: UIView = {
-        let buttonSeparatorLine = UIView()
-        buttonSeparatorLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        return buttonSeparatorLine
-    }()
+    private let buttonSeparatorLine1: UIView = newSeparatorLine()
+    private let buttonSeparatorLine2: UIView = newSeparatorLine()
 
-    private let copyButton: UIButton = {
-        let copyButton = UIButton()
-        copyButton.contentHorizontalAlignment = .left
-        copyButton.setTitle("Copy", for: .normal)
-        copyButton.setTitleColor(UIColor(hexString: "#007AFF"), for: .normal)
-        copyButton.setImage(UIImage(named: "copyButtonIcon"), for: .normal)
-        copyButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -4, bottom: 0, right: 0)
-        return copyButton
-    }()
-
-    init(wallet: EthereumWallet) {
+    init(wallet: EthereumWallet, updateHandler handler: @escaping (String) -> Void) {
         self.wallet = wallet
+        updateWalletName = handler
+
         super.init(frame: CGRect.zero)
+
+        let screenSize: CGRect = UIScreen.main.bounds
+
+        var kButtonContainerHeight = 171
+        var kButtonContainerSpacing = -30
+
+        // special case SE (check in pixels)
+        if screenSize.width == 320 {
+            kButtonContainerHeight = 151
+            kButtonContainerSpacing = -15
+        }
 
         backgroundColor = .clear
 
         addSubview(bottomContainer)
         bottomContainer.snp.makeConstraints { make in
-            make.height.equalTo(114)
+            make.height.equalTo(kButtonContainerHeight)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -96,19 +107,19 @@ class WalletInfoView: UIView {
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.height.equalToSuperview().multipliedBy(0.33)
         }
         shareButton.imageView?.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-21)
             make.centerY.equalToSuperview()
         }
 
-        bottomContainer.contentView.addSubview(buttonSeparatorLine)
-        buttonSeparatorLine.snp.makeConstraints { make in
+        bottomContainer.contentView.addSubview(buttonSeparatorLine1)
+        buttonSeparatorLine1.snp.makeConstraints { make in
             make.height.equalTo(0.5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.centerY.equalToSuperview()
+            make.top.equalTo(shareButton.snp.bottom)
         }
 
         copyButton.addTarget(self, action: #selector(copyAction), for: .touchUpInside)
@@ -116,10 +127,31 @@ class WalletInfoView: UIView {
         copyButton.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.5)
+            make.top.equalTo(buttonSeparatorLine1.snp.bottom)
+            make.height.equalToSuperview().multipliedBy(0.33)
         }
         copyButton.imageView?.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-18)
+            make.centerY.equalToSuperview()
+        }
+
+        bottomContainer.contentView.addSubview(buttonSeparatorLine2)
+        buttonSeparatorLine2.snp.makeConstraints { make in
+            make.height.equalTo(0.5)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(copyButton.snp.bottom)
+        }
+
+        editWalletNameButton.addTarget(self, action: #selector(editWalletNameAction), for: .touchUpInside)
+        bottomContainer.contentView.addSubview(editWalletNameButton)
+        editWalletNameButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(buttonSeparatorLine2.snp.bottom)
+            make.height.equalToSuperview().multipliedBy(0.33)
+        }
+        editWalletNameButton.imageView?.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-18)
             make.centerY.equalToSuperview()
         }
@@ -130,7 +162,7 @@ class WalletInfoView: UIView {
         topContainer.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.width.equalToSuperview()
-            make.bottom.equalTo(bottomContainer.snp.top).offset(-30)
+            make.bottom.equalTo(bottomContainer.snp.top).offset(kButtonContainerSpacing)
         }
 
         topContainer.addSubview(closeButton)
@@ -194,6 +226,33 @@ class WalletInfoView: UIView {
 
     @objc private func copyAction() {
         UIPasteboard.general.string = wallet.address
+        SwiftEntryKit.dismiss()
+    }
+
+    @objc private func editWalletNameAction() {
+        let alertController = UIAlertController(title: "Edit Wallet Name", message: nil, preferredStyle: .alert)
+        alertController.addTextField { textField in
+            if (self.wallet.name?.isEmpty)! {
+                textField.text = "Ethereum Wallet"
+            } else {
+                textField.text = self.wallet.name
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned alertController] _ in
+            let answer = alertController.textFields![0]
+            if let handler = self.updateWalletName {
+                handler(answer.text!)
+            }
+        }
+
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+
+        let rootViewController = AppDelegate.shared.window.rootViewController
+        rootViewController?.present(alertController, animated: true, completion: nil)
+
         SwiftEntryKit.dismiss()
     }
 }

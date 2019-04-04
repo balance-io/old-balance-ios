@@ -49,6 +49,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         loadData()
 
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(walletChanged), name: CoreDataHelper.Notifications.ethereumWalletChanged, object: nil)
     }
 
     private func setupNavigation() {
@@ -117,6 +118,10 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
 
+    @objc private func walletChanged() {
+        loadData()
+    }
+
     // MARK: - Table View -
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
@@ -136,6 +141,12 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let managedObject = managedEthereumWallets[indexPath.row]
+        func updateWalletName(newName: String) {
+            CoreDataHelper.update(managedObject: managedObject, withName: newName)
+            NotificationCenter.default.post(name: CoreDataHelper.Notifications.ethereumWalletChanged, object: nil)
+        }
+
         tableView.deselectRow(at: indexPath, animated: true)
 
         var attributes = EKAttributes()
@@ -158,7 +169,7 @@ class WalletsViewController: UIViewController, UITableViewDataSource, UITableVie
         let heightConstraint = EKAttributes.PositionConstraints.Edge.intrinsic
         attributes.positionConstraints.size = .init(width: widthConstraint, height: heightConstraint)
 
-        let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row])
+        let walletInfoView = WalletInfoView(wallet: ethereumWallets[indexPath.row], updateHandler: updateWalletName)
         SwiftEntryKit.display(entry: walletInfoView, using: attributes)
     }
 
