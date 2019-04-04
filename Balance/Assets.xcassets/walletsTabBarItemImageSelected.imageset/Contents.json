@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "watchlistTabBarItemImageSelected@2x.png",
+      "filename" : "walletsTabBarItemImageSelected@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "watchlistTabBarItemImageSelected@3x.png",
+      "filename" : "walletsTabBarItemImageSelected@3x.png",
       "scale" : "3x"
     }
   ],
