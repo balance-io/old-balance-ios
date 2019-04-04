@@ -151,7 +151,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             }
             for (index, ethereumWallet) in ethereumWallets.enumerated() {
                 contentViewControllers[index + offset].ethereumWallet = ethereumWallet
-                contentViewControllers[index + offset].title = ethereumWallet.name ?? ethereumWallet.address
+                contentViewControllers[index + offset].title = ethereumWallet.pagingTabTitle()
             }
         }
 
