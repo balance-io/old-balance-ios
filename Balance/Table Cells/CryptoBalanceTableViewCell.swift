@@ -107,7 +107,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                 // Wrap the high value tokens
                 containerView.addSubview(highValueTokensContainer)
                 highValueTokensContainer.snp.makeConstraints { make in
-                    make.top.equalTo(titleLabel.snp.bottom).offset(5)
+                    make.top.equalTo(titleLabel.snp.bottom).offset(10)
                     make.trailing.equalToSuperview()
                     make.leading.equalToSuperview()
                 }
@@ -116,7 +116,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                 for tokenRow in highValueMap[true] ?? [] {
                     highValueTokensContainer.addSubview(tokenRow)
                     tokenRow.snp.makeConstraints { make in
-                        make.top.equalTo(topView.snp.bottom).offset(5)
+                        make.top.equalTo(topView.snp.bottom).offset(10)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
                         make.height.equalTo(CryptoRow.rowHeight)
@@ -131,7 +131,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     containerView.addSubview(lowValueTokensContainer)
                     toggleVisibilityOfLowValueTokensContainer(show: isExpanded)
                     lowValueTokensContainer.snp.makeConstraints { make in
-                        make.top.equalTo(highValueTokensContainer.snp.bottom).offset(5)
+                        make.top.equalTo(highValueTokensContainer.snp.bottom).offset(10)
                         make.leading.equalToSuperview()
                         make.trailing.equalToSuperview()
                     }
@@ -140,7 +140,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                     for tokenRow in highValueMap[false] ?? [] {
                         lowValueTokensContainer.addSubview(tokenRow)
                         tokenRow.snp.makeConstraints { make in
-                            make.top.equalTo(topView.snp.bottom).offset(5)
+                            make.top.equalTo(topView.snp.bottom).offset(10)
                             make.leading.equalToSuperview()
                             make.trailing.equalToSuperview()
                             make.height.equalTo(CryptoRow.rowHeight)
@@ -172,17 +172,26 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
         case .ethereum:
             height = 70
         case .erc20:
-            let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
-            let expandHeight = (wallet.nonValuableTokens?.count ?? 0) > 0 ? CryptoRow.rowHeight : 0
+            var tokens: [Token]?
+            var expandHeight: Int
+
+            if let valuableTokens = wallet.valuableTokens, !valuableTokens.isEmpty {
+                tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
+                expandHeight = (wallet.nonValuableTokens?.count ?? 0) > 0 ? CryptoRow.rowHeight : 0
+            } else {
+                tokens = wallet.nonValuableTokens ?? []
+                expandHeight = 0
+            }
+
             let tokensCount = Int(tokens?.count ?? 0)
-            height = CGFloat(20 + expandHeight + calculateHeightForRows(tokensCount)) // 25 for label, 35 for expand row, then 40 + 5 for every token displayed
+            height = CGFloat(expandHeight + calculateHeightForRows(tokensCount))
         }
 
         return height
     }
 
     static func calculateHeightForRows(_ tokenCount: Int) -> Int {
-        return Int(tokenCount * (CryptoRow.rowHeight + 5))
+        return 20 + Int(tokenCount * (CryptoRow.rowHeight + 10))
     }
 
     private func toggleVisibilityOfLowValueTokensContainer(show: Bool) {
@@ -202,7 +211,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
             make.bottom.equalToSuperview().offset(-5)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(40)
+            make.height.equalTo(CryptoRow.rowHeight)
         }
 
         return expandCollapseRow
