@@ -142,7 +142,7 @@ class BalanceContentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
         let sectionEnum: Section = sections[indexPath.section]
-        
+
         if sectionEnum == Section.ethereum {
             return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
         } else if sectionEnum == Section.erc20 {
@@ -189,8 +189,6 @@ class BalanceContentViewController: UITableViewController {
         case .erc20:
             sectionName = NSLocalizedString("Tokens", comment: "")
             icon.image = UIImage(named: "erc20Section")
-        default:
-            sectionName = ""
         }
 
         label.text = sectionName
