@@ -173,8 +173,9 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
             height = 70
         case .erc20:
             let tokens = isExpanded ? wallet.tokens : wallet.valuableTokens
+            let expandHeight = (wallet.nonValuableTokens?.count ?? 0) > 0 ? CryptoRow.rowHeight : 0
             let tokensCount = Int(tokens?.count ?? 0)
-            height = CGFloat(20 + CryptoRow.rowHeight + calculateHeightForRows(tokensCount)) // 25 for label, 35 for expand row, then 40 + 5 for every token displayed
+            height = CGFloat(20 + expandHeight + calculateHeightForRows(tokensCount)) // 25 for label, 35 for expand row, then 40 + 5 for every token displayed
         }
 
         return height
