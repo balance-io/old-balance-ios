@@ -189,8 +189,6 @@ class BalanceContentViewController: UITableViewController {
         case .erc20:
             sectionName = NSLocalizedString("Tokens", comment: "")
             icon.image = UIImage(named: "erc20Section")
-        default:
-            sectionName = ""
         }
 
         label.text = sectionName

@@ -8,6 +8,7 @@
 
 import Foundation
 import Intercom
+import UserNotifications
 
 struct Chat {
     static let showButton: Bool = {
@@ -36,6 +37,11 @@ struct Chat {
     }
 
     static func show() {
+        // Request permission for notifications
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
+
+        // Pop open the intercom chat panel
         Intercom.presentMessenger()
     }
 }
