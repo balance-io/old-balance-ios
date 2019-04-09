@@ -105,21 +105,36 @@ class BalanceContentViewController: UITableViewController {
         tableView.reloadData()
     }
 
+    func showCDPSection() -> Bool {
+        guard let isEmpty = ethereumWallet?.CDPs?.isEmpty, isEmpty == false else {
+            return false
+        }
+
+        return true
+    }
+
+    func showTokensSection() -> Bool {
+        guard let count = ethereumWallet?.tokens?.count, count > 0 else {
+            return false
+        }
+
+        return true
+    }
+
     override func numberOfSections(in _: UITableView) -> Int {
-        var count = 2
+        sections = []
 
-        let showCDPSection = ethereumWallet?.CDPs?.isEmpty != true
-        count = showCDPSection ? count + 1 : count
-
-        // determine number of sections and placement
-        if count == 3 {
+        if showCDPSection() {
             sections.append(Section.cdp)
         }
 
         sections.append(Section.ethereum)
-        sections.append(Section.erc20)
 
-        return count
+        if showTokensSection() {
+            sections.append(Section.erc20)
+        }
+
+        return sections.count
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -129,11 +144,7 @@ class BalanceContentViewController: UITableViewController {
         case .ethereum:
             return ethereumWallet != nil ? 1 : 0
         case .erc20:
-            // Check if there are any tokens
-            if let count = ethereumWallet?.tokens?.count, count > 0 {
-                return 1
-            }
-            return 0
+            return 1
         case .cdp:
             return ethereumWallet?.CDPs?.count ?? 0
         }
