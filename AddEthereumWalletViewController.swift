@@ -13,7 +13,7 @@ private func newOptionalLabel() -> UILabel {
     let optionalLabel = UILabel()
     optionalLabel.font = UIFont.systemFont(ofSize: 14)
     optionalLabel.text = "(optional)"
-    optionalLabel.textColor = UIColor(hexString: "#666666")
+    optionalLabel.textColor = UIColor(hexString: "#6F6F6F")
     return optionalLabel
 }
 
@@ -21,7 +21,7 @@ private func newTextFieldContainer() -> UIView {
     let textFieldContainer = UIView()
     textFieldContainer.backgroundColor = .white
     textFieldContainer.layer.cornerRadius = 8
-    textFieldContainer.layer.borderColor = UIColor(hexString: "#43464B")?.cgColor
+    textFieldContainer.layer.borderColor = UIColor(hexString: "#C0C0C0")?.cgColor
     textFieldContainer.layer.borderWidth = 1
     return textFieldContainer
 }
@@ -42,7 +42,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let middleContainerView: UIView = {
         let middleContainerView = UIView()
-        middleContainerView.backgroundColor = .black
+        middleContainerView.backgroundColor = UIColor(hexString: "#323232")
         return middleContainerView
     }()
 
@@ -50,7 +50,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let cameraHighlightBoxLayer: CALayer = {
         let cameraHighlightBoxLayer = CALayer()
-        cameraHighlightBoxLayer.borderColor = UIColor.red.cgColor
+        cameraHighlightBoxLayer.borderColor = UIColor(hexString: "#EA0201")?.cgColor
         cameraHighlightBoxLayer.borderWidth = 2
         cameraHighlightBoxLayer.cornerRadius = 10
         return cameraHighlightBoxLayer
@@ -58,7 +58,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let cameraPreviewView: UIView = {
         let cameraPreviewView = UIView()
-        cameraPreviewView.backgroundColor = .black
+        cameraPreviewView.backgroundColor = UIColor(hexString: "#323232")
         return cameraPreviewView
     }()
 
@@ -367,7 +367,9 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         bottomContainerView.addSubview(addButton)
         addButton.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(10)
-            make.width.equalTo(min(381, view.bounds.width - 40))
+//            make.width.equalTo(min(381, view.bounds.width - 40))
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(smallFormat ? 80 : 95)
             make.centerX.equalToSuperview()
         }
