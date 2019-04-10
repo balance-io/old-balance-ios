@@ -1,6 +1,7 @@
 import UIKit
 import AVKit
 import SnapKit
+import QuartzCore
 
 private func newTitleLabel() -> UILabel {
     let titleLabel = UILabel()
@@ -12,7 +13,7 @@ private func newTitleLabel() -> UILabel {
 private func newOptionalLabel() -> UILabel {
     let optionalLabel = UILabel()
     optionalLabel.font = UIFont.systemFont(ofSize: 14)
-    optionalLabel.text = "(optional)"
+    optionalLabel.text = "Optional"
     optionalLabel.textColor = UIColor(hexString: "#6F6F6F")
     return optionalLabel
 }
@@ -23,6 +24,13 @@ private func newTextFieldContainer() -> UIView {
     textFieldContainer.layer.cornerRadius = 8
     textFieldContainer.layer.borderColor = UIColor(hexString: "#C0C0C0")?.cgColor
     textFieldContainer.layer.borderWidth = 1
+    
+    textFieldContainer.layer.shadowColor = UIColor(hexString: "#C0C0C0")?.cgColor
+    textFieldContainer.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+    textFieldContainer.layer.shadowRadius = 3.0
+    textFieldContainer.layer.shadowOpacity = 0.5
+    textFieldContainer.layer.masksToBounds = false
+//    textFieldContainer.layer.shouldRasterize = true
     return textFieldContainer
 }
 
@@ -97,7 +105,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let addressTextField: UITextField = {
         let addressTextField = UITextField()
-        addressTextField.placeholder = "Address starting with 0x"
+        addressTextField.placeholder = "40 characters starting with 0x"
         addressTextField.font = UIFont.systemFont(ofSize: 15)
         addressTextField.textColor = UIColor(hexString: "#3C4252")
         addressTextField.minimumFontSize = 8;
@@ -128,6 +136,7 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
     private let nameTextField: UITextField = {
         let nameTextField = UITextField()
+        nameTextField.placeholder = "e.g. Personal Metamask"
         nameTextField.font = UIFont.systemFont(ofSize: 19)
         nameTextField.textColor = UIColor(hexString: "#3C4252")
         nameTextField.minimumFontSize = 8;
@@ -142,12 +151,18 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
     private let pasteButton: UIButton = {
         let pasteButton = UIButton()
         pasteButton.backgroundColor = UIColor(hexString: "#0E76FD")
-        pasteButton.layer.cornerRadius = 12
+        pasteButton.layer.cornerRadius = 4
         pasteButton.titleLabel?.textAlignment = .center
         pasteButton.setImage(UIImage(named: "pasteWhite"), for: .normal)
         pasteButton.setTitle("Paste", for: .normal)
         pasteButton.setTitleColor(.white, for: .normal)
         pasteButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        
+        pasteButton.layer.shadowColor = UIColor(hexString: "#C0C0C0")?.cgColor
+        pasteButton.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        pasteButton.layer.shadowRadius = 3.0
+        pasteButton.layer.shadowOpacity = 0.5
+        pasteButton.layer.masksToBounds = false
         return pasteButton
     }()
 
@@ -283,14 +298,14 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         bottomContainerView.addSubview(addressTitleLabel)
         addressTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
-            make.leading.equalToSuperview().offset(14)
+            make.leading.equalToSuperview().offset(10)
         }
 
         bottomContainerView.addSubview(addressFieldContainer)
         addressFieldContainer.snp.makeConstraints { make in
             make.top.equalTo(addressTitleLabel.snp.bottom).offset(8)
-            make.leading.equalToSuperview().offset(7)
-            make.trailing.equalToSuperview().offset(-14)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
             make.height.equalTo(smallFormat ? 40 : 60)
         }
 
@@ -298,8 +313,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
         addressFieldContainer.addSubview(addressTextField)
         addressTextField.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(14)
-            make.trailing.equalToSuperview().offset(-14)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
             make.bottom.equalToSuperview()
         }
         addressTextField.addTarget(self, action: #selector(validate), for: .editingChanged)
@@ -312,8 +327,8 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
             make.centerY.equalToSuperview()
         }
         pasteButton.imageView?.snp.makeConstraints { make in
-            make.width.equalTo(13)
-            make.leading.equalToSuperview().offset(9)
+            make.width.equalTo(12)
+            make.leading.equalToSuperview().offset(10)
             make.centerY.equalToSuperview().offset(-1)
         }
         //TODO: Get the label perfectly centered
@@ -330,21 +345,21 @@ class AddEthereumWalletViewController: UIViewController, UITextFieldDelegate, AV
 
         addressFieldContainer.addSubview(addressFieldValidationLabel)
         addressFieldValidationLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressTextField.snp.bottom).offset(5)
+            make.top.equalTo(addressTextField.snp.bottom).offset(6)
             make.leading.equalTo(addressTextField.snp.leading)
             make.trailing.equalTo(addressTextField.snp.trailing)
         }
 
         bottomContainerView.addSubview(nameTitleLabel)
         nameTitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(addressFieldContainer.snp.bottom).offset(25)
+            make.top.equalTo(addressFieldContainer.snp.bottom).offset(24)
             make.leading.equalTo(addressTitleLabel)
         }
 
         bottomContainerView.addSubview(nameOptionalLabel)
         nameOptionalLabel.snp.makeConstraints { make in
             make.top.equalTo(addressFieldContainer.snp.bottom).offset(26)
-            make.trailing.equalToSuperview().offset(-14)
+            make.trailing.equalToSuperview().offset(-10)
         }
 
         bottomContainerView.addSubview(nameFieldContainer)
