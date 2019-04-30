@@ -33,8 +33,8 @@ class CDPBalanceTableViewCell: UITableViewCell {
             // TODO: look into more elegant way of doing this
             // http://danielemargutti.com/2016/12/04/attributed-string-in-swift-the-right-way/
 
-            if let ink = cdp.ink {
-                let collateral = ink
+            if let eth = cdp.eth {
+                let collateral = eth
                 let collateralFormatted = numberFormatter.string(from: NSNumber(value: collateral))
 
                 let cryptoAmountAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .regular)]
@@ -48,7 +48,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
                 combination.append(partOne)
                 combination.append(partTwo)
 
-                inkLabel.attributedText = combination
+                ethLabel.attributedText = combination
             }
 
             if let art = cdp.art {
@@ -141,7 +141,7 @@ class CDPBalanceTableViewCell: UITableViewCell {
         return label
     }()
 
-    private let inkLabel: UILabel = {
+    private let ethLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .left
@@ -187,8 +187,8 @@ class CDPBalanceTableViewCell: UITableViewCell {
             make.leading.equalTo(ethCircleImageView.snp.trailing).offset(10)
         }
 
-        containerView.addSubview(inkLabel)
-        inkLabel.snp.makeConstraints { make in
+        containerView.addSubview(ethLabel)
+        ethLabel.snp.makeConstraints { make in
             make.top.equalTo(identityLabel.snp.bottom).offset(2)
             make.leading.equalTo(ethCircleImageView.snp.trailing).offset(10)
         }

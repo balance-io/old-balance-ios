@@ -261,14 +261,16 @@ class CDPInfoView: UIView {
             make.centerY.equalTo(ethCircleImageView)
         }
 
-        if let ink = cdp.ink {
+        if let eth = cdp.eth {
             if let pip = cdp.pip {
-                let inkString = numberFormatter.string(from: NSNumber(value: ink))
+                // TODO: add PETH
+//                let inkString = numberFormatter.string(from: NSNumber(value: ink))
+                let ethString = numberFormatter.string(from: NSNumber(value: eth))
                 let pipString = numberFormatter.string(from: NSNumber(value: pip))
-                if let inkString = inkString, let pipString = pipString {
-                    collateralBreakdownLabel.text = "\(inkString) ETH * \(pipString) USD"
+                if let ethString = ethString, let pipString = pipString {
+                    collateralBreakdownLabel.text = "\(ethString) ETH * \(pipString) USD"
                 } else {
-                    print("Failed to format inkString: \(String(describing: inkString)) or pipString: \(String(describing: pipString))")
+                    print("Failed to format inkString: \(String(describing: ethString)) or pipString: \(String(describing: pipString))")
                 }
             }
         }

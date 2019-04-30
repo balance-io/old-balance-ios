@@ -32,6 +32,7 @@ struct CDP: Codable {
     let pep: Double?
     let ire: Double?
     let per: String?
+    let eth: Double?
     let act: String?
     let liqPrice: Double?
 
@@ -45,6 +46,7 @@ struct CDP: Codable {
         case pep
         case ire
         case per
+        case eth
         case act
         case liqPrice = "liq_price"
     }
