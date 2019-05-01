@@ -102,7 +102,7 @@ class EthereumWallet {
 
                 // Check for any BAL tokens; if we have some, let the rest of the app know.
                 let balBalance: Double = totalTokens
-                    .filter({ $0.symbol == "BAL" })
+                    .filter({ $0.symbol == "BAL" && $0.address != nil && $0.address!.lowercased() == AppDelegate.balContractAddress.lowercased() })
                     .reduce(0) { $0 + ($1.balance ?? 0) }
 
                 if balBalance > 0 {

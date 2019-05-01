@@ -11,6 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     let window = UIWindow(frame: UIScreen.main.bounds)
     let tabBarController = TabBarController()
 
+    static let balContractAddress = "0xe7049114562C759d5E9D1d25783773Ccd61C0a65"
+
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // HACK: Ensure "shared" property is loaded on the main thread (yeah it's not "good" code but it's short, sweet, and most importantly it works ;)
         print(AppDelegate.shared)
