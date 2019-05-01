@@ -6,7 +6,6 @@
 //  Copyright © 2019 Balance. All rights reserved.
 //
 
-import BigInt
 import CoreData
 import Foundation
 
@@ -66,8 +65,8 @@ struct AmberdataAPI {
                     return
                 }
 
-                if let value = accountBalanceResponse.payload?.value {
-                    wallet.updateBalance(fromWei: BigUInt(stringLiteral: value))
+                if let value = accountBalanceResponse.payload?.value, let weiValue = Int(value) {
+                    wallet.updateBalance(fromWei: weiValue)
                 }
 
                 dispatchGroup.leave()
@@ -108,7 +107,7 @@ struct AmberdataAPI {
                     }
 
                     if let amount = tokenInfo.amount, let decimals = tokenInfo.decimals {
-                        balance = Double(amount * BigUInt(10).power(0 - Int(decimals)))
+                        balance = Double(amount) * pow(10.0, 0.0 - Double(decimals))
                     }
 
                     return Token(balance: balance,
@@ -253,7 +252,7 @@ private struct Tokens: Decodable {
 private struct TokenInfo: Decodable {
     var address, holder, name, symbol: String?
 
-    var amount: BigUInt?
+    var amount: UInt?
     var decimals: UInt?
     var isERC20, isERC721, isERC777, isERC884, isERC998: Bool?
     var price: TokensPrice?
@@ -267,7 +266,7 @@ private struct TokenInfo: Decodable {
 
         address = try? container.decode(String.self, forKey: .address)
         holder = try? container.decode(String.self, forKey: .holder)
-        amount = BigUInt(try container.decode(String.self, forKey: .amount)) ?? 0
+        amount = UInt(try container.decode(String.self, forKey: .amount)) ?? 0
         decimals = UInt(try container.decode(String.self, forKey: .decimals)) ?? 0
         name = try? container.decode(String.self, forKey: .name)
         symbol = try? container.decode(String.self, forKey: .symbol)

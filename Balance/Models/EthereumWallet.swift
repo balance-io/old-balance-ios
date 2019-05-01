@@ -1,4 +1,3 @@
-import BigInt
 import Foundation
 
 class EthereumWallet {
@@ -53,8 +52,8 @@ class EthereumWallet {
         return valuableTokens?.isEmpty == true
     }
 
-    func updateBalance(fromWei wei: BigUInt) {
-        balance = Double(wei * BigUInt(10).power(-18))
+    func updateBalance(fromWei wei: Int) {
+        balance = Double(Double(wei) * pow(10.0, -18))
     }
 
     static func aggregated(wallets: [EthereumWallet]) -> EthereumWallet? {
