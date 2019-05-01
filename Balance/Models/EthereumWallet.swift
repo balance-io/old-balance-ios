@@ -1,6 +1,7 @@
+import BigInt
 import Foundation
 
-struct EthereumWallet {
+class EthereumWallet {
     struct Notifications {
         static let userOwnsBal = Notification.Name(rawValue: "EthereumWallet.userOwnsBal")
     }
@@ -50,6 +51,10 @@ struct EthereumWallet {
 
     func isAlwaysExpanded() -> Bool {
         return valuableTokens?.isEmpty == true
+    }
+
+    func updateBalance(fromWei wei: BigUInt) {
+        balance = Double(wei * BigUInt(10).power(-18))
     }
 
     static func aggregated(wallets: [EthereumWallet]) -> EthereumWallet? {

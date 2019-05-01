@@ -75,6 +75,7 @@ struct EthplorerAPI {
                 var returnWallet = ethereumWallet
                 if let addressInfoResponse = addressInfoResponse, let ETH = addressInfoResponse.ETH {
                     returnWallet.balance = ETH.balance
+                    print(returnWallet.balance)
                     if let tokensResponse = addressInfoResponse.tokens {
                         var tokens = [Token]()
                         for tokenInfoWrapper in tokensResponse {

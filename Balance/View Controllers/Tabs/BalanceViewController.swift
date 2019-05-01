@@ -221,7 +221,8 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
             // Load balances first
             dispatchGroup.enter()
-            EthplorerAPI.loadWalletBalances(newEthereumWallets) { wallets in
+
+            AmberdataAPI.loadWalletBalances(newEthereumWallets) { wallets in
                 newEthereumWallets = wallets
                 dispatchGroup.leave()
             }
@@ -243,15 +244,15 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
                 newEthereumWallets[index].CDPs = newEthereumWalletsCDPs[index].CDPs
             }
 
-            // Load ethereum price
-            dispatchGroup.enter()
-            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, _ in
-                newEthereumWallets = wallets
-                dispatchGroup.leave()
-            }
-
+//             Load ethereum price
+//            dispatchGroup.enter()
+//            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, _ in
+//                newEthereumWallets = wallets
+//                dispatchGroup.leave()
+//            }
+//
             // Wait for results
-            dispatchGroup.wait()
+//            dispatchGroup.wait()
 
             // Aggregate the balances
             if newEthereumWallets.count > 1 {
