@@ -52,10 +52,6 @@ class EthereumWallet {
         return valuableTokens?.isEmpty == true
     }
 
-    func updateBalance(fromWei wei: Int) {
-        balance = Double(Double(wei) * pow(10.0, -18))
-    }
-
     static func aggregated(wallets: [EthereumWallet]) -> EthereumWallet? {
         // Aggregate the balances
         // NOTE: This currently assumes all wallets have the same fiat currency
