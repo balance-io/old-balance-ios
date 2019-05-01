@@ -185,7 +185,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             return
         }
 
-        let delay = EthplorerAPI.isFreeApiKey ? 2.0 : 1.0 // TODO: This is super slow and we have to find a better way.
+        let delay = 0.25
         let secondsSinceLastLoad = NSDate().timeIntervalSince1970 - lastLoadTimestamp
         if secondsSinceLastLoad < delay {
             // Wait a few seconds and try again
@@ -219,7 +219,7 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
 
             let dispatchGroup = DispatchGroup()
 
-            // Load balances first
+            // Load balances and ETH price first
             dispatchGroup.enter()
 
             AmberdataAPI.loadWalletBalances(newEthereumWallets) { wallets in
@@ -243,16 +243,6 @@ class BalanceViewController: UIViewController, PagingMenuViewControllerDataSourc
             for index in 0 ..< newEthereumWallets.count {
                 newEthereumWallets[index].CDPs = newEthereumWalletsCDPs[index].CDPs
             }
-
-//             Load ethereum price
-//            dispatchGroup.enter()
-//            CoinMarketCapAPI.loadEthereumPrice(newEthereumWallets) { wallets, _ in
-//                newEthereumWallets = wallets
-//                dispatchGroup.leave()
-//            }
-//
-            // Wait for results
-//            dispatchGroup.wait()
 
             // Aggregate the balances
             if newEthereumWallets.count > 1 {

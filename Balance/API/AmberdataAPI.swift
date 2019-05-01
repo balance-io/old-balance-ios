@@ -11,7 +11,9 @@ import Foundation
 
 struct AmberdataAPI {
     static func loadWalletBalances(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> Void) {
-        DispatchQueue.utility.async {
+        let concurrentDispatchQueue = DispatchQueue(label: "AmberdataAPI#loadWalletBalances", attributes: .concurrent)
+
+        concurrentDispatchQueue.async {
             let dispatchGroup = DispatchGroup()
             var returnWallets = [EthereumWallet]()
 
