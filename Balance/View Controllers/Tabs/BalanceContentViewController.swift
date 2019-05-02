@@ -10,7 +10,23 @@ class BalanceContentViewController: UITableViewController {
         case erc20 = 2
     }
 
-    var sections: [Section] = []
+    var sections: [Section] {
+        var sectionList: [Section] = []
+
+        if showCDPSection() {
+            sectionList.append(Section.cdp)
+        }
+
+        sectionList.append(Section.ethereum)
+
+        if showTokensSection() {
+            sectionList.append(Section.erc20)
+        }
+
+        print("computing sections: \(sectionList.count) sections")
+
+        return sectionList
+    }
 
     var ethereumWallet: EthereumWallet?
     var erc20TableCell: CryptoBalanceTableViewCell?
@@ -41,7 +57,10 @@ class BalanceContentViewController: UITableViewController {
         tableView.refreshControl = refresh
 
         setupNavigation()
-        preloadErc20Cell()
+
+        if showTokensSection() {
+            preloadErc20Cell()
+        }
 
         NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
@@ -95,15 +114,20 @@ class BalanceContentViewController: UITableViewController {
     // MARK: - Table View -
 
     private func preloadErc20Cell() {
-        let indexPath = IndexPath(row: 0, section: Section.erc20.rawValue)
+        let indexPath = indexPathForSectionType(.erc20)!
         let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
         erc20TableCell = CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .erc20, isExpanded: isExpanded, indexPath: indexPath)
     }
 
     func reloadData() {
-        preloadErc20Cell()
+        if showTokensSection() {
+            preloadErc20Cell()
+        }
+
         tableView.reloadData()
     }
+
+    // MARK: - Dynamic Sections -
 
     func showCDPSection() -> Bool {
         guard let isEmpty = ethereumWallet?.CDPs?.isEmpty, isEmpty == false else {
@@ -122,19 +146,15 @@ class BalanceContentViewController: UITableViewController {
     }
 
     override func numberOfSections(in _: UITableView) -> Int {
-        sections = []
-
-        if showCDPSection() {
-            sections.append(Section.cdp)
-        }
-
-        sections.append(Section.ethereum)
-
-        if showTokensSection() {
-            sections.append(Section.erc20)
-        }
-
         return sections.count
+    }
+
+    func indexPathForSectionType(_ type: Section) -> IndexPath? {
+        if let sectionIndex = sections.firstIndex(of: type) {
+            return IndexPath(row: 0, section: sectionIndex)
+        }
+
+        return nil
     }
 
     override func tableView(_: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -154,9 +174,9 @@ class BalanceContentViewController: UITableViewController {
         let isExpanded = ethereumWallet!.isAlwaysExpanded() || (indexPath == expandedIndexPath)
         let sectionEnum: Section = sections[indexPath.section]
 
-        if sectionEnum == Section.ethereum {
+        if sectionEnum == .ethereum {
             return CryptoBalanceTableViewCell(withIdentifier: cryptoCellReuseIdentifier, wallet: ethereumWallet!, cryptoType: .ethereum, isExpanded: isExpanded, indexPath: indexPath)
-        } else if sectionEnum == Section.erc20 {
+        } else if sectionEnum == .erc20 {
             // Cache this cell to prevent stuttering when scrolling
             return erc20TableCell!
         } else {
@@ -234,10 +254,11 @@ class BalanceContentViewController: UITableViewController {
         }
 
         let isExpanded = (indexPath == expandedIndexPath)
+        let sectionEnum: Section = sections[indexPath.section]
 
-        if indexPath.section == Section.ethereum.rawValue {
+        if sectionEnum == .ethereum {
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .ethereum, isExpanded: isExpanded)
-        } else if indexPath.section == Section.erc20.rawValue {
+        } else if sectionEnum == .erc20 {
             let isErc20Expanded = ethereumWallet.isAlwaysExpanded() ? false : isExpanded
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isErc20Expanded)
         } else {
@@ -249,7 +270,9 @@ class BalanceContentViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
-        guard indexPath.section == Section.cdp.rawValue else {
+        let sectionEnum: Section = sections[indexPath.section]
+
+        guard sectionEnum == .cdp else {
             return
         }
 

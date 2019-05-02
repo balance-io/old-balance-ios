@@ -442,7 +442,7 @@ private class CryptoRow: UIView {
             make.top.equalTo(rateLabel)
         }
 
-        var cryptoBalance = "-"
+        var cryptoBalance = "0.00"
 
         // TODO: - Fix this for multi-currency
         if let rate = rate {
