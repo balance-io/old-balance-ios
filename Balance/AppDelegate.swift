@@ -8,7 +8,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // Convenience accessor
     static let shared = UIApplication.shared.delegate as! AppDelegate
 
-    let window = UIWindow(frame: UIScreen.main.bounds)
+    var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
     let tabBarController = TabBarController()
 
     static let balContractAddress = "0xe7049114562C759d5E9D1d25783773Ccd61C0a65"
@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         print(AppDelegate.shared)
 
         Chat.setup()
-        window.rootViewController = TabBarController()
-        window.makeKeyAndVisible()
+
+        window?.rootViewController = TabBarController()
+        window?.makeKeyAndVisible()
 
         NotificationCenter.default.addObserver(self, selector: #selector(userOwnsBal), name: EthereumWallet.Notifications.userOwnsBal, object: nil)
 
