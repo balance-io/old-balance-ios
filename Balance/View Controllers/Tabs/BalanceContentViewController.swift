@@ -189,7 +189,7 @@ class BalanceContentViewController: UITableViewController {
     }
 
     public override func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 40.0
+        return 70.0
     }
 
     public override func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -234,10 +234,19 @@ class BalanceContentViewController: UITableViewController {
 
         label.font = UIFont.systemFont(ofSize: 18)
         view.addSubview(label)
-//        view.addSubview(imageView)
 
-        // setup the view
-        view.backgroundColor = UIColor(hexString: "#fbfbfb")
+        view.backgroundColor = .white
+
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = CGSize(width: -1, height: -1)
+        view.layer.shadowRadius = 9
+        view.layer.zPosition = 200
+
+        view.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 10, width: tableView.bounds.width, height: 20)).cgPath
+        view.layer.cornerRadius = 10
+        // view.layer.shouldRasterize = true
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         label.snp.makeConstraints { make in
             make.leading.equalTo(icon.snp.trailing).offset(10)
