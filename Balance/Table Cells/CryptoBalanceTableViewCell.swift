@@ -57,10 +57,10 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview()
         }
 
         // TODO: remove title altogether
@@ -168,7 +168,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         switch cryptoType {
         case .ethereum:
-            height = 70
+            height = 60
         case .erc20:
             var tokens: [Token]?
             var expandHeight: Int
@@ -189,7 +189,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     }
 
     static func calculateHeightForRows(_ tokenCount: Int) -> Int {
-        return 20 + Int(tokenCount * (CryptoRow.rowHeight + 10))
+        return 10 + Int(tokenCount * (CryptoRow.rowHeight + 10))
     }
 
     private func toggleVisibilityOfLowValueTokensContainer(show: Bool) {

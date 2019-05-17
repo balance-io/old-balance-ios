@@ -193,7 +193,7 @@ class BalanceContentViewController: UITableViewController {
     }
 
     public override func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 70.0
+        return 50.0
     }
 
     public override func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -307,7 +307,7 @@ class BalanceContentViewController: UITableViewController {
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isErc20Expanded)
         } else {
             // CDP cell height
-            return 70
+            return 60
         }
     }
 
