@@ -26,10 +26,6 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 5
-        view.clipsToBounds = true
-        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
-        view.layer.borderWidth = 1
         return view
     }()
 
