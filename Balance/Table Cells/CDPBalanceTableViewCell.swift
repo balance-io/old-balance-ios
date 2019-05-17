@@ -111,10 +111,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
         let view = UIView()
 //        let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         view.backgroundColor = UIColor(hexString: "#FFFFFF")
-        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 5
-        view.clipsToBounds = true
         return view
     }()
 
