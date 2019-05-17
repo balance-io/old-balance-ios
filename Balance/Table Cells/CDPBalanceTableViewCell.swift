@@ -165,10 +165,10 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview()
         }
 
         containerView.addSubview(ethCircleImageView)
