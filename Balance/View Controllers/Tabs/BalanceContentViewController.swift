@@ -257,6 +257,37 @@ class BalanceContentViewController: UITableViewController {
         return view
     }
 
+    override func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
+        return 30
+    }
+
+    public override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view: UIView
+        if let _view: UIView = tableView.footerView(forSection: section) {
+            view = _view
+        } else {
+            view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 30))
+        }
+
+        let subview = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 15))
+
+        subview.backgroundColor = .white
+
+        subview.layer.shadowColor = UIColor.black.cgColor
+        subview.layer.shadowOpacity = 0.3
+        subview.layer.shadowOffset = CGSize(width: 1, height: 1)
+        subview.layer.shadowRadius = 8
+
+        subview.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 10, width: tableView.bounds.width, height: 5)).cgPath
+        subview.layer.zPosition = -100
+        subview.layer.cornerRadius = 10
+        // subview.layer.shouldRasterize = true
+        subview.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.addSubview(subview)
+
+        return view
+    }
+
     override func tableView(_: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let ethereumWallet = ethereumWallet else {
             return 0
