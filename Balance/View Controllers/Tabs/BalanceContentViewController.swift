@@ -62,6 +62,9 @@ class BalanceContentViewController: UITableViewController {
             preloadErc20Cell()
         }
 
+        // push table view down for first section card border/shadow
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 10))
+
         NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startedLoadingBalances), name: BalanceViewController.Notifications.startedLoadingBalances, object: nil)
