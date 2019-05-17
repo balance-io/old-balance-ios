@@ -155,6 +155,8 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                 }
             }
         }
+
+        layer.zPosition = 104
     }
 
     required init?(coder _: NSCoder) {

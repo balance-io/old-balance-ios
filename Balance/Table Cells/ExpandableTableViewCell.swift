@@ -25,6 +25,8 @@ class ExpandableTableViewCell: UITableViewCell {
         tapGestureRecognizer.numberOfTapsRequired = 1
         tapGestureRecognizer.numberOfTouchesRequired = 1
         addGestureRecognizer(tapGestureRecognizer)
+
+        layer.zPosition = 104
     }
 
     required init?(coder _: NSCoder) {

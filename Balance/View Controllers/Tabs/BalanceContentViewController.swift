@@ -184,6 +184,7 @@ class BalanceContentViewController: UITableViewController {
             if let cdp = ethereumWallet?.CDPs?[indexPath.row] {
                 cell.cdp = cdp
             }
+            cell.layer.zPosition = 104
             return cell
         }
     }

@@ -210,6 +210,8 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
+
+        layer.zPosition = 104
     }
 
     required init?(coder _: NSCoder) {
