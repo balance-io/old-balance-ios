@@ -12,7 +12,7 @@ struct MakerToolsAPI {
         loadCDPs(ids: ids, baseURL: ethBaseURL) { CDPsDict in
             var returnWallets = [EthereumWallet]()
             for ethereumWallet in ethereumWallets {
-                var returnWallet = ethereumWallet
+                let returnWallet = ethereumWallet
                 returnWallet.CDPs = CDPsDict[ethereumWallet.address]
                 returnWallets.append(returnWallet)
             }

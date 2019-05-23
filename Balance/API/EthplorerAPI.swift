@@ -72,7 +72,7 @@ struct EthplorerAPI {
                 }
 
                 // Convert to Balance model
-                var returnWallet = ethereumWallet
+                let returnWallet = ethereumWallet
                 if let addressInfoResponse = addressInfoResponse, let ETH = addressInfoResponse.ETH {
                     returnWallet.balance = ETH.balance
                     if let tokensResponse = addressInfoResponse.tokens {

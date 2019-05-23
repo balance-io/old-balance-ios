@@ -5,7 +5,7 @@ struct CoinMarketCapAPI {
         loadEthereumTicker { response in
             var returnWallets = [EthereumWallet]()
             for wallet in ethereumWallets {
-                var returnWallet = wallet
+                let returnWallet = wallet
                 if let balance = wallet.balance, let rate = response?.priceUSD {
                     returnWallet.fiatBalance = balance * rate
                 }

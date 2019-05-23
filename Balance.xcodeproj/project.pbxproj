@@ -47,6 +47,9 @@
 		DCBF852822380B010002F93F /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCBF852722380B010002F93F /* Icons.xcassets */; };
 		F1D844E42242A512007245E9 /* WalletTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E32242A512007245E9 /* WalletTableViewCell.swift */; };
 		F1D844EA2243A881007245E9 /* EIP55.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1D844E92243A881007245E9 /* EIP55.swift */; };
+		F1DB7E8D2275CEFC006C02E5 /* AmberdataAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB7E8C2275CEFC006C02E5 /* AmberdataAPI.swift */; };
+		F1DB7E8F2275D374006C02E5 /* ArrayEthereumWallet+sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB7E8E2275D374006C02E5 /* ArrayEthereumWallet+sort.swift */; };
+		F1DB7E912275D936006C02E5 /* URL+appendingQueryStringComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1DB7E902275D936006C02E5 /* URL+appendingQueryStringComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +99,9 @@
 		DCBF852722380B010002F93F /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		F1D844E32242A512007245E9 /* WalletTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewCell.swift; sourceTree = "<group>"; };
 		F1D844E92243A881007245E9 /* EIP55.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP55.swift; sourceTree = "<group>"; };
+		F1DB7E8C2275CEFC006C02E5 /* AmberdataAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmberdataAPI.swift; sourceTree = "<group>"; };
+		F1DB7E8E2275D374006C02E5 /* ArrayEthereumWallet+sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArrayEthereumWallet+sort.swift"; sourceTree = "<group>"; };
+		F1DB7E902275D936006C02E5 /* URL+appendingQueryStringComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+appendingQueryStringComponent.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,7 @@
 		53F0C9B02235796000FF0796 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				F1DB7E8C2275CEFC006C02E5 /* AmberdataAPI.swift */,
 				53F0C9B12235798100FF0796 /* MakerToolsAPI.swift */,
 				53721AAA22381BEB001C1883 /* EthplorerAPI.swift */,
 				53721AB0223835A4001C1883 /* CoinMarketCapAPI.swift */,
@@ -222,6 +229,8 @@
 				53F0C9BD2235B67100FF0796 /* UIColor+Hex.swift */,
 				531AFF62224FD7F700916843 /* UIRefreshControl+ManualRefresh.swift */,
 				2D18EB712250B7F400CD4086 /* UIViewController+UI.swift */,
+				F1DB7E8E2275D374006C02E5 /* ArrayEthereumWallet+sort.swift */,
+				F1DB7E902275D936006C02E5 /* URL+appendingQueryStringComponent.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -425,7 +434,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#check if env-vars.sh exists\nif [ -f ./Balance/apikeys.sh ]; then\nsource ./Balance/apikeys.sh\nelse\nsource ./Balance/default_apikeys.sh\nfi\n#no `else` case needed if the CI works as expected\n./Pods/Sourcery/bin/sourcery --templates ./Balance --sources . --output ./Balance --args ethplorerApiKey=$ETHPLORER_API_KEY,intercomAppId=$INTERCOM_APP_ID,intercomApiKey=$INTERCOM_API_KEY\n";
+			shellScript = "#check if env-vars.sh exists\nif [ -f ./Balance/apikeys.sh ]; then\nsource ./Balance/apikeys.sh\nelse\nsource ./Balance/default_apikeys.sh\nfi\n#no `else` case needed if the CI works as expected\n./Pods/Sourcery/bin/sourcery --templates ./Balance --sources . --output ./Balance --args ethplorerApiKey=$ETHPLORER_API_KEY,amberdataApiKey=$AMBERDATA_API_KEY,intercomAppId=$INTERCOM_APP_ID,intercomApiKey=$INTERCOM_API_KEY\n";
 		};
 		E98A920B721C057F7F96B0EA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -487,12 +496,15 @@
 				53F0C9BC2235B4BA00FF0796 /* AddEthereumWalletViewController.swift in Sources */,
 				5355309E22383EA800BD119C /* CryptoBalanceTableViewCell.swift in Sources */,
 				DC4BA4EE22345FC900A4E30D /* WalletsViewController.swift in Sources */,
+				F1DB7E912275D936006C02E5 /* URL+appendingQueryStringComponent.swift in Sources */,
 				DC66983F221CA8F000C383BD /* BalanceContentViewController.swift in Sources */,
 				53BABFB222394005009DCF63 /* Token.swift in Sources */,
+				F1DB7E8F2275D374006C02E5 /* ArrayEthereumWallet+sort.swift in Sources */,
 				53F0C9BE2235B67100FF0796 /* UIColor+Hex.swift in Sources */,
 				53F0C9AF223578BD00FF0796 /* CoreDataHelper.swift in Sources */,
 				53721AB1223835A4001C1883 /* CoinMarketCapAPI.swift in Sources */,
 				DC4BA4F22234617A00A4E30D /* EthereumWallet.swift in Sources */,
+				F1DB7E8D2275CEFC006C02E5 /* AmberdataAPI.swift in Sources */,
 				2D18EB722250B7F400CD4086 /* UIViewController+UI.swift in Sources */,
 				53721AAB22381BEB001C1883 /* EthplorerAPI.swift in Sources */,
 				531AFF672251409A00916843 /* CDPBalanceTableViewCell.swift in Sources */,
