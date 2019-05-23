@@ -64,14 +64,14 @@ struct AmberdataAPI {
 
         AmberdataRequest(fromComponents: ["addresses", wallet.address, "account-balances", "latest"])
             .withQueryStringComponents(["includePrice": "true"])
-            .go { data in
+            .go { data, request in
 
                 let accountBalanceResponse: AmberdataAccountBalanceResponse
 
                 do {
                     accountBalanceResponse = try JSONDecoder().decode(AmberdataAccountBalanceResponse.self, from: data)
                 } catch {
-                    print("JSON error: \(error)")
+                    AmberdataAPI.requestDidError(request.request, withError: error)
                     return
                 }
 
@@ -94,14 +94,14 @@ struct AmberdataAPI {
 
         AmberdataRequest(fromComponents: ["addresses", wallet.address, "tokens"])
             .withQueryStringComponents(["includePrice": "true"])
-            .go { data in
+            .go { data, request in
 
                 let tokensResponse: AmberdataTokensResponse
 
                 do {
                     tokensResponse = try JSONDecoder().decode(AmberdataTokensResponse.self, from: data)
                 } catch {
-                    print("JSON error: \(error)")
+                    AmberdataAPI.requestDidError(request.request, withError: error)
                     return
                 }
 
@@ -141,6 +141,10 @@ struct AmberdataAPI {
     }
 
     static func requestDidError(_: URLRequest, withError error: Error? = nil) {
+        if let error = error {
+            print("ERROR: \(error)")
+        }
+
         if hasDisplayedConnectionError {
             return
         }
@@ -198,7 +202,7 @@ struct AmberdataRequest {
         return AmberdataRequest(fromRequest: request)
     }
 
-    func go(completion: @escaping (Data) -> Void) {
+    func go(completion: @escaping (Data, AmberdataRequest) -> Void) {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil, let response = response as? HTTPURLResponse else {
                 print(error ?? "Response Error")
@@ -212,7 +216,7 @@ struct AmberdataRequest {
                 return
             }
 
-            completion(data)
+            completion(data, self)
         }
 
         task.resume()
