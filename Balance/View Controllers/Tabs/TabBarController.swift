@@ -12,6 +12,7 @@ class TabBarController: UITabBarController {
     let settingsViewController = SettingsViewController()
 
     private var welcomeViewController: WelcomeViewController?
+    private var unbalancedViewController: UnbalancedViewController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,7 @@ class TabBarController: UITabBarController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(walletAdded), name: CoreDataHelper.Notifications.ethereumWalletAdded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(walletRemoved), name: CoreDataHelper.Notifications.ethereumWalletRemoved, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displayUnbalancedScreen), name: AmberdataAPI.Notifications.connectionError, object: nil)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -67,5 +69,10 @@ class TabBarController: UITabBarController {
             welcomeViewController = WelcomeViewController()
             present(welcomeViewController!, animated: true, completion: nil)
         }
+    }
+
+    @objc private func displayUnbalancedScreen() {
+        unbalancedViewController = UnbalancedViewController()
+        present(unbalancedViewController!, animated: true, completion: nil)
     }
 }

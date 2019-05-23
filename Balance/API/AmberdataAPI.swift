@@ -8,10 +8,18 @@
 
 import CoreData
 import Foundation
+import NotificationBannerSwift
 
 struct AmberdataAPI {
+    struct Notifications {
+        static let connectionError = Notification.Name(rawValue: "AmberdataAPI.connectionError")
+    }
+
+    static var hasDisplayedConnectionError = false
+
     static func loadWalletBalances(_ ethereumWallets: [EthereumWallet], completion: @escaping ([EthereumWallet]) -> Void) {
         let concurrentDispatchQueue = DispatchQueue(label: "AmberdataAPI#loadWalletBalances", attributes: .concurrent)
+        hasDisplayedConnectionError = false
 
         concurrentDispatchQueue.async {
             let dispatchGroup = DispatchGroup()
@@ -131,6 +139,28 @@ struct AmberdataAPI {
                 dispatchGroup.leave()
             }
     }
+
+    static func requestDidError(_: URLRequest, withError error: Error? = nil) {
+        if hasDisplayedConnectionError {
+            return
+        }
+
+        hasDisplayedConnectionError = true
+
+        DispatchQueue.main.async {
+            if let error = error, error._domain == "NSURLErrorDomain", error._code == -1009 {
+                NotificationCenter.default.post(name: Notifications.connectionError, object: nil)
+                return
+            }
+
+            let leftView = UIImageView(image: UIImage(named: "warningRed"))
+            let banner = NotificationBanner(title: "Connection Error",
+                                            subtitle: "We had trouble connecting to our data provider. Please pull down to refresh.",
+                                            leftView: leftView,
+                                            style: .danger)
+            banner.show()
+        }
+    }
 }
 
 // MARK: - General Request Handling
@@ -172,11 +202,13 @@ struct AmberdataRequest {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil, let response = response as? HTTPURLResponse else {
                 print(error ?? "Response Error")
+                AmberdataAPI.requestDidError(self.request, withError: error)
                 return
             }
 
             guard (200 ... 299).contains(response.statusCode) else {
                 print(response)
+                AmberdataAPI.requestDidError(self.request)
                 return
             }
 

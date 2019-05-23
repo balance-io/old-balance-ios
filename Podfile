@@ -7,10 +7,11 @@ target 'Balance' do
 
   # Pods for Balance
   pod 'SwiftEntryKit', '0.8.8'
-  pod 'SnapKit', '~> 4.0.0'
+  pod 'SnapKit', '~> 4.2.0'
   pod 'CryptoSwift'
   pod 'Intercom'
-  pod "PagingKit"
+  pod 'NotificationBannerSwift', '2.0.1'
+  pod 'PagingKit'
   pod 'SwiftFormat/CLI'
   pod 'Sourcery'
 

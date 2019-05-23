@@ -1,9 +1,13 @@
 PODS:
   - CryptoSwift (0.14.0)
   - Intercom (5.2.1)
+  - MarqueeLabel/Swift (3.2.1)
+  - NotificationBannerSwift (2.0.1):
+    - MarqueeLabel/Swift (~> 3.2.0)
+    - SnapKit (~> 4.2.0)
   - PagingKit (1.9.0)
   - QuickLayout (2.1.1)
-  - SnapKit (4.0.1)
+  - SnapKit (4.2.0)
   - Sourcery (0.16.0)
   - SwiftEntryKit (0.8.8):
     - QuickLayout (= 2.1.1)
@@ -12,8 +16,9 @@ PODS:
 DEPENDENCIES:
   - CryptoSwift
   - Intercom
+  - NotificationBannerSwift (= 2.0.1)
   - PagingKit
-  - SnapKit (~> 4.0.0)
+  - SnapKit (~> 4.2.0)
   - Sourcery
   - SwiftEntryKit (= 0.8.8)
   - SwiftFormat/CLI
@@ -22,6 +27,8 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - CryptoSwift
     - Intercom
+    - MarqueeLabel
+    - NotificationBannerSwift
     - PagingKit
     - QuickLayout
     - SnapKit
@@ -32,13 +39,15 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
   Intercom: 53f07c24f0ca18c1e910750e79b75f9c9867338f
+  MarqueeLabel: 2daf039bf916937c8a4c9adfc13577cc5e51b4ce
+  NotificationBannerSwift: 007774aa590cc9680647b92b2f217bef5c00c32c
   PagingKit: a65ffc616296d617ac89897a986263fdae766db4
   QuickLayout: 9af2b7fd89a6552828f51a5aba28d1bcdb8b340c
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   Sourcery: 3e55aad9719ee5782ab81eb16addd44d272e4d13
   SwiftEntryKit: c50f25a14772713ded1591c852d1c1dc74c95b9e
   SwiftFormat: b5e9397ee6f061762006421913c913d7268c2c50
 
-PODFILE CHECKSUM: bc52a4a3ef568722cb2c756458b42eae382d6fc8
+PODFILE CHECKSUM: fb7da031328e4085727b5e89a4529ca1a21bdd95
 
 COCOAPODS: 1.6.1

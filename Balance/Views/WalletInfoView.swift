@@ -220,7 +220,7 @@ class WalletInfoView: UIView {
 
     @objc private func shareAction() {
         let activityViewController = UIActivityViewController(activityItems: [wallet.address], applicationActivities: nil)
-        let rootViewController = AppDelegate.shared.window.rootViewController
+        let rootViewController = AppDelegate.shared.window!.rootViewController
         rootViewController?.present(activityViewController, animated: true, completion: nil)
         SwiftEntryKit.dismiss()
     }
@@ -251,7 +251,7 @@ class WalletInfoView: UIView {
         alertController.addAction(cancelAction)
         alertController.addAction(saveAction)
 
-        let rootViewController = AppDelegate.shared.window.rootViewController
+        let rootViewController = AppDelegate.shared.window!.rootViewController
         rootViewController?.present(alertController, animated: true, completion: nil)
 
         SwiftEntryKit.dismiss()
