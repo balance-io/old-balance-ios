@@ -62,6 +62,9 @@ class BalanceContentViewController: UITableViewController {
             preloadErc20Cell()
         }
 
+        // push table view down for first section card border/shadow
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 10))
+
         NotificationCenter.default.addObserver(self, selector: #selector(cellExpanded(_:)), name: ExpandableTableViewCell.Notifications.expanded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(cellCollapsed(_:)), name: ExpandableTableViewCell.Notifications.collapsed, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(startedLoadingBalances), name: BalanceViewController.Notifications.startedLoadingBalances, object: nil)
@@ -184,12 +187,13 @@ class BalanceContentViewController: UITableViewController {
             if let cdp = ethereumWallet?.CDPs?[indexPath.row] {
                 cell.cdp = cdp
             }
+            cell.layer.zPosition = 104
             return cell
         }
     }
 
     public override func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        return 40.0
+        return 50.0
     }
 
     public override func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -234,16 +238,56 @@ class BalanceContentViewController: UITableViewController {
 
         label.font = UIFont.systemFont(ofSize: 18)
         view.addSubview(label)
-//        view.addSubview(imageView)
 
-        // setup the view
-        view.backgroundColor = UIColor(hexString: "#fbfbfb")
+        view.backgroundColor = .white
+
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.5
+        view.layer.shadowOffset = CGSize(width: -1, height: -1)
+        view.layer.shadowRadius = 9
+        view.layer.zPosition = 200
+
+        view.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 10, width: tableView.bounds.width, height: 20)).cgPath
+        view.layer.cornerRadius = 10
+        // view.layer.shouldRasterize = true
+        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         label.snp.makeConstraints { make in
             make.leading.equalTo(icon.snp.trailing).offset(10)
 //            make.trailing.equalToSuperview()
             make.centerY.equalToSuperview()
         }
+
+        return view
+    }
+
+    override func tableView(_: UITableView, heightForFooterInSection _: Int) -> CGFloat {
+        return 30
+    }
+
+    public override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view: UIView
+        if let _view: UIView = tableView.footerView(forSection: section) {
+            view = _view
+        } else {
+            view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 30))
+        }
+
+        let subview = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 15))
+
+        subview.backgroundColor = .white
+
+        subview.layer.shadowColor = UIColor.black.cgColor
+        subview.layer.shadowOpacity = 0.3
+        subview.layer.shadowOffset = CGSize(width: 1, height: 1)
+        subview.layer.shadowRadius = 8
+
+        subview.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 10, width: tableView.bounds.width, height: 5)).cgPath
+        subview.layer.zPosition = -100
+        subview.layer.cornerRadius = 10
+        // subview.layer.shouldRasterize = true
+        subview.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        view.addSubview(subview)
 
         return view
     }
@@ -263,7 +307,7 @@ class BalanceContentViewController: UITableViewController {
             return CryptoBalanceTableViewCell.calculatedHeight(wallet: ethereumWallet, cryptoType: .erc20, isExpanded: isErc20Expanded)
         } else {
             // CDP cell height
-            return 70
+            return 60
         }
     }
 

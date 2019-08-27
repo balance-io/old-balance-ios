@@ -26,10 +26,6 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.cornerRadius = 5
-        view.clipsToBounds = true
-        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
-        view.layer.borderWidth = 1
         return view
     }()
 
@@ -61,10 +57,10 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview()
         }
 
         // TODO: remove title altogether
@@ -155,6 +151,8 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
                 }
             }
         }
+
+        layer.zPosition = 104
     }
 
     required init?(coder _: NSCoder) {
@@ -170,7 +168,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
 
         switch cryptoType {
         case .ethereum:
-            height = 70
+            height = 60
         case .erc20:
             var tokens: [Token]?
             var expandHeight: Int
@@ -191,7 +189,7 @@ class CryptoBalanceTableViewCell: ExpandableTableViewCell {
     }
 
     static func calculateHeightForRows(_ tokenCount: Int) -> Int {
-        return 20 + Int(tokenCount * (CryptoRow.rowHeight + 10))
+        return 10 + Int(tokenCount * (CryptoRow.rowHeight + 10))
     }
 
     private func toggleVisibilityOfLowValueTokensContainer(show: Bool) {

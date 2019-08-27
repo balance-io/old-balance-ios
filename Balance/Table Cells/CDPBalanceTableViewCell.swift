@@ -111,10 +111,6 @@ class CDPBalanceTableViewCell: UITableViewCell {
         let view = UIView()
 //        let darkCardBackgroundColor = UIColor(red: 0.176, green: 0.196, blue: 0.220, alpha: 1.000)
         view.backgroundColor = UIColor(hexString: "#FFFFFF")
-        view.layer.borderColor = UIColor(hexString: "#EEEEEE")?.cgColor
-        view.layer.borderWidth = 1
-        view.layer.cornerRadius = 5
-        view.clipsToBounds = true
         return view
     }()
 
@@ -169,10 +165,10 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(5)
+            make.top.equalToSuperview()
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview()
         }
 
         containerView.addSubview(ethCircleImageView)
@@ -210,6 +206,8 @@ class CDPBalanceTableViewCell: UITableViewCell {
 
         containerView.setNeedsLayout()
         containerView.layoutIfNeeded()
+
+        layer.zPosition = 104
     }
 
     required init?(coder _: NSCoder) {
