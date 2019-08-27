@@ -65,7 +65,6 @@ struct AmberdataAPI {
         AmberdataRequest(fromComponents: ["addresses", wallet.address, "account-balances", "latest"])
             .withQueryStringComponents(["includePrice": "true"])
             .go { data, request in
-
                 let accountBalanceResponse: AmberdataAccountBalanceResponse
 
                 do {
@@ -238,9 +237,13 @@ private struct AmberdataTokensResponse: Decodable {
 }
 
 private struct AccountBalance: Decodable {
-    let address: String?
+    let address: AccountAddress
     let value: String?
     let price: AccountBalancePrice?
+}
+
+private struct AccountAddress: Decodable {
+    let address: String?
 }
 
 // Urgh. Account balance is nested: { ... price: { value: ... } } whereas the tokens
